@@ -1,0 +1,121 @@
+@media (max-width: 575.98px) {
+
+    #login {
+        width: 200px;
+        height: 200px;
+        margin-top: 10% !important;
+    }
+
+    .secao {
+        margin-top: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    #form table {
+        font-size: 11px !important;
+    }
+
+    .button-info {
+        font-size: 11px !important;
+    }
+
+    #logo {
+        display: none;
+    }
+    .card{
+        width: 90% !important;
+        margin-left: 5% !important;
+        margin-right: 5% !important;
+    }
+    /*#tabela-registros{
+        overflow-x: auto;
+    }*/
+    #cod_registro{
+        display: none !important;
+        background-color: aqua !important;
+    }
+    .container{
+        padding: 0 !important;
+    }
+    #tabela{
+        overflow-x: auto !important;
+    }
+    #button-desktop{
+        display: none;
+    }
+    .form-check-input {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+
+}
+
+@media (max-width: 991.98px) {
+    #login {
+        width: 250px;
+        height: 250px;
+        margin-top: 20%;
+    }
+
+    #person {
+        width: 80px;
+        height: 80px;
+    }
+
+    #form table {
+        font-size: 11px !important;
+    }
+
+    .button-info {
+        font-size: 11px !important;
+    }
+
+    #btn-salvar {
+        width: 100%;
+    }
+    #button-desktop{
+        display: none;
+    }
+    #corpo-tabela{
+        height: 804px;
+    }
+}
+@media (max-width: 1599px){
+    #btn-salvar {
+        width: 100%;
+    }
+    #corpo-tabela{
+        height: 820px;
+    }
+    #button-desktop{
+        display: none;
+    }
+    
+}
+@media (min-width: 1600px) {
+    #form table {
+        font-size: 15px !important;
+    }
+
+    .button-info {
+        font-size: 15px !important;
+    }
+
+    #tabela {
+        overflow-x: hidden;
+    }
+    #accordi{
+        display: none;
+    }
+    #button-mobile {
+        display: none;
+    }
+
+    #corpo-tabela{
+        height: 260px;
+    }
+}

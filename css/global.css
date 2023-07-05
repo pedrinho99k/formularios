@@ -1,0 +1,160 @@
+body,html {
+    background-color: #e3ecfc !important;
+    width: 100%;
+    font-family: 'Asap Condensed', sans-serif !important;
+    font-size: 15px;
+    overflow-x: hidden;
+    min-height: 100%;
+}
+
+.button-info {
+    color: #0dcaf0;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.button-info:hover {
+    color: #fff !important;
+}
+
+/*input[type='radio']:checked+label {
+    color: #0dcaf0 !important;
+}
+*/
+.form-signin {
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+
+}
+
+.Header {
+    display: none;
+    
+}
+
+.secao {
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 10% !important;
+    box-shadow: 5px 5px 10px #a2a4a6;
+}
+
+.secao-1 {
+    margin-top: 5% !important;
+}
+
+.secao-2 {
+    margin-top: 5% !important;
+    margin-bottom: 5%;
+}
+
+.form-floating {
+    margin: 10px ;
+}
+.navbar{
+    box-shadow: 5px 5px 10px rgb(185, 184, 184);
+    background-color: #fff;
+    position: fixed; top: 0; left: 0; right: 0;
+    
+}
+.nav{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.dropdownMenuButton1:hover{
+    cursor: pointer;
+}
+#tabela{
+    overflow-x: scroll;
+}
+.logo{
+    display: none;
+}
+.container{
+    box-sizing: content-box !important;
+}
+#cadastrar-boletim{
+    background-color: white;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#email{
+    font-size: 15px;
+    margin: 10px;
+}
+
+.dropdown-toggle{
+    cursor: pointer;
+}
+
+#test{
+    margin: 15px;
+    padding: 0;
+}
+
+#title-form{
+    width: 100%;
+    background-color: #0dcaf0;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 10px 10px 0px 0px;
+}
+.btn-primary{
+    background-color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+}
+.btn-primary:hover{
+    background-color: #1291aa !important;
+    border-color: #1291aa !important;
+}
+.btn-danger{
+    background-color: #cc0606 !important;
+    border-color: #cc0606 !important;
+}
+.btn-danger:hover{
+    background-color: #960606 !important;
+    border-color: #960606 !important;
+}
+/*.active{
+    background-color: #1291aa !important;
+    border: 2px solid black !important;
+    box-shadow: 5px 5px 10px rgb(185, 184, 184);
+}
+.nav-active{
+    background-color: #ce1111 !important;
+    border: 2px solid black !important;
+    box-shadow: 5px 5px 10px rgb(185, 184, 184);
+}*/
+#nome_formulario{
+    background-color: #0dcaf0;
+    border: none;
+    color: white;
+}
+#nome_avaliacao_visu{
+    background-color: #0dcaf0;
+    border: none;
+    color: white;
+}
+#desc_avaliacao_visu{
+    background-color: #0dcaf0;
+    border: none;
+    color: white;
+}
+#nome_formulario:focus{
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+.input-visu-questao{
+    border: none !important;
+}
+.input-visu-questao:focus{
+    box-shadow: 0 0 0 0 !important;
+    outline: 0 !important;
+}
+.form-check-input {
+    width: 20px !important;
+    height: 20px !important;
+}

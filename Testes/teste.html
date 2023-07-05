@@ -1,0 +1,23 @@
+<h3>Window size is <span class="window-size"></span></h3>
+<p>Knowing this number you can make decisions based in breakpoints of window.</p>
+<hr>
+<h3>Screen size is <span class="screen-size"></span></h3>
+<p>Here you have an idea of device screen size. </p>
+<script>
+    function sizeOfThings(){
+  var windowWidth = window.innerWidth;
+  var windowHeight = window.innerHeight;
+  
+  var screenWidth = screen.width;
+  var screenHeight = screen.height;
+  
+  document.querySelector('.window-size').innerHTML = windowWidth + 'x' + windowHeight;
+  document.querySelector('.screen-size').innerHTML = screenWidth + 'x' + screenHeight;
+
+};
+sizeOfThings();
+
+window.addEventListener('resize', function(){
+	sizeOfThings();
+});
+</script>
