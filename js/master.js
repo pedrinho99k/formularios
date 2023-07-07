@@ -731,8 +731,6 @@ function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
         }
     });
     var html_tbody;
-
-
 }
 
 
@@ -1922,6 +1920,22 @@ function InativarAtivarPerfil(cod_perfil, perfil_ativo) {
         }
         , error: function () {
             console.log("Erro ao inativar perfil pelo Ajax!");
+        }
+    });
+}
+
+
+//Seção Relatório AHPACEG
+function FormListarAhpaceg() {
+    $.ajax({
+        url: url + "php/Forms/listar-ahpaceg.php",
+        success: function (result) {
+            $("#form").html(result);
+            PreencherTabelaPerfil();
+            $("#close-canvas").trigger("click");
+        },
+        error: function () {
+            console.log("Error");
         }
     });
 }

@@ -101,6 +101,10 @@ if ((isset($_SESSION['usuarioNome']))) {
                                 <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormCadastraQuestoes()">Questões</button>
                                 </button>
                             </li>
+                            <li class="dropdown-item">
+                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormListarAhpaceg()">Relatório AHPACEG</button>
+                                </button>
+                            </li>
                         </ul>
                     </li>
                     <!-- Usuários -->
