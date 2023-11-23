@@ -1,31 +1,14 @@
 <?php
-
+/*
 
 $filtro = 'ahpaceg_2';
 $valor_filtro = $_POST['mes_competencia'];
-
+//$valor_filtro = '05/2023';
 $cod_formulario = 1;
 $formulario = 'ahpaceg';
 
 include_once '../conexao/conexao.php';
 $conn = Conectar();
-
-$query_codigos_formularios = "SELECT form_codigo FROM fm_formularios WHERE form_sigla = '" . $formulario . "'";
-$result_cod_form = $conn->prepare($query_codigos_formularios);
-$result_cod_form->execute(); // Executar a QUERY
-$row_cod_form = $result_cod_form->fetchAll(PDO::FETCH_ASSOC);
-
-// Inicialize uma string vazia para armazenar os códigos
-$codigos = '';
-
-// Use um loop para concatenar os códigos separados por vírgulas
-foreach ($row_cod_form as $row) {
-    $codigos .= $row['form_codigo'] . ', ';
-}
-
-// Remova a última vírgula e espaço em branco, se houver
-$codigos = rtrim($codigos, ', ');
-
 
 // VARIÁVEIS QUE UTILIZAREMOS
 $linha = '';
@@ -58,7 +41,6 @@ while ($row_usuario = $result_usuarios->fetch(PDO::FETCH_ASSOC)) {
     JOIN fm_formularios ON reg_codigo_formulario = form_codigo
     JOIN fm_usuarios ON reg_codigo_usuario = usu_codigo
     WHERE " . $filtro . " = '" . $valor_filtro . "'
-    AND fm_registros.reg_codigo_formulario IN (.$codigos.)
     AND reg_ativo = 'SIM'";
             $result = $conn->prepare($SQL);
             $result->execute();
@@ -70,3 +52,29 @@ while ($row_usuario = $result_usuarios->fetch(PDO::FETCH_ASSOC)) {
     }
 }
 echo json_encode($dados);
+
+*/
+$formulario = 'ahpaceg';
+
+include_once '../conexao/conexao.php';
+$conn = Conectar();
+
+$query_codigos_formularios = "SELECT form_codigo FROM fm_formularios WHERE form_sigla = 'ahpaceg'";
+$result_cod_form = $conn->prepare($query_codigos_formularios);
+$result_cod_form->execute(); // Executar a QUERY
+$row_cod_form = $result_cod_form->fetchAll(PDO::FETCH_ASSOC);
+
+// Inicialize uma string vazia para armazenar os códigos
+$codigos = '';
+
+// Use um loop para concatenar os códigos separados por vírgulas
+foreach ($row_cod_form as $row) {
+    $codigos .= $row['form_codigo'] . ', ';
+}
+
+// Remova a última vírgula e espaço em branco, se houver
+$codigos = rtrim($codigos, ', ');
+
+// Exiba a string resultante
+echo $codigos;
+

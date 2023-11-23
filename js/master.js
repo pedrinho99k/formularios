@@ -684,11 +684,6 @@ function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
                                     html_tbody += '<tr><th id="' + siglaArray[i] + '"></th><td>' + elemento[siglaArray[i]] + '</td></tr>';
                                     break;
                             }
-                            /*if (i > 0) {
-                                html_tbody += '<tr><th id="' + siglaArray[i] + '"></th><td>' + elemento[siglaArray[i]] + '</td></tr>';
-                            } else {
-                                
-                            }*/
                         });
                     }
                     $('#corpo-tabel-vizualizacao').append(html_tbody);

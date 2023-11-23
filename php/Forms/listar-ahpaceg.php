@@ -128,7 +128,6 @@
                         }
                     });
                 });
-
             },
             error: function() {
                 console.log("Erro ao montar formulario pelo Ajax!");
