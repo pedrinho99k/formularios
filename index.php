@@ -226,7 +226,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                 <div class="row">
                     <form id="fim" action="php\excel\testeExcel.php" target="_blank" method="post">
                         <hr>
-                        <button type="submit"> Exportar em Excel </button>
+                        <button type="submit" class="btn btn-primary button-prin"> Exportar em Excel </button>
                         <div class="position-relative">
                             <h4 class="position-absolute top-0 start-0">📑 Registros de Formulários</h4>
                         </div>
