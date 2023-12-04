@@ -88,7 +88,7 @@ $(document).ready(function () {
                     switch (elemento['form_ativo']) {
                         case "SIM":
                             $("#cards").append(`
-                                <div class="card col-md-6 col-xl-1 m-2">
+                                <div class="card col-md-2 p-2 m-3">
                                     <div class="card-body">
                                         <h5 class="card-title text-center" id="nome-form">` + elemento['form_nome'] + `</h5>
                                         <button type="button" class="btn btn-primary button-prin" style="width:100%;" onclick="MontarFormulario(`+ elemento['form_codigo'] + `)">Novo Registro</button>
