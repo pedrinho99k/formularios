@@ -84,7 +84,7 @@ $(document).ready(function () {
         dataType: "JSON",
         success: function (result) {
             //Icone SVG do Excel
-            var iconExcel = '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">' +
+            var iconExcel = '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 48 48">' +
                 '<path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>' +
                 '<path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path>' +
                 '<path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>' +
@@ -107,10 +107,10 @@ $(document).ready(function () {
                                 <div class="card col-md-2 p-2 m-3">
                                     <div class="card-body">
                                         <h5 class="card-title text-center" id="nome-form">` + elemento['form_nome'] + `</h5>
-                                        <button type="button" class="btn btn-primary button-prin" style="width:100%;" onclick="MontarFormulario(`+ elemento['form_codigo'] + `)">Novo Registro</button>
+                                        <button type="button" class="btn btn-primary button-prin btn-sm" style="width:100%;" onclick="MontarFormulario(`+ elemento['form_codigo'] + `)">Novo Registro</button>
                                         <input type="radio" class="btn-check"  name="btnradio" id="btnradio`+ elemento['form_codigo'] + `" autocomplete="off">
                                         <label class="btn btn-outline-secondary button-prin btn-sm my-1" style="width:100%;" for="btnradio`+ elemento['form_codigo'] + `" onclick="VizualizarRegistroPorFormulario(` + elemento['form_codigo'] + `,'` + elemento['form_nome'] + `')">Buscar Registros</label>
-                                        ${elemento['form_codigo'] == 29 ? '<form action="php/excel/testeExcel.php" target="_blank" method="post"><button type="submit" class="btn btn-outline-success button-prin" style="width:100%;">' + iconExcel + ' Exportar em Excel</button></form>' : ''}
+                                        ${elemento['form_codigo'] == 29 ? '<form action="php/excel/testeExcel.php" target="_blank" method="post"><button type="submit" class="btn btn-outline-success button-prin btn-sm" style="width:100%;">' + iconExcel + ' Exportar em Excel</button></form>' : ''}
                                     </div>
                                 </div>
                         `);
@@ -1399,7 +1399,7 @@ function FormCadastraFormularioQuestoes() {
     });
 }
 
-
+// Fica em Formulários no Dropdown dos formulários
 function PreencherTabelaFormulario() {
     $("#corpo-tabela").html("");
     $.ajax({
@@ -1416,8 +1416,8 @@ function PreencherTabelaFormulario() {
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1430,8 +1430,8 @@ function PreencherTabelaFormulario() {
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1664,8 +1664,8 @@ function PreencherTabelaUsuario() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1680,8 +1680,8 @@ function PreencherTabelaUsuario() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
