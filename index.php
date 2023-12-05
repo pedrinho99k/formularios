@@ -219,7 +219,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                 <div class="row">
                     <form class="mt-4" id="form-principal">
                         <h4 class="mb-4">🧾 Formulários</h4>
-                        <div class="d-flex align-content-stretch flex-wrap" id="cards">
+                        <div class="d-flex align-content-stretch flex-wrap w-100" id="cards">
                         </div>
                     </form>
                 </div>

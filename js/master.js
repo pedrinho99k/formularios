@@ -98,19 +98,19 @@ $(document).ready(function () {
                 '<path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path>' +
                 '<path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>' +
                 '</svg>';
-
+            
             if (result.length > 0) {
                 result.forEach(function (elemento) {
                     switch (elemento['form_ativo']) {
                         case "SIM":
                             $("#cards").append(`
-                                <div class="card col-md-2 p-2 m-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-center" id="nome-form">` + elemento['form_nome'] + `</h5>
-                                        <button type="button" class="btn btn-primary button-prin btn-sm" style="width:100%;" onclick="MontarFormulario(`+ elemento['form_codigo'] + `)">Novo Registro</button>
+                                <div class="card col-md-2 m-3">
+                                    <div class="card-body d-flex flex-column p-2">
+                                        <h5 class="card-title text-center flex-fill" id="nome-form">` + elemento['form_nome'] + `</h5>
+                                        <button type="button" class="btn btn-primary button-prin btn-sm" w-100 onclick="MontarFormulario(`+ elemento['form_codigo'] + `)">Novo Registro</button>
                                         <input type="radio" class="btn-check"  name="btnradio" id="btnradio`+ elemento['form_codigo'] + `" autocomplete="off">
-                                        <label class="btn btn-outline-secondary button-prin btn-sm my-1" style="width:100%;" for="btnradio`+ elemento['form_codigo'] + `" onclick="VizualizarRegistroPorFormulario(` + elemento['form_codigo'] + `,'` + elemento['form_nome'] + `')">Buscar Registros</label>
-                                        ${elemento['form_codigo'] == 29 ? '<form action="php/excel/testeExcel.php" target="_blank" method="post"><button type="submit" class="btn btn-outline-success button-prin btn-sm" style="width:100%;">' + iconExcel + ' Exportar em Excel</button></form>' : ''}
+                                        <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio`+ elemento['form_codigo'] + `" onclick="VizualizarRegistroPorFormulario(` + elemento['form_codigo'] + `,'` + elemento['form_nome'] + `')">Buscar Registros</label>
+                                        ${elemento['form_codigo'] == 29 ? '<form class="m-0" action="php/excel/testeExcel.php" target="_blank" method="post"><button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">' + iconExcel + ' Exportar em Excel</button></form>' : ''}
                                     </div>
                                 </div>
                         `);
@@ -1864,8 +1864,8 @@ function PreencherTabelaPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1877,8 +1877,8 @@ function PreencherTabelaPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
