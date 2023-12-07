@@ -100,11 +100,17 @@ $(document).ready(function () {
                 '</svg>';
             
                 if (result.length > 0) {
+                    // adicionar o codigo dos novos formularios aqui
+                    var formularios_excel = [29, 1];
+
                     result.forEach(function (elemento) {
                         var codigo_form = elemento['form_codigo'];
+                        // Conversão para number pq a verificação do includes e ===
+                        codigo_form = parseInt(codigo_form);
+                        var showExcelButton;
                         switch (elemento['form_ativo']) {
                             case "SIM":
-                                var showExcelButton = codigo_form == 29 || codigo_form == 1;
+                                showExcelButton = formularios_excel.includes(codigo_form);
                                 var cardHtml = `
                                     <div class="card col-md-2 m-3">
                                         <div class="card-body d-flex flex-column p-2">
