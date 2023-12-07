@@ -105,8 +105,16 @@ $(document).ready(function () {
 
                     result.forEach(function (elemento) {
                         var codigo_form = elemento['form_codigo'];
+                        var codigo_nome = elemento['form_nome'];
+
                         // Conversão para number pq a verificação do includes e ===
                         codigo_form = parseInt(codigo_form);
+
+                        // Funções
+                        var buscarRegistro = "VizualizarRegistroPorFormulario(" + codigo_form + ", '" + elemento['form_nome'] + "')";
+                        var criarFormulario = "MontarFormulario("+codigo_form+")";
+                        
+                        console.log(codigo_form)
                         var showExcelButton;
                         switch (elemento['form_ativo']) {
                             case "SIM":
@@ -115,9 +123,9 @@ $(document).ready(function () {
                                     <div class="card col-md-2 m-3">
                                         <div class="card-body d-flex flex-column p-2">
                                             <h5 class="card-title text-center flex-fill" id="nome-form">` + elemento['form_nome'] + `</h5>
-                                            <button type="button" class="btn btn-primary button-prin btn-sm" w-100 onclick="MontarFormulario(${codigo_form})">Novo Registro</button>
+                                            <button type="button" class="btn btn-primary button-prin btn-sm" w-100 onclick="${criarFormulario}">Novo Registro</button>
                                             <input type="radio" class="btn-check"  name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
-                                            <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form},'` + elemento['form_nome'] + `')">Buscar Registros</label>
+                                            <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="${buscarRegistro}">Buscar Registros</label>
                                             ${showExcelButton ? '<form class="m-0" action="php/excel/testeExcel.php" target="_blank" method="post"><button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">' + iconExcel + ' Exportar em Excel</button></form>' : ''}
                                         </div>
                                     </div>
@@ -130,6 +138,13 @@ $(document).ready(function () {
                         }
                 });
 
+                $.ajax({
+                    url: url + "php/excel/testeExcel.php",
+                    type: "POST",
+                    data: {
+                        codigo_form: codigo_form
+                    }
+                })
             } else {
                 $("#cards").append(`<p>Nenhum Formulário habilitado ao seu perfil!</p>`);
             }

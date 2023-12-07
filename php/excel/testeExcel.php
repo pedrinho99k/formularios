@@ -10,8 +10,7 @@ require __DIR__ . '/../conexao/conexao.php';
 // Conectar ao banco de dados
 $conexao = Conectar();
 
-// Consultas SQL
-
+// CONSULTAS SQL
 // INDICADOR DE ACOMPANHAMENTO FARMACOTERAPÊUTICO
 $query_29 = "SELECT codigo as 'REGISTRO', fr.reg_data_hora as 'INSERIDO', indicador_de__acompa_2 as 'Mês competência',
 indicador_de__acompa_3 as 'UNIDADE DE INTERNAÇÃO', indicador_de__acompa_4 as 'DATA',
@@ -25,7 +24,6 @@ indicador_de__acompa_19 as 'ORIENTAÇÃO DE ALTA PARA DOMICILIO'
 FROM indicador_de__acompa ia
 JOIN fm_registros fr ON fr.reg_codigo_registro  = ia.codigo 
 WHERE fr.reg_codigo_formulario='29' AND fr.reg_ativo <> 'EXCLUIDO'";
-
 
 // AHPACEG
 $query_1 = "SELECT codigo as 'Código',
@@ -86,6 +84,8 @@ ahpaceg_54 as 'Total de quedas registradas em pacientes internos e externos:',
 ahpaceg_55 as 'Número de saídas hospitalares de pacientes submetidos a procedimentos cirúrgicos. Saídas hospitalares são as altas mais óbitos mais transferências externas durante o mês:'
 FROM ahpaceg
 JOIN fm_registros ON ahpaceg.codigo = fm_registros.reg_codigo";
+
+
 
 try {
     $resultado = $conexao->prepare($query_1);
