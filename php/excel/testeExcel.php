@@ -10,7 +10,8 @@ require __DIR__ . '/../conexao/conexao.php';
 // Conectar ao banco de dados
 $conexao = Conectar();
 
-// CONSULTAS SQL
+// Consultas SQL
+
 // INDICADOR DE ACOMPANHAMENTO FARMACOTERAPÊUTICO
 $query_29 = "SELECT codigo as 'REGISTRO', fr.reg_data_hora as 'INSERIDO', indicador_de__acompa_2 as 'Mês competência',
 indicador_de__acompa_3 as 'UNIDADE DE INTERNAÇÃO', indicador_de__acompa_4 as 'DATA',
@@ -24,6 +25,7 @@ indicador_de__acompa_19 as 'ORIENTAÇÃO DE ALTA PARA DOMICILIO'
 FROM indicador_de__acompa ia
 JOIN fm_registros fr ON fr.reg_codigo_registro  = ia.codigo 
 WHERE fr.reg_codigo_formulario='29' AND fr.reg_ativo <> 'EXCLUIDO'";
+
 
 // AHPACEG
 $query_1 = "SELECT codigo as 'Código',
@@ -85,66 +87,82 @@ ahpaceg_55 as 'Número de saídas hospitalares de pacientes submetidos a procedi
 FROM ahpaceg
 JOIN fm_registros ON ahpaceg.codigo = fm_registros.reg_codigo";
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
+    $codigo_form = $_POST['codigo_form'];
 
-
-try {
-    $resultado = $conexao->prepare($query_1);
-    $resultado->execute();
-
-    // Criar uma instância do PhpSpreadsheet
-    $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-
-    // Adicionar cabeçalhos
-    $coluna = 'A';
-    foreach ($resultado->fetch(PDO::FETCH_ASSOC) as $campo => $valor) {
-        $sheet->setCellValue($coluna . '1', $campo);
-        $coluna++;
+    switch ($codigo_form) {
+        case 1:
+            $query = $query_1;
+            break;
+        case 29:
+            $query = $query_29;
+            break;
+        default:
+            $query = "SELECT * FROM ahpaceg";
     }
 
-    // Adicionar dados
-    $linha = 2;
-    while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
-        $coluna = 'A';
-        foreach ($row as $valor) {
-            $sheet->setCellValue($coluna . $linha, $valor);
-            $coluna++;
-        }
-        $linha++;
+    try {
+        if (!empty($query)) {
+            $resultado = $conexao->prepare($query);
+            $resultado->execute();
+        
+            // Criar uma instância do PhpSpreadsheet
+            $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+        
+            // Adicionar cabeçalhos
+            $coluna = 'A';
+            foreach ($resultado->fetch(PDO::FETCH_ASSOC) as $campo => $valor) {
+                $sheet->setCellValue($coluna . '1', $campo);
+                $coluna++;
+            }
+        
+            // Adicionar dados
+            $linha = 2;
+            while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                $coluna = 'A';
+                foreach ($row as $valor) {
+                    $sheet->setCellValue($coluna . $linha, $valor);
+                    $coluna++;
+                }
+                $linha++;
+            }
+        
+            // Data atual quando o arquivo foi gerado
+            $data = date('d-m-Y');
+        
+            // Nome que vai ficar salvo no arquivo
+            $nomeDownload = "exportacao_dia:" . $data . ".xlsx";
+        
+            // Definir cabeçalhos HTTP para download
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header("Content-Disposition: attachment;filename=$nomeDownload");
+            header('Cache-Control: max-age=0');
+        
+            // Nome do arquivo que fica salvo no sistema
+            $nomeArquivo = "exportacao_" . $data . ".xlsx";
+        
+            // Salvar o arquivo Excel
+            $writer = PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->save('php://output');
+            $writer->save("planilhas/" . $nomeArquivo);
+            
+        } 
+    } catch (PDOException $e) {
+        echo "<h3>Erro ao gerar planilha</h3>" . $e->getMessage();
     }
 
-    // Data atual quando o arquivo foi gerado
-    $data = date('d-m-Y');
+}
 
-    // Nome que vai ficar salvo no arquivo
-    $nomeDownload = "exportacao_dia:" . $data . ".xlsx";
+// Pasta que fica as exportações
+$directory = __DIR__ . "/planilhas";
 
-    // Definir cabeçalhos HTTP para download
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header("Content-Disposition: attachment;filename=$nomeDownload");
-    header('Cache-Control: max-age=0');
-
-    // Pasta que fica as exportações
-    $directory = __DIR__ . "/planilhas";
-
-    // Verificar se existe o diretorio
-    if (!file_exists($directory)) {
-        // Criar o diretorio se ele não existir
-        if (!mkdir($directory, 0777, true)) {
-            die('Erro ao criar a pasta de exportação!');
-        }
+// Verificar se existe o diretorio
+if (!file_exists($directory)) {
+    // Criar o diretorio se ele não existir
+    if (!mkdir($directory, 0777, true)) {
+        die('Erro ao criar a pasta de exportação!');
     }
-
-    // Nome do arquivo que fica salvo no sistema
-    $nomeArquivo = "exportacao_" . $data . ".xlsx";
-
-    // Salvar o arquivo Excel
-    $writer = PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-    $writer->save('php://output');
-    $writer->save("planilhas/" . $nomeArquivo);
-    
-} catch (PDOException $e) {
-    echo "<h3>Erro ao gerar planilha</h3>" . $e->getMessage();
 }
 
 ?>
