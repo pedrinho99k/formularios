@@ -106,17 +106,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $resultado = $conexao->prepare($query);
             $resultado->execute();
         
+            
             // Criar uma instância do PhpSpreadsheet
             $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-        
+
             // Adicionar cabeçalhos
             $coluna = 'A';
             foreach ($resultado->fetch(PDO::FETCH_ASSOC) as $campo => $valor) {
                 $sheet->setCellValue($coluna . '1', $campo);
                 $coluna++;
             }
-        
+
+            // Reiniciar a execução da consulta
+            $resultado->execute();
+
             // Adicionar dados
             $linha = 2;
             while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
@@ -127,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
                 }
                 $linha++;
             }
-        
+
             // Data atual quando o arquivo foi gerado
             $data = date('d-m-Y');
         
@@ -147,7 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $writer->save('php://output');
             $writer->save("planilhas/" . $nomeArquivo);
             
-        } 
+        }
+
     } catch (PDOException $e) {
         echo "<h3>Erro ao gerar planilha</h3>" . $e->getMessage();
     }

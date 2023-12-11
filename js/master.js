@@ -111,7 +111,7 @@ $(document).ready(function () {
                         codigo_form = parseInt(codigo_form);
 
                         // Funções
-                        var buscarRegistro = "VizualizarRegistroPorFormulario(" + codigo_form + ", '" + elemento['form_nome'] + "')";
+                        var buscarRegistro = "VizualizarRegistroPorFormulario(" + codigo_form + ", " + codigo_nome + ")";
                         var criarFormulario = "MontarFormulario("+codigo_form+")";
                         
                         console.log(codigo_form)
