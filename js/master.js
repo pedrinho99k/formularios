@@ -101,7 +101,7 @@ $(document).ready(function () {
             
                 if (result.length > 0) {
                     // adicionar o codigo dos novos formularios aqui
-                    var formularios_excel = [29, 1];
+                    var formularios_excel = [1,22,28,29,34,37];
 
                     result.forEach(function (elemento) {
                         var codigo_form = elemento['form_codigo'];
@@ -128,6 +128,7 @@ $(document).ready(function () {
                                             <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="${buscarRegistro}">Buscar Registros</label>
                                             ${showExcelButton ? `<form class="m-0" action="php/excel/testeExcel.php" method="post"><input type="hidden" name="codigo_form" value="${codigo_form}"><button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">${iconExcel} Exportar em Excel</button>
                                             </form>` : ''}
+                                            ${codigo_nome}
                                         </div>
                                     </div>
                             `;
