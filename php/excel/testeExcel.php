@@ -107,7 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $query = $query_29;
             break;
         default:
-            $query = "SELECT * FROM ahpaceg";
+            $query = "";
+            echo " <h2> Código do Formulário não encontrado </h2> ";
     }
 
     try {
