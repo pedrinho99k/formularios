@@ -147,7 +147,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                                     HR Formulários
                                 </a>
                                 <a class="list-group-item">
-                                    Versão 1.0.0
+                                    Versão 1.1.0
                                 </a>
                             </div>
                         </div>

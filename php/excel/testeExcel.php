@@ -10,10 +10,12 @@ require __DIR__ . '/../conexao/conexao.php';
 // Conectar ao banco de dados
 $conexao = Conectar();
 
-// Consultas SQL
 
+// Consultas SQL
 // INDICADOR DE ACOMPANHAMENTO FARMACOTERAPÊUTICO
-$query_29 = "SELECT codigo as 'REGISTRO', fr.reg_data_hora as 'INSERIDO', indicador_de__acompa_2 as 'Mês competência',
+$query_29 = "SELECT codigo as 'REGISTRO', fr.reg_data_hora as 'INSERIDO',
+usu.usu_nome as 'Usuário', usu.usu_login as 'Login',
+indicador_de__acompa_2 as 'Mês competência',
 indicador_de__acompa_3 as 'UNIDADE DE INTERNAÇÃO', indicador_de__acompa_4 as 'DATA',
 indicador_de__acompa_5 as 'OCUPAÇÃO DE LEITOS', indicador_de__acompa_6 as 'ADMISSÃO',
 indicador_de__acompa_7 as 'NÚMERO DE EVOLUÇÕES', indicador_de__acompa_8 as 'NUMERO TOTAL DE INTERVENÇÕES',
@@ -23,14 +25,17 @@ indicador_de__acompa_15 as 'OCORRÊNCIA DE REAÇÃO ADVERSA A MEDICAMENTOS', ind
 indicador_de__acompa_17 as 'REALIZADA VISITA - PACIENTE SEGURO', indicador_de__acompa_18 as 'REALIZADA TRANSIÇÃO DO CUIDADO',
 indicador_de__acompa_19 as 'ORIENTAÇÃO DE ALTA PARA DOMICILIO' 
 FROM indicador_de__acompa ia
-JOIN fm_registros fr ON fr.reg_codigo_registro  = ia.codigo 
+JOIN fm_registros fr ON fr.reg_codigo_registro  = ia.codigo
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 WHERE fr.reg_codigo_formulario='29' AND fr.reg_ativo <> 'EXCLUIDO'";
 
 
 // AHPACEG
 $query_1 = "SELECT codigo as 'Código',
-fm_registros.reg_data_hora as 'Data e Hora',
+fr.reg_data_hora as 'Data e Hora',
 ahpaceg_2 as 'Mês competência',
+usu.usu_nome as 'Usuário',
+usu.usu_login as 'Login',
 ahpaceg_3 as 'Número de casos de extravasamento de contrastes',
 ahpaceg_4 as 'Número de casos de flebite em pacientes que foram submetidos a punção venosa para infusão de contraste para realização de exame de imagem:',
 ahpaceg_5 as 'Número de exames de imagem repetidos na instituição de saúde:',
@@ -85,8 +90,12 @@ ahpaceg_53 as 'Total de quedas registradas:',
 ahpaceg_54 as 'Total de quedas registradas em pacientes internos e externos:',
 ahpaceg_55 as 'Número de saídas hospitalares de pacientes submetidos a procedimentos cirúrgicos. Saídas hospitalares são as altas mais óbitos mais transferências externas durante o mês:'
 FROM ahpaceg
-JOIN fm_registros ON ahpaceg.codigo = fm_registros.reg_codigo";
+JOIN fm_registros fr ON ahpaceg.codigo = fr.reg_codigo
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
+ORDER BY fr.reg_data_hora DESC";
 
+
+// Qualquer erro na query sql deixa o arquivo xlsx corrompido
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
     $codigo_form = $_POST['codigo_form'];
 
