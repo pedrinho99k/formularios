@@ -218,7 +218,7 @@ intervencao_farmaceutica_10 as 'OBSERVAÇÕES'
 FROM 
 intervencao_farmaceutica intfarm
 JOIN fm_registros fr ON fr.reg_codigo_registro = intfarm.codigo
-JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_registro
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 ORDER BY fr.reg_data_hora";
 
 
