@@ -126,9 +126,8 @@ $(document).ready(function () {
                                             <button type="button" class="btn btn-primary button-prin btn-sm" w-100 onclick="${criarFormulario}">Novo Registro</button>
                                             <input type="radio" class="btn-check"  name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
                                             <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="${buscarRegistro}">Buscar Registros</label>
-                                            ${showExcelButton ? `<form class="m-0" action="php/excel/testeExcel.php" method="post"><input type="hidden" name="codigo_form" value="${codigo_form}"><button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">${iconExcel} Exportar em Excel</button>
+                                            ${showExcelButton ? `<form class="m-0" action="php/excel/testeExcel.php" method="post"><input type="hidden" name="codigo_form" value="${codigo_form}"><input type="hidden" name="codigo_nome" value="${codigo_nome}"><button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">${iconExcel} Exportar em Excel</button>
                                             </form>` : ''}
-                                            ${codigo_nome}
                                         </div>
                                     </div>
                             `;
