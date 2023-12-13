@@ -68,7 +68,7 @@ ahpaceg
 JOIN fm_registros fr ON ahpaceg.codigo = fr.reg_codigo 
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario 
 ORDER BY 
-fr.reg_data_hora DESC";
+fr.reg_data_hora";
 
 
 // taxa_de_reconvocação - TAXA DE RECONVOCAÇÃO DE EXAMES
@@ -88,7 +88,7 @@ FROM taxa_de_reconvocação tr
 JOIN fm_registros fr ON fr.reg_codigo_registro = tr.codigo 
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario 
 WHERE fr.reg_codigo_formulario = '22' AND fr.reg_ativo = 'SIM' 
-ORDER BY fr.reg_data_hora DESC";
+ORDER BY fr.reg_data_hora";
 
 
 // análise_técnica_pres - ANÁLISE TÉCNICA DE PRESCRIÇÃO
@@ -126,7 +126,7 @@ FROM análise_técnica_pres at
 JOIN fm_registros fr ON fr.reg_codigo_registro = at.codigo
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 WHERE reg_codigo_formulario = '28'
-ORDER BY fr.reg_data_hora DESC";
+ORDER BY fr.reg_data_hora";
 
 
 
@@ -160,7 +160,7 @@ JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 WHERE 
 fr.reg_codigo_formulario = '29' 
 AND fr.reg_ativo <> 'EXCLUIDO'
-ORDER BY fr.reg_data_hora DESC";
+ORDER BY fr.reg_data_hora";
 
 
 
@@ -198,7 +198,7 @@ ronda_farmaceutica rf
 JOIN fm_registros fr ON fr.reg_codigo_registro = rf.codigo
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 WHERE fr.reg_codigo_formulario = '34'
-ORDER BY fr.reg_data_hora DESC";
+ORDER BY fr.reg_data_hora";
 
 
 // intervencao_farmaceutica
@@ -219,7 +219,7 @@ FROM
 intervencao_farmaceutica intfarm
 JOIN fm_registros fr ON fr.reg_codigo_registro = intfarm.codigo
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_registro
-ORDER BY fr.reg_data_hora DESC";
+ORDER BY fr.reg_data_hora";
 
 
 ?>
