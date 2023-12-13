@@ -196,7 +196,7 @@ ronda_farmaceutica_24 as 'DATA DA INSPEÇÃO:'
 FROM
 ronda_farmaceutica rf
 JOIN fm_registros fr ON fr.reg_codigo_registro = rf.codigo
-JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_registro
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 WHERE fr.reg_codigo_formulario = '34'
 ORDER BY fr.reg_data_hora DESC";
 
