@@ -6,7 +6,7 @@
 $query_1 = 
 "SELECT 
 codigo as 'REGISTRO', 
-fr.reg_data_hora as 'INSERIDO',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO',
 usu.usu_nome as 'USUÁRIO', 
 usu.usu_login as 'LOGIN', 
 ahpaceg_2 as 'Mês competência', 
@@ -75,7 +75,7 @@ fr.reg_data_hora DESC";
 $query_22 = 
 "SELECT 
 codigo as 'REGISTRO', 
-fr.reg_data_hora as 'INSERIDO', 
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO', 
 usu.usu_nome as 'USUÁRIO', 
 usu.usu_login as 'LOGIN', 
 taxa_de_reconvocação_2 as 'Data da Repetição', 
@@ -95,7 +95,7 @@ ORDER BY fr.reg_data_hora DESC";
 $query_28 = 
 "SELECT 
 codigo as 'REGISTRO',
-fr.reg_data_hora as 'DATA E HORA',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'DATA E HORA',
 usu.usu_nome as 'USUÁRIO',
 usu.usu_login as 'LOGIN',
 análise_técnica_pres_2 AS 'DATA DA REPETIÇÃO',
@@ -134,7 +134,7 @@ ORDER BY fr.reg_data_hora DESC";
 $query_29 =  
 "SELECT 
 codigo as 'REGISTRO', 
-fr.reg_data_hora as 'INSERIDO', 
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO', 
 usu.usu_nome as 'USUÁRIO', 
 usu.usu_login as 'LOGIN', 
 indicador_de__acompa_2 as 'MÊS COMPETÊNCIA', 
@@ -168,7 +168,7 @@ ORDER BY fr.reg_data_hora DESC";
 $query_34 = 
 "SELECT 
 codigo as 'REGISTRO',
-fr.reg_data_hora as 'INSERIDO',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO',
 usu.usu_nome as 'USUÁRIO',
 usu.usu_login as 'LOGIN',
 ronda_farmaceutica_2 as 'UNIDADE HOSPITALAR',
@@ -205,7 +205,7 @@ ORDER BY fr.reg_data_hora DESC";
 $query_37 = 
 "SELECT 
 codigo as 'REGISTRO',
-fr.reg_data_hora as 'INSERIDO',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO',
 usu.usu_nome as 'USUÁRIO',
 usu.usu_login as 'LOGIN',
 intervencao_farmaceutica_2 as 'DATA:',
