@@ -200,14 +200,14 @@ $(document).ready(function () {
                     <td>` + dataHora + `</td>
                     <td>
                         <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
                         <div id="button-mobile">
-                            <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
                     </td>`;
 
@@ -315,14 +315,14 @@ $("#num_linhas").click(function (e) {
                     <td>` + dataHora + `</td>
                     <td>
                         <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
                         <div id="button-mobile">
-                            <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
                     </td>`;
 
@@ -403,14 +403,14 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form) {
                 <td>` + dataHora + `</td>
                 <td>
                     <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                        <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                        <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                     </div>
                     <div id="button-mobile">
-                        <button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                        <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
+                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                        <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                     </div>
                 </td>`;
 
@@ -568,8 +568,8 @@ function PreencherTabelaRegistros() {
                <td>` + item['reg_codigo_registro'] + `</td>
                <td>` + item['reg_tipo'] + `</td>
                <td>` + dataHora + `</td>
-               <td><button type="button" class="btn btn-primary btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                   <button type="button" class="btn btn-danger btn-sm my-1" style="width: 100%;" onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+               <td><button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                   <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                </td>`;
 
             wrapper.appendChild(tr_element); //Insere no html
@@ -976,7 +976,7 @@ function PreencherTabelaVinculoFormularioPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['fp_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarVinculoPerfilFormulario(`+ elemento['fp_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-danger my-1 w-100"  value="NÃO" onclick="InativarAtivarVinculoPerfilFormulario(`+ elemento['fp_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -989,7 +989,7 @@ function PreencherTabelaVinculoFormularioPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['fp_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarVinculoPerfilFormulario(`+ elemento['fp_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-success my-1 w-100"  value="SIM" onclick="InativarAtivarVinculoPerfilFormulario(`+ elemento['fp_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1186,7 +1186,7 @@ function PreencherTabelaVinculoFormularioQuestao() {
                                 <td>`+ elemento['ques_descricao'] + `</td>
                                 <td>`+ elemento['fq_vinculo_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarVinculoQuestaoFormulario(`+ elemento['fq_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-danger my-1 w-100"  value="NÃO" onclick="InativarAtivarVinculoQuestaoFormulario(`+ elemento['fq_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1199,7 +1199,7 @@ function PreencherTabelaVinculoFormularioQuestao() {
                                 <td>`+ elemento['ques_descricao'] + `</td>
                                 <td>`+ elemento['fq_vinculo_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarVinculoQuestaoFormulario(`+ elemento['fq_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-success my-1 w-100"  value="SIM" onclick="InativarAtivarVinculoQuestaoFormulario(`+ elemento['fq_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1282,8 +1282,8 @@ function PreencherTabelaQuestoes() {
                                 <td>`+ elemento['ques_sigla'] + `</td>
                                 <td>`+ elemento['ques_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary my-1 w-100"  onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger my-1 w-100"  value="NÃO" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1296,8 +1296,8 @@ function PreencherTabelaQuestoes() {
                                 <td>`+ elemento['ques_sigla'] + `</td>
                                 <td>`+ elemento['ques_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary my-1 w-100"  onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1 w-100"  value="SIM" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1435,9 +1435,9 @@ function PreencherTabelaFormulario() {
                                 <td>`+ elemento['form_nome'] + `</td>
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger w-50 mx-1" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1449,9 +1449,9 @@ function PreencherTabelaFormulario() {
                                 <td>`+ elemento['form_nome'] + `</td>
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success w-50 mx-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1592,9 +1592,9 @@ function SalvarDadosFormulario() {
                 </div>
                 <div class="card-body text-center card-fim">
                     <h5 class="card-title">Deseja:</h5>
-                    <a href="`+ url + `" class="btn btn-primary mb-2" style="width: 100%;">Voltar ao Menu Principal</a>
+                    <a href="`+ url + `" class="btn btn-primary mb-2 w-100" >Voltar ao Menu Principal</a>
                     <button type="button" class="btn btn-primary button-prin mb-2" style="width:100%;" onclick="MontarFormulario(`+ cod_form + `)">Novo Registro</button>
-                    <a href="logout.php" class="btn btn-primary mb-2" style="width: 100%;">Sair do Sistema</a>
+                    <a href="logout.php" class="btn btn-primary mb-2 w-100" >Sair do Sistema</a>
                 </div>
             </div>
             </div>
@@ -1619,13 +1619,13 @@ function SalvarDadosFormulario() {
                 </div>
                 <div class="card-body text-center card-fim">
                     <h5 class="card-title">Entre em contato com setor de Tecnologia da Informação!</h5>
-                    <a href="`+ url + `" class="btn btn-primary mb-2" style="width: 100%;">Voltar ao Menu Principal</a>
-                    <a href="logout.php" class="btn btn-primary mb-2" style="width: 100%;">Sair do Sistema</a>
+                    <a href="`+ url + `" class="btn btn-primary mb-2 w-100" >Voltar ao Menu Principal</a>
+                    <a href="logout.php" class="btn btn-primary mb-2 w-100" >Sair do Sistema</a>
                 </div>
             </div>
             </div>
             `);
-                $(".card-fim").hide().delay('1000').toggle("slow");
+                $(".card-fim").hide().delay('900').toggle("slow");
                 $(".card").hide().delay('500').fadeIn("slow");
             }
         }, error: function () {
