@@ -86,9 +86,9 @@
                                 <td>` + elemento['ques_sigla'] + `</td>
                                 <td>` + elemento['ques_ativo'] + `</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
-                                        <button type="button" class="btn btn-danger my-1" style="width: 100%;" value="NÃO" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Inativar</button>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
+                                        <button type="button" class="btn btn-danger btn-sm" value="NÃO" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Inativar</button>
                                     </div>
                                 </td>
                             </tr>
@@ -101,9 +101,9 @@
                                 <td>` + elemento['ques_descricao'] + `</td>
                                 <td>` + elemento['ques_sigla'] + `</td>
                                 <td>` + elemento['ques_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 100%;" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 100%;" value="SIM" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-primary my-1" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1" value="SIM" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);

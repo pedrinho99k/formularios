@@ -65,12 +65,12 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin button-gestao" id="btn-cadastro-formularios" style="width: 100%;" onclick="FormCadastrarAvaliacao()">
+                                <button class="btn btn-primary button-prin button-admin button-gestao w-100" id="btn-cadastro-formularios" onclick="FormCadastrarAvaliacao()">
                                     Formulários de Avaliações
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormCadastraAvaliacaoQuestoes()">
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraAvaliacaoQuestoes()">
                                     Nova Avaliação
                                 </button>
                             </li>
@@ -83,26 +83,26 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin button-gestao" id="btn-cadastro-formularios" style="width: 100%;" onclick="FormCadastraFormulario()">
+                                <button class="btn btn-primary button-prin button-admin button-gestao w-100" id="btn-cadastro-formularios" onclick="FormCadastraFormulario()">
                                     Formulários
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormCadastraFormularioQuestoes()">
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraFormularioQuestoes()">
                                     Novo Fomulário
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormCadastraFormularioApartirFormularioCriado()">
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraFormularioApartirFormularioCriado()">
                                     Novo Formulário Apartir de Outro
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormCadastraQuestoes()">Questões</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraQuestoes()">Questões</button>
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormListarAhpaceg()">Relatório AHPACEG</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormListarAhpaceg()">Relatório AHPACEG</button>
                                 </button>
                             </li>
                         </ul>
@@ -114,10 +114,10 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-usuarios" style="width: 100%;" onclick="FormCadastraUsuario()">Usuários</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-usuarios" onclick="FormCadastraUsuario()">Usuários</button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-perfil" style="width: 100%;" onclick="FormCadastraPerfil()">Perfil</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-perfil" onclick="FormCadastraPerfil()">Perfil</button>
                             </li>
                         </ul>
 
@@ -129,10 +129,10 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormVincularPerfisFormulario()">Vinculo de Perfis/Formulários</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormVincularPerfisFormulario()">Vinculo de Perfis/Formulários</button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin" id="btn-cadastro-questoes" style="width: 100%;" onclick="FormVincularQuestoesFormulario()">Vinculo de Questões/Formulários</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormVincularQuestoesFormulario()">Vinculo de Questões/Formulários</button>
                             </li>
                         </ul>
                     </li>

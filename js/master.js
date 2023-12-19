@@ -114,7 +114,6 @@ $(document).ready(function () {
                         var buscarRegistro = "VizualizarRegistroPorFormulario("+codigo_form+" , '"+codigo_nome+"')";
                         var criarFormulario = "MontarFormulario("+codigo_form+")";
                         
-                        console.log(codigo_form)
                         var showExcelButton;
                         switch (elemento['form_ativo']) {
                             case "SIM":
@@ -1436,8 +1435,8 @@ function PreencherTabelaFormulario() {
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
                                 <td class="d-flex">
-                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger w-50 mx-1" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger w-50 mx-1 my-auto" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
