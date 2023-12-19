@@ -52,6 +52,7 @@ function ConverteDataHoraFormtBR(data) {
 
 //Verificação de perfil
 let cod_perfil = $("#cod_perfil_login").text();
+var nivel_perfil = $("#nivelPerfil").text();
 //Inicio
 $(document).ready(function () {
     //Esconde linha de vizualição de registros
@@ -249,11 +250,14 @@ $(document).ready(function () {
 
     setInterval(() => {
         
-        if (cod_perfil != 1) {
+        if (nivel_perfil == 2) {
+            $("#usuarios").attr("disabled", true);
+            $("#usuarios").addClass("d-none");
+        }
+
+        if (nivel_perfil == 3) {
             $(".button-admin").attr("disabled", true);
             $(".button-admin").addClass("d-none");
-        } else {
-
         }
 
     }, 10);
