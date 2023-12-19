@@ -186,6 +186,14 @@ if ((isset($_SESSION['usuarioNome']))) {
                                         </div>
                                     </div>
                                 </li>
+                                <li class="dropdown-item">
+                                    <div class="row">
+                                        <label for="staticEmail" class="col-2">Nivel:</label>
+                                        <div class="col-10">
+                                            <?php $nivel = $_SESSION['nivelPerfil'];$result=($nivel==1)?"Avançado":(($nivel==2)?"Intermédiario":"Básico");echo $result; ?>
+                                        </div>
+                                    </div>
+                                </li>
 
                                 <li class="dropdown-item d-none" id="cod_perfil_login"><?php echo $_SESSION['codPerfil']; ?></li>
                                 <li class="dropdown-item d-none" id="cod_usuario_login"><?php echo $_SESSION['usuarioId']; ?></li>
