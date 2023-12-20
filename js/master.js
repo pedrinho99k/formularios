@@ -52,7 +52,10 @@ function ConverteDataHoraFormtBR(data) {
 
 //Verificação de perfil
 let cod_perfil = $("#cod_perfil_login").text();
-var nivel_perfil = $("#nivelPerfil").text();
+var nivel_perfil = document.querySelector('span#nivelPerfil');
+nivel_perfil = nivel_perfil.textContent || nivel_perfil.innerText;
+const per_nivel = nivel_perfil==1?"Avançado":nivel_perfil==2?"Intermédiario":"Básico";
+
 //Inicio
 $(document).ready(function () {
     //Esconde linha de vizualição de registros
@@ -1676,19 +1679,23 @@ function PreencherTabelaUsuario() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
+                var resultado_nivel = elemento['per_nivel'];
+                resultado_nivel = resultado_nivel==1?"Avançado":resultado_nivel==2?"Intermédiario":"Básico";
+
                 switch (elemento['usu_ativo']) {
                     case 'SIM':
                         $("#corpo-tabela").append(`
                             <tr>
                                 <th>`+ elemento['usu_codigo'] + `</th>
+                                <td>`+ resultado_nivel + `</td>
                                 <td>`+ elemento['usu_login'] + `</td>
                                 <td>`+ elemento['usu_nome'] + `</td>
                                 <td>`+ elemento['usu_email'] + `</td>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger mx-1 w-50 flex-fill"  value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1697,14 +1704,15 @@ function PreencherTabelaUsuario() {
                         $("#corpo-tabela").append(`
                             <tr>
                                 <th>`+ elemento['usu_codigo'] + `</th>
+                                <td>`+ resultado_nivel + `</td>
                                 <td>`+ elemento['usu_login'] + `</td>
                                 <td>`+ elemento['usu_nome'] + `</td>
                                 <td>`+ elemento['usu_email'] + `</td>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success mx-1 w-50 flex-fill"  value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1887,8 +1895,8 @@ function PreencherTabelaPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary my-1 w-50"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger my-1 w-50"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1900,8 +1908,8 @@ function PreencherTabelaPerfil() {
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary my-1 w-50"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success my-1 w-50"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);

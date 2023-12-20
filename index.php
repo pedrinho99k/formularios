@@ -190,9 +190,8 @@ if ((isset($_SESSION['usuarioNome']))) {
                                     <div class="row">
                                         <label for="staticEmail" class="col-2">Nivel:</label>
                                         <div class="col-10">
-                                            <?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
-                                        </div>
-                                        <div id="nivelPerfil"><?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?></div>
+                                            <span id="nivelPerfil"><?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?></span> - <?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
+                                        </div> 
                                     </div>
                                 </li>
 
