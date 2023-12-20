@@ -236,6 +236,8 @@ FROM
 adesao_a_visita__pac ade
 JOIN fm_registros fr ON fr.reg_codigo_registro = ade.codigo
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
+WHERE fr.reg_codigo_formulario = 44
+AND fr.reg_ativo <> 'EXCLUIDO'
 ORDER BY fr.reg_data_hora";
 
 ?>
