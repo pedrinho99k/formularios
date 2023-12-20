@@ -574,8 +574,9 @@ function PreencherTabelaRegistros() {
                <td>` + item['reg_codigo_registro'] + `</td>
                <td>` + item['reg_tipo'] + `</td>
                <td>` + dataHora + `</td>
-               <td><button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                   <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+               <td>
+                    <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                    <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                </td>`;
 
             wrapper.appendChild(tr_element); //Insere no html
@@ -1894,9 +1895,9 @@ function PreencherTabelaPerfil() {
                                 <th>`+ elemento['per_codigo'] + `</th>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1 w-50"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1 w-50"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger mx-1 w-50 flex-fill"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1907,9 +1908,9 @@ function PreencherTabelaPerfil() {
                                 <th>`+ elemento['per_codigo'] + `</th>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['per_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1 w-50"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1 w-50"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-25 flex-fill"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success mx-1 w-25 flex-fill"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
