@@ -101,7 +101,7 @@ $(document).ready(function () {
             
                 if (result.length > 0) {
                     // adicionar o codigo dos novos formularios aqui
-                    var formularios_excel = [1,22,28,29,34,37];
+                    var formularios_excel = [1,22,28,29,34,37,44];
 
                     result.forEach(function (elemento) {
                         var codigo_form = elemento['form_codigo'];

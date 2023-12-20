@@ -46,6 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $query = $query_37;
             $nomeDoArquivo = $codigo_nome;
             break;
+        case 44:
+            $query = $query_44;
+            $nomeDoArquivo = $codigo_nome;
+            break;
         default:
             $query = "";
             echo " <h2> Código do Formulário não encontrado </h2> ";

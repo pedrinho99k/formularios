@@ -222,4 +222,20 @@ JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
 ORDER BY fr.reg_data_hora";
 
 
+// adesao_a_visita__pac - ADESAO A VISITA PACIENTE/SEGURO
+$query_44 =
+"SELECT
+codigo as 'REGISTRO',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO',
+usu.usu_nome as 'USUÁRIO',
+usu.usu_login as 'LOGIN',
+adesao_a_visita__pac_3 as 'Categoria Profissional',
+adesao_a_visita__pac_4 as 'Mês de Referencia',
+adesao_a_visita__pac_5 as 'Quantidade'
+FROM
+adesao_a_visita__pac ade
+JOIN fm_registros fr ON fr.reg_codigo_registro = ade.codigo
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
+ORDER BY fr.reg_data_hora";
+
 ?>
