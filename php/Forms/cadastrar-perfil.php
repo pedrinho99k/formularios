@@ -13,9 +13,7 @@
                     <input type="text" class="form-control" id="desc_perfil" name="desc_perfil">
                 </div>
                 <div class="col-md-12">
-                <!-- Executa a mesma function que tem no formularios quando a tela carregar -->
-                <script> window.onload = PreencherSelectFormularios(); </script>
-                    <label for="mainSelect">Escolha:</label>
+                    <label for="mainSelect">Escolha:</label><script> window.onload = PreencherSelectFormulariosAtivos(); </script>
                     <select class="form-select" id="cod_formulario" name="cod_formulario">
                         <option selected>Selecione um Formulário</option>
                     </select>
@@ -26,13 +24,14 @@
                 </div>
             </form>
             <div id="tabela">
-                <table class="table">
+            <table class="table table-condensed">
                     <thead>
                         <tr>
                             <th scope="col">Cód.</th>
-                            <th scope="col">Perfil</th>
+                            <th scope="col">Nível</th>
+                            <th scope="col" class="w-75">Perfil</th>
                             <th scope="col">Ativo</th>
-                            <th scope="col" class="w-25">Opções</th>
+                            <th scope="col">Opções</th>
                         </tr>
                     </thead>
                     <tbody id="corpo-tabela">

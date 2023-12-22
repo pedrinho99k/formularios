@@ -1110,7 +1110,7 @@ function PreencherSelectFormularios() {
                 switch (elemento['form_ativo']) {
                     case 'SIM':
                         $("#cod_formulario").append(`
-                            <option value="`+ elemento['form_codigo'] + `">` + elemento['form_nome'] + `</option>
+                            <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
                         `);
                         break;
                 }
@@ -1120,6 +1120,20 @@ function PreencherSelectFormularios() {
             console.log("Error");
         }
     });
+}
+
+function PreencherSelectFormulariosAtivos() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formulario-ativos.php",
+        dataType: "JSON",
+        success: function (result) {
+            result.forEach(function (elemento) {
+                $("#cod_formulario").append(`
+                    <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
+                `)
+            })
+        }
+    })
 }
 
 
@@ -1888,16 +1902,20 @@ function PreencherTabelaPerfil() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
-                switch (elemento['per_ativo']) {
+                var resultado_nivel = elemento['per_nivel'];
+                resultado_nivel = resultado_nivel==1?"Avançado":resultado_nivel==2?"Intermédiario":"Básico";
+
+                switch (elemento['per_ativo']) {                    
                     case 'SIM':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['per_codigo'] + `</th>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['per_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger mx-1 w-50 flex-fill"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
+                                <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
+                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle">${elemento['per_descricao']}</td>
+                                <td class="align-middle">${elemento['per_ativo']}</td>
+                                <td class="align-middle d-flex">
+                                    <button type="button" class="btn btn-primary flex-fill mx-1"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger flex-fill"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1905,12 +1923,13 @@ function PreencherTabelaPerfil() {
                     case 'NÃO':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['per_codigo'] + `</th>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['per_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary mx-1 w-25 flex-fill"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success mx-1 w-25 flex-fill"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
+                                <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
+                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle">${elemento['per_descricao']}</td>
+                                <td class="align-middle">${elemento['per_ativo']}</td>
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-primary flex-fill mx-1"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success flex-fill"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
