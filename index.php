@@ -89,7 +89,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                             </li>
                             <li class="dropdown-item">
                                 <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraFormularioQuestoes()">
-                                    Novo Fomulário
+                                    Novo Formulário
                                 </button>
                             </li>
                             <li class="dropdown-item">
@@ -190,7 +190,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                                     <div class="row">
                                         <label for="staticEmail" class="col-2">Nivel:</label>
                                         <div class="col-10">
-                                            <span id="nivelPerfil"><?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?></span> - <?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
+                                            <span id="nivelPerfil" data-nivel="<?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?>"><?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
                                         </div> 
                                     </div>
                                 </li>

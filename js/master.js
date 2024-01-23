@@ -52,9 +52,15 @@ function ConverteDataHoraFormtBR(data) {
 
 //Verificação de perfil
 let cod_perfil = $("#cod_perfil_login").text();
-var nivel_perfil = document.querySelector('span#nivelPerfil');
-nivel_perfil = nivel_perfil.textContent || nivel_perfil.innerText;
-const per_nivel = nivel_perfil==1?"Avançado":nivel_perfil==2?"Intermédiario":"Básico";
+
+let nivel_perfil_element = document.querySelector('span#nivelPerfil');
+let nivel_perfil;
+
+if (nivel_perfil_element != null) {
+    nivel_perfil = nivel_perfil_element.dataset.nivel;
+}
+
+console.log(nivel_perfil);
 
 //Inicio
 $(document).ready(function () {
@@ -72,8 +78,6 @@ $(document).ready(function () {
         $("#btn-conta").attr('aria-expanded', false);
         $("#drop-conta").removeAttr('data-bs-popper');
     });
-
-
 
 
 
