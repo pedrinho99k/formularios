@@ -905,7 +905,7 @@ function FormVincularPerfisFormulario() {
         url: url + "php/Forms/cadastrar-formularios-perfil.php",
         success: function (result) {
             $("#form").html(result);
-            PreencherSelectFormularios();
+            PreencherSelectFormulariosPerfil();
             PreencherSelectPerfis();
             PreencherTabelaVinculoFormularioPerfil();
             $("#close-canvas").trigger("click");
@@ -1063,7 +1063,7 @@ function FormVincularQuestoesFormulario() {
         url: url + "php/Forms/cadastrar-formularios-questoes.php",
         success: function (result) {
             $("#form").html(result);
-            PreencherSelectFormularios();
+            PreencherSelectFormulariosPerfil();
             PreencherSelectQuestoes();
             PreencherTabelaVinculoFormularioQuestao();
             $("#close-canvas").trigger("click");
@@ -1107,6 +1107,27 @@ function PreencherSelectQuestoes() {
 function PreencherSelectFormularios() {
     $.ajax({
         url: url + "php/Funcoes/buscar-formulario-json.php",
+        dataType: "JSON",
+        success: function (result) {
+            result.forEach(function (elemento) {
+                switch (elemento['form_ativo']) {
+                    case 'SIM':
+                        $("#cod_formulario").append(`
+                            <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
+                        `);
+                        break;
+                }
+            });
+
+        }, error: function () {
+            console.log("Error");
+        }
+    });
+}
+
+function PreencherSelectFormulariosPerfil() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formularios-perfis.php",
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
