@@ -5,19 +5,19 @@
             <h4>Vincular Perfis com Formulários</h4>
             <form class="row g-3">
                 <div class="col-md-12">
-                    <label for="cod_formulario" class="form-label">Cód. Formulário</label>
+                    <label for="cod_formulario" class="form-label">Cód. do Formulário</label>
                     <select class="form-select" id="cod_formulario" name="cod_formulario">
 
                     </select>
                 </div>
                 <div class="col-md-12">
-                    <label for="cod_perfil" class="form-label">Cód. Perfil</label>
+                    <label for="cod_perfil" class="form-label">Cód. do Perfil</label>
                     <select class="form-select" id="cod_perfil" name="cod_perfil">
 
                     </select>
                 </div>
                 <div class="col-md-12 my-2">
-                    <button type="button" class="btn btn-primary" onclick="SalvarVinculoFormularioPerfil()">Salvar</button>
+                    <button type="button" class="btn btn-primary" onclick="SalvarVinculoFormularioPerfil()">Vincular</button>
                 </div>
                 <div class="col-md-12" id="retorno" >
                 </div>

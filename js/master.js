@@ -60,7 +60,6 @@ if (nivel_perfil_element != null) {
     nivel_perfil = nivel_perfil_element.dataset.nivel;
 }
 
-console.log(nivel_perfil);
 
 //Inicio
 $(document).ready(function () {
