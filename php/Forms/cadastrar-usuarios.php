@@ -36,6 +36,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Cód.</th>
+                        <th scope="col">Nível</th>
                         <th scope="col">Login</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>

@@ -89,7 +89,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                             </li>
                             <li class="dropdown-item">
                                 <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraFormularioQuestoes()">
-                                    Novo Fomulário
+                                    Novo Formulário
                                 </button>
                             </li>
                             <li class="dropdown-item">
@@ -109,7 +109,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                     </li>
                     <!-- Usuários -->
                     <li class="nav-item dropdown button-admin">
-                        <a class="nav-link dropdown-toggle" id="navbarLandings" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="usuarios" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Usuários
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -184,6 +184,14 @@ if ((isset($_SESSION['usuarioNome']))) {
                                         <div class="col-10">
                                             <?php echo $_SESSION['descPerfil']; ?>
                                         </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item">
+                                    <div class="row">
+                                        <label for="staticEmail" class="col-2">Nivel:</label>
+                                        <div class="col-10">
+                                            <span id="nivelPerfil" data-nivel="<?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?>"><?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
+                                        </div> 
                                     </div>
                                 </li>
 

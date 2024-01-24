@@ -12,16 +12,24 @@
                     <label for="desc_perfil" class="form-label">Descrição do Perfil</label>
                     <input type="text" class="form-control" id="desc_perfil" name="desc_perfil">
                 </div>
+                <div class="col-md-12">
+                    <label for="mainSelect">Escolha:</label><script> window.onload = PreencherSelectFormulariosAtivos(); </script>
+                    <select class="form-select" id="cod_formulario" name="cod_formulario">
+                        <option selected>Selecione um Formulário</option>
+                    </select>
+                </div>
+
                 <div class="col-md-12 my-2">
                     <button type="button" class="btn btn-primary" onclick="SalvarPerfil()">Salvar</button>
                 </div>
             </form>
             <div id="tabela">
-                <table class="table">
+            <table class="table table-condensed">
                     <thead>
                         <tr>
                             <th scope="col">Cód.</th>
-                            <th scope="col">Perfil</th>
+                            <th scope="col">Nível</th>
+                            <th scope="col" class="w-75">Perfil</th>
                             <th scope="col">Ativo</th>
                             <th scope="col">Opções</th>
                         </tr>
@@ -34,3 +42,4 @@
         </div>
     </div>
 </form>
+

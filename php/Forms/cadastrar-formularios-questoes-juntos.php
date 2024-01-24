@@ -205,11 +205,13 @@
 
     function SalvarFormularioQuestao() {
         let sigla_formulario = $("#sigla_formulario").val();
+        let cod_formulario = $("#cod_formulario").val();
         $.ajax({
             method: "POST",
             url: url + "php/Funcoes/criar-tabela-bd.php",
             data: {
-                sigla_formulario: sigla_formulario
+                sigla_formulario: sigla_formulario,
+                cod_formulario: cod_formulario
             },
             success: function(result) {
                 $("#questao").slideUp();

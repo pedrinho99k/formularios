@@ -52,6 +52,15 @@ function ConverteDataHoraFormtBR(data) {
 
 //Verificação de perfil
 let cod_perfil = $("#cod_perfil_login").text();
+
+let nivel_perfil_element = document.querySelector('span#nivelPerfil');
+let nivel_perfil;
+
+if (nivel_perfil_element != null) {
+    nivel_perfil = nivel_perfil_element.dataset.nivel;
+}
+
+
 //Inicio
 $(document).ready(function () {
     //Esconde linha de vizualição de registros
@@ -68,8 +77,6 @@ $(document).ready(function () {
         $("#btn-conta").attr('aria-expanded', false);
         $("#drop-conta").removeAttr('data-bs-popper');
     });
-
-
 
 
 
@@ -249,11 +256,14 @@ $(document).ready(function () {
 
     setInterval(() => {
         
-        if (cod_perfil != 1) {
+        if (nivel_perfil == 2) {
+            $("#usuarios").attr("disabled", true);
+            $("#usuarios").addClass("d-none");
+        }
+
+        if (nivel_perfil == 3) {
             $(".button-admin").attr("disabled", true);
             $(".button-admin").addClass("d-none");
-        } else {
-
         }
 
     }, 10);
@@ -567,8 +577,9 @@ function PreencherTabelaRegistros() {
                <td>` + item['reg_codigo_registro'] + `</td>
                <td>` + item['reg_tipo'] + `</td>
                <td>` + dataHora + `</td>
-               <td><button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                   <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+               <td>
+                    <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                    <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                </td>`;
 
             wrapper.appendChild(tr_element); //Insere no html
@@ -894,7 +905,7 @@ function FormVincularPerfisFormulario() {
         url: url + "php/Forms/cadastrar-formularios-perfil.php",
         success: function (result) {
             $("#form").html(result);
-            PreencherSelectFormularios();
+            PreencherSelectFormulariosPerfil();
             PreencherSelectPerfis();
             PreencherTabelaVinculoFormularioPerfil();
             $("#close-canvas").trigger("click");
@@ -1052,7 +1063,7 @@ function FormVincularQuestoesFormulario() {
         url: url + "php/Forms/cadastrar-formularios-questoes.php",
         success: function (result) {
             $("#form").html(result);
-            PreencherSelectFormularios();
+            PreencherSelectFormulariosPerfil();
             PreencherSelectQuestoes();
             PreencherTabelaVinculoFormularioQuestao();
             $("#close-canvas").trigger("click");
@@ -1102,7 +1113,7 @@ function PreencherSelectFormularios() {
                 switch (elemento['form_ativo']) {
                     case 'SIM':
                         $("#cod_formulario").append(`
-                            <option value="`+ elemento['form_codigo'] + `">` + elemento['form_nome'] + `</option>
+                            <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
                         `);
                         break;
                 }
@@ -1112,6 +1123,41 @@ function PreencherSelectFormularios() {
             console.log("Error");
         }
     });
+}
+
+function PreencherSelectFormulariosPerfil() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formularios-perfis.php",
+        dataType: "JSON",
+        success: function (result) {
+            result.forEach(function (elemento) {
+                switch (elemento['form_ativo']) {
+                    case 'SIM':
+                        $("#cod_formulario").append(`
+                            <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
+                        `);
+                        break;
+                }
+            });
+
+        }, error: function () {
+            console.log("Error");
+        }
+    });
+}
+
+function PreencherSelectFormulariosAtivos() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formulario-ativos.php",
+        dataType: "JSON",
+        success: function (result) {
+            result.forEach(function (elemento) {
+                $("#cod_formulario").append(`
+                    <option value="${elemento['form_codigo']}">${elemento['form_nome']}</option>
+                `)
+            })
+        }
+    })
 }
 
 
@@ -1672,19 +1718,23 @@ function PreencherTabelaUsuario() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
+                var resultado_nivel = elemento['per_nivel'];
+                resultado_nivel = resultado_nivel==1?"Avançado":resultado_nivel==2?"Intermédiario":"Básico";
+
                 switch (elemento['usu_ativo']) {
                     case 'SIM':
                         $("#corpo-tabela").append(`
                             <tr>
                                 <th>`+ elemento['usu_codigo'] + `</th>
+                                <td>`+ resultado_nivel + `</td>
                                 <td>`+ elemento['usu_login'] + `</td>
                                 <td>`+ elemento['usu_nome'] + `</td>
                                 <td>`+ elemento['usu_email'] + `</td>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger mx-1 w-50 flex-fill"  value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1693,14 +1743,15 @@ function PreencherTabelaUsuario() {
                         $("#corpo-tabela").append(`
                             <tr>
                                 <th>`+ elemento['usu_codigo'] + `</th>
+                                <td>`+ resultado_nivel + `</td>
                                 <td>`+ elemento['usu_login'] + `</td>
                                 <td>`+ elemento['usu_nome'] + `</td>
                                 <td>`+ elemento['usu_email'] + `</td>
                                 <td>`+ elemento['per_descricao'] + `</td>
                                 <td>`+ elemento['usu_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success mx-1 w-50 flex-fill"  value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1875,16 +1926,20 @@ function PreencherTabelaPerfil() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
-                switch (elemento['per_ativo']) {
+                var resultado_nivel = elemento['per_nivel'];
+                resultado_nivel = resultado_nivel==1?"Avançado":resultado_nivel==2?"Intermédiario":"Básico";
+
+                switch (elemento['per_ativo']) {                    
                     case 'SIM':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['per_codigo'] + `</th>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['per_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1" style="width: 50%;" value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
+                                <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
+                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle">${elemento['per_descricao']}</td>
+                                <td class="align-middle">${elemento['per_ativo']}</td>
+                                <td class="align-middle d-flex">
+                                    <button type="button" class="btn btn-primary flex-fill mx-1"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger flex-fill"  value="NÃO" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Inativar</button>
                                 </td>
                             </tr>
                         `);
@@ -1892,12 +1947,13 @@ function PreencherTabelaPerfil() {
                     case 'NÃO':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['per_codigo'] + `</th>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['per_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1" style="width: 50%;" onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" style="width: 50%;" value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
+                                <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
+                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle">${elemento['per_descricao']}</td>
+                                <td class="align-middle">${elemento['per_ativo']}</td>
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-primary flex-fill mx-1"  onclick="SelecionarPerfilAlterar(`+ elemento['per_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success flex-fill"  value="SIM" onclick="InativarAtivarPerfil(`+ elemento['per_codigo'] + `,this.value)">Ativar</button>
                                 </td>
                             </tr>
                         `);

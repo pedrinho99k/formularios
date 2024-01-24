@@ -83,6 +83,7 @@ if ((isset($_POST['login'])) && (isset($_POST['senha']))) {
 						$_SESSION['usuarioId'] = $retorno[$i]['usu_codigo'];
 						$_SESSION['usuarioAtivo'] = $retorno[$i]['usu_ativo'];
 						$_SESSION['codPerfil'] = $retorno[$i]['usu_codigo_perfil'];
+						$_SESSION['nivelPerfil'] = $retorno[$i]['per_nivel'];
 						$_SESSION['descPerfil'] = $retorno[$i]['per_descricao'];
 						header("Location: index.php");
 					}
@@ -103,6 +104,7 @@ if ((isset($_POST['login'])) && (isset($_POST['senha']))) {
 					$_SESSION['usuarioId'] = $retorno[$i]['usu_codigo'];
 					$_SESSION['usuarioAtivo'] = $retorno[$i]['usu_ativo'];
 					$_SESSION['codPerfil'] = $retorno[$i]['usu_codigo_perfil'];
+					$_SESSION['nivelPerfil'] = $retorno[$i]['per_nivel'];
 					$_SESSION['descPerfil'] = $retorno[$i]['per_descricao'];
 					header("Location: index.php");
 				} else {
