@@ -77,6 +77,12 @@
                                 Opções
                             </label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radios-tipo-questao" id="tipo_checkbox" value="Checkbox">
+                            <label class="form-check-label" for="tipo_checkbox">
+                                Checkbox
+                            </label>
+                        </div>
                     </div>
                     <div class="col-md-12" id="secao-opcoes">
                         <label for="valor_opcao" class="form-label">Valor Opção</label>
@@ -126,21 +132,24 @@
     $("#noti-descricao").hide();
     $("#noti-sigla").hide();
     $("#questao").hide();
-    let tipo;
     let opcoes = [];
+    let tipo = $('input[name="radios-tipo-questao"]:checked').val();
+
     $('input[type="radio"]').click(function() {
         tipo = $('input[name="radios-tipo-questao"]:checked').val();
-        console.log(tipo);
         switch (tipo) {
             case 'Option':
                 $("#secao-opcoes").slideDown();
-                break;
+            break;
             case 'Text':
                 $("#secao-opcoes").slideUp();
-                break;
+            break;
+            case 'Checkbox':
+                $("#secao-opcoes").slideDown();
+            break;
         }
     });
-    let html_select = "";
+    // let html_select = "";
     let i = 0;
     $("#button-add-opcao").click(function() {
         AddOpcao();
@@ -260,31 +269,55 @@
 
     function HtmlVisualizar() {
 
-        for (i = 0; i < opcoes.length; i++) {
-            html_select += '<option value="' + opcoes[i] + '">' + opcoes[i] + '</option>';
+        let html_select = "";
+
+        tipo = $('input[name="radios-tipo-questao"]:checked').val();
+
+        switch (tipo) {
+            case 'Option':
+                for (i = 0; i < opcoes.length; i++) {
+                    html_select += '<option value="' + opcoes[i] + '">' + opcoes[i] + '</option>';
+                }
+            break;
+            case 'Checkbox':
+                for (i = 0; i < opcoes.length; i++) {
+                    html_select += `
+                        <input type="checkbox" class="form-check-input" value="${opcoes[i]}">
+                        <label class="form-check-label">${opcoes[i]}</label>
+                    `;
+                }
+            break;
         }
 
         let desc_questao = $("#desc_questao").val();
         let sigla_questao = $("#sigla_formulario").val() + '_' + posicao;
         $("#sigla_questao").val(sigla_questao);
-        let tipo = $('input[name="radios-tipo-questao"]:checked').val();
         switch (tipo) {
             case 'Text':
                 html_questao =
                     `<div class="col-md-12">
-                        <label for="` + sigla_questao + `" class="form-label">` + desc_questao + `</label>
-                        <input type="text" class="form-control" id="` + sigla_questao + `" name="` + sigla_questao + `" autocomplete="off">
+                        <label for="${sigla_questao}" class="form-label">${desc_questao}</label>
+                        <input type="text" class="form-control" id="${sigla_questao}" name="${sigla_questao}" autocomplete="off">
                     </div>
                 `;
-                break;
+            break;
             case 'Option':
                 html_questao =
                     `<div class="col-md-12">
-                        <label for="` + sigla_questao + `" class="form-label">` + desc_questao + `</label>
-                        <select class="form-select" id="` + sigla_questao + `" name="` + sigla_questao + `">` + html_select + `</select>
+                        <label for="${sigla_questao}" class="form-label">${desc_questao}</label>
+                        <select class="form-select" id="${sigla_questao}" name="${sigla_questao}">${html_select}</select>
                     </div>
                 `;
-                break;
+            break;
+            case 'Checkbox':
+                html_questao = `
+                    <div class="col-md-12" id="${sigla_questao}">
+
+                        <label for="${sigla_questao}" class="form-check-label">${desc_questao}</label><br>
+                        ${html_select}
+                    </div>
+                `;
+            break;
         }
         $("#html_questao").val(html_questao);
         return true;
