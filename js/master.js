@@ -1600,12 +1600,39 @@ function LimparCamposCadastroFormulario() {
 
 function SalvarDadosFormulario() {
 
+    var valoresAgrupados = {};
+
+    $("#ques input[type='checkbox']:checked").each(function() {
+        var idDiv = $(this).closest('div').attr('id');
+        var valor = $(this).val();
+
+        if (valoresAgrupados.hasOwnProperty(idDiv)) {
+            valoresAgrupados[idDiv].push(valor);
+        } else {
+            valoresAgrupados[idDiv] = [valor];
+        }
+    });
+
+
     var cod_form = $("#cod_form").text();
     var sigla_form = $("#sigla_form").text();
     var cod_usuario = $("#cod_usuario_login").text();
     var codigo = $("#codigo").val();
     var cod_registro = $("#cod_registro").val();
     var dados = $("form").serializeArray();
+
+
+    // Para adicionar os valores junto com a var = dados
+    $.each(valoresAgrupados, function(key, value) {
+        dados.push({ name:key, value:value.join(", ") })
+    });
+
+    // console.log(cod_form, 'COD FORM');
+    // console.log(sigla_form, 'SIGLA FORM');
+    // console.log(cod_usuario, 'COD USUARIO');
+    // console.log(codigo, 'CODIGO');
+    // console.log(cod_registro, 'COD REGISTRO');
+    // console.log(dados ,'DADOS');
 
     $.ajax({
         method: "POST",
