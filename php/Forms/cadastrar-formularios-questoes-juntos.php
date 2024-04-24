@@ -267,6 +267,23 @@
     let posicao = 2; // Inicia no 2, pois a posição 1 é a questão codigo
     let html_questao;
 
+    function abreviacao(desc_questao) {
+        if (desc_questao.indexOf(' ') === -1) {
+            return desc_questao; // Descricao sem abreviacao
+        }
+
+        var words = desc_questao.split(' ');
+        var abbWords = [];
+
+        for (var i = 0; i < words.length; i++) {
+            abbWords.push(words[i].substr(0, 3));
+        }
+
+        var abreviacao = abbWords.join('_');
+        return abreviacao;
+    }
+
+
     function HtmlVisualizar() {
 
         let html_select = "";
@@ -290,8 +307,9 @@
         }
 
         let desc_questao = $("#desc_questao").val();
-        let sigla_questao = $("#sigla_formulario").val() + '_' + posicao;
+        let sigla_questao = abreviacao(desc_questao);
         $("#sigla_questao").val(sigla_questao);
+        console.log(sigla_questao);
         switch (tipo) {
             case 'Text':
                 html_questao =
