@@ -83,6 +83,12 @@
                                 Checkbox
                             </label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radios-tipo-questao" id="tipo_textarea" value="Textarea">
+                            <label class="form-check-label" for="tipo_textarea">
+                                Campo Texto
+                            </label>
+                        </div>
                     </div>
                     <div class="col-md-12" id="secao-opcoes">
                         <label for="valor_opcao" class="form-label">Valor Opção</label>
@@ -107,7 +113,7 @@
                     <div class="col-md-12">
                         <label for="html_questao " class="form-label">HTML da Questão</label>
                         <button type="button" class="btn btn-info btn-sm my-1" onclick="HtmlVisualizar()">Prefixo</button>
-                        <textarea class="form-control" id="html_questao" name="html_questao" rows="10"></textarea>
+                        <textarea class="form-control" id="html_questao" name="html_questao" rows="10" disabled></textarea>
                     </div>
                     <div class="col-md-12">
                         <div class="alert alert-warning text-center" role="alert" id="noti-descricao">Insira a descrição da questão!</div>
@@ -146,6 +152,9 @@
             break;
             case 'Checkbox':
                 $("#secao-opcoes").slideDown();
+            break;
+            case 'Textarea':
+                $("#secao-opcoes").slideUp();
             break;
         }
     });
@@ -312,16 +321,16 @@
         console.log(sigla_questao);
         switch (tipo) {
             case 'Text':
-                html_questao =
-                    `<div class="col-md-12">
+                html_questao = `
+                    <div class="col-md-12">
                         <label for="${sigla_questao}" class="form-label">${desc_questao}</label>
                         <input type="text" class="form-control" id="${sigla_questao}" name="${sigla_questao}" autocomplete="off">
                     </div>
                 `;
             break;
             case 'Option':
-                html_questao =
-                    `<div class="col-md-12">
+                html_questao = `
+                    <div class="col-md-12">
                         <label for="${sigla_questao}" class="form-label">${desc_questao}</label>
                         <select class="form-select" id="${sigla_questao}" name="${sigla_questao}">${html_select}</select>
                     </div>
@@ -330,9 +339,16 @@
             case 'Checkbox':
                 html_questao = `
                     <div class="col-md-12" id="${sigla_questao}">
-
                         <label for="${sigla_questao}" class="form-check-label">${desc_questao}</label><br>
                         ${html_select}
+                    </div>
+                `;
+            break;
+            case 'Textarea':
+                html_questao = `
+                    <div class="col-md-12" id="${sigla_questao}">
+                        <label for="${sigla_questao}" class="form-check-label">${desc_questao}</label>
+                        <textarea class="form-select" id="${sigla_questao}" name="${sigla_questao}" rows="5"></textarea>
                     </div>
                 `;
             break;
