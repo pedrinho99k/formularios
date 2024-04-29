@@ -7,6 +7,9 @@ if ((isset($_SESSION['usuarioNome']))) {
     $_SESSION['loginErro'] = "Você precisa efetuar login!";
     header("Location: login.php");
 }
+
+$nivelPerfil = $_SESSION['nivelPerfil'];
+
 ?>
 <!doctype html lang="pt-BR">
 
@@ -59,7 +62,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </a>
                     </li>
                     <!-- Avaliações -->
-                    <li class="nav-item dropdown button-admin">
+                    <li class="nav-item dropdown button-admin" id="avaliacao">
                         <a class="nav-link dropdown-toggle" id="navbarLandings" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                             Avaliações
                         </a>
@@ -77,7 +80,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </ul>
                     </li>
                     <!-- Formulários -->
-                    <li class="nav-item dropdown button-admin">
+                    <li class="nav-item dropdown button-admin" id="formularios">
                         <a class="nav-link dropdown-toggle" id="navbarLandings" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                             Formulários
                         </a>
@@ -108,8 +111,8 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </ul>
                     </li>
                     <!-- Usuários -->
-                    <li class="nav-item dropdown button-admin">
-                        <a class="nav-link dropdown-toggle" id="usuarios" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown button-admin" id="usuarios">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Usuários
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -123,7 +126,7 @@ if ((isset($_SESSION['usuarioNome']))) {
 
                     </li>
                     <!-- Vinculos -->
-                    <li class="nav-item dropdown button-admin">
+                    <li class="nav-item dropdown button-admin" id="vinculos">
                         <a class="nav-link dropdown-toggle" id="navbarPages" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                             Vinculos
                         </a>
@@ -137,7 +140,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                         </ul>
                     </li>
                     <!-- Documentação -->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="documentacao">
                         <a class="nav-link dropdown-toggle" id="navbarDocumentation" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                             Documentação
                         </a>
@@ -190,7 +193,7 @@ if ((isset($_SESSION['usuarioNome']))) {
                                     <div class="row">
                                         <label for="staticEmail" class="col-2">Nivel:</label>
                                         <div class="col-10">
-                                            <span id="nivelPerfil" data-nivel="<?php echo $nivelPerfil=$_SESSION['nivelPerfil']; ?>"><?php $nivelPerfil = $_SESSION['nivelPerfil'];$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");echo $result; ?>
+                                            <span id="nivelPerfil" data-nivel=""><?php echo $_SESSION['nivelPerfil'] ?></span>
                                         </div> 
                                     </div>
                                 </li>
@@ -328,6 +331,25 @@ if ((isset($_SESSION['usuarioNome']))) {
     <!-- Bootstrap JS -->
     <script src="<?php echo DIRBOOTSTRAP . 'js/bootstrap.bundle.min.js' ?>"></script>
     <script src="<?php echo DIRJS . 'master.js' ?>"></script>
+
+    <script>
+        var nivelPerfil = '<?php echo $nivelPerfil; ?>';
+
+        var intermediario = function() {
+            document.getElementById('usuarios').style.display = 'none';
+        };
+
+        // elementos desabilitados
+        if (nivelPerfil === 'Avançado') {
+            console.log("Usuário = Admin")
+        }
+        else if (nivelPerfil === 'Intermediário') {
+            intermediario();
+        } else {
+            intermediario();
+            document.getElementById('vinculos').style.display = 'none';
+        }
+    </script>
 
 </body>
 

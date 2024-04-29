@@ -1037,6 +1037,21 @@ function PreencherSelectPerfis() {
     });
 }
 
+function PreencherSelectNivel() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-nivel-json.php",
+        dataType: "JSON",
+        success: function (result) {
+            console.log(result);
+            result.forEach(function (elemento) {
+                $("#perfil_nivel").append(`
+                    <option value="${elemento.per_nivel}">${elemento.per_nivel}<?option>
+                `);
+            })
+        }
+    })
+}
+
 
 function InativarAtivarVinculoPerfilFormulario(cod_vinculo, vinculo_ativo) {
     $.ajax({
@@ -1752,13 +1767,13 @@ function PreencherTabelaUsuario() {
                     case 'SIM':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['usu_codigo'] + `</th>
-                                <td>`+ resultado_nivel + `</td>
-                                <td>`+ elemento['usu_login'] + `</td>
-                                <td>`+ elemento['usu_nome'] + `</td>
-                                <td>`+ elemento['usu_email'] + `</td>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['usu_ativo'] + `</td>
+                                <th>${elemento['usu_codigo']}</th>
+                                <td>${elemento['per_nivel']}</td>
+                                <td>${elemento['usu_login']}</td>
+                                <td>${elemento['usu_nome']}</td>
+                                <td>${elemento['usu_email']}</td>
+                                <td>${elemento['per_descricao']}</td>
+                                <td>${elemento['usu_ativo']}</td>
                                 <td class="d-flex">
                                     <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
                                     <button type="button" class="btn btn-danger mx-1 w-50 flex-fill"  value="NÃO" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Inativar</button>
@@ -1769,13 +1784,13 @@ function PreencherTabelaUsuario() {
                     case 'NÃO':
                         $("#corpo-tabela").append(`
                             <tr>
-                                <th>`+ elemento['usu_codigo'] + `</th>
-                                <td>`+ resultado_nivel + `</td>
-                                <td>`+ elemento['usu_login'] + `</td>
-                                <td>`+ elemento['usu_nome'] + `</td>
-                                <td>`+ elemento['usu_email'] + `</td>
-                                <td>`+ elemento['per_descricao'] + `</td>
-                                <td>`+ elemento['usu_ativo'] + `</td>
+                                <th>${elemento['usu_codigo']}</th>
+                                <td>${elemento['per_nivel']}</td>
+                                <td>${elemento['usu_login']}</td>
+                                <td>${elemento['usu_nome']}</td>
+                                <td>${elemento['usu_email']}</td>
+                                <td>${elemento['per_descricao']}</td>
+                                <td>${elemento['usu_ativo']}</td>
                                 <td class="d-flex">
                                     <button type="button" class="btn btn-primary mx-1 w-50 flex-fill"  onclick="SelecionarUsuarioAlterar(`+ elemento['usu_codigo'] + `)">Alterar</button>
                                     <button type="button" class="btn btn-success mx-1 w-50 flex-fill"  value="SIM" onclick="InativarAtivarUsuario(`+ elemento['usu_codigo'] + `,this.value)">Ativar</button>
@@ -1925,11 +1940,13 @@ function LimparCamposCadastroPerfil() {
 function SalvarPerfil() {
     let cod_perfil = $("#cod_perfil").val();
     let desc_perfil = $("#desc_perfil").val();
+    let cod_nivel = $("#perfil_nivel").val();
     let perfil_ativo = "SIM";
     $.ajax({
         url: url + "php/Funcoes/salvar-perfil.php",
         data: {
             cod_perfil: cod_perfil,
+            cod_nivel: cod_nivel,
             desc_perfil: desc_perfil,
             perfil_ativo: perfil_ativo
         },
@@ -1961,7 +1978,7 @@ function PreencherTabelaPerfil() {
                         $("#corpo-tabela").append(`
                             <tr>
                                 <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
-                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle"><strong>${elemento['per_nivel']}</strong></td>
                                 <td class="align-middle">${elemento['per_descricao']}</td>
                                 <td class="align-middle">${elemento['per_ativo']}</td>
                                 <td class="align-middle d-flex">
@@ -1975,7 +1992,7 @@ function PreencherTabelaPerfil() {
                         $("#corpo-tabela").append(`
                             <tr>
                                 <td class="align-middle"><strong>${elemento['per_codigo']}</strong></td>
-                                <td class="align-middle"><strong>${resultado_nivel}</strong></td>
+                                <td class="align-middle"><strong>${elemento['per_nivel']}</strong></td>
                                 <td class="align-middle">${elemento['per_descricao']}</td>
                                 <td class="align-middle">${elemento['per_ativo']}</td>
                                 <td class="align-middle">
@@ -2011,6 +2028,7 @@ function SelecionarPerfilAlterar(cod_perfil) {
                 $("#cod_perfil").val(elemento['per_codigo']);
                 $("#desc_perfil").val(elemento['per_descricao']);
                 $("#perfil_ativo").val(elemento['per_ativo']);
+                $("#perfil_nivel").val(elemento['per_nivel']);
             });
         }
         , error: function () {

@@ -12,11 +12,10 @@
                     <label for="desc_perfil" class="form-label">Descrição do Perfil</label>
                     <input type="text" class="form-control" id="desc_perfil" name="desc_perfil">
                 </div>
+
                 <div class="col-md-12">
-                    <label for="mainSelect">Escolha:</label><script> window.onload = PreencherSelectFormulariosAtivos(); </script>
-                    <select class="form-select" id="cod_formulario" name="cod_formulario">
-                        <option selected>Selecione um Formulário</option>
-                    </select>
+                    <label for="mainSelect">Escolha:</label><script>window.onload = PreencherSelectNivel();</script>
+                    <select class="form-select" id="perfil_nivel" name="perfil_nivel"></select>
                 </div>
 
                 <div class="col-md-12 my-2">
