@@ -240,4 +240,19 @@ WHERE fr.reg_codigo_formulario = 44
 AND fr.reg_ativo <> 'EXCLUIDO'
 ORDER BY fr.reg_data_hora";
 
+$query_57 =
+"SELECT
+codigo as 'RESGISTRO',
+DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y   %H:%i:%s') as 'INSERIDO',
+usu.usu_nome as 'USUÁRIO',
+usu.usu_login as 'LOGIN',
+cdp.*
+FROM
+controle_de_patrimôn cdp
+JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
+JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
+WHERE fr.reg_codigo_formulario = 57
+AND fr.reg_ativo <> 'EXCLUIDO'
+ORDER BY fr.reg_data_hora
+";
 ?>
