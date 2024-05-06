@@ -975,6 +975,9 @@ function PreencherTabelaVinculoFormularioPerfil() {
     $.ajax({
         url: url + "php/Funcoes/buscar-formularios-perfis-json.php",
         dataType: "JSON",
+        data: {
+            cod_perfil: cod_perfil
+        },
         success: function (result) {
             result.forEach(function (elemento) {
                 switch (elemento['fp_ativo']) {
@@ -1094,7 +1097,7 @@ function PreencherSelectQuestoes() {
     var ordenacao = 'DESC';
     var campo = 'ques_codigo';
     $.ajax({
-        url: url + "php/Funcoes/buscar-questoes-json.php",
+        url: url + "php/Funcoes/buscar-questoes-perfis-json.php",
         dataType: "JSON",
         data:{
             ordenacao,
@@ -1233,7 +1236,7 @@ function SalvarVinculoFormularioQuestao() {
 function PreencherTabelaVinculoFormularioQuestao() {
     $("#corpo-tabela").html("");
     $.ajax({
-        url: url + "php/Funcoes/buscar-formularios-questoes-json.php",
+        url: url + "php/Funcoes/buscar-questoes-perfis-json.php",
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
@@ -1324,7 +1327,7 @@ function HtmlPrefixo() {
 function PreencherTabelaQuestoes() {
     $("#corpo-tabela").html("");
     $.ajax({
-        url: url + "php/Funcoes/buscar-questoes-json.php",
+        url: url + "php/Funcoes/buscar-questoes-perfis-json.php",
         method: "POST",
         data: {
             ordenacao: 'ASC',
@@ -1455,7 +1458,7 @@ function FormCadastraFormulario() {
         url: url + "php/Forms/cadastrar-formularios.php",
         success: function (result) {
             $("#form").html(result);
-            PreencherTabelaFormulario();
+            PreencherTabelaFormularioPerfil();
             $("#close-canvas").trigger("click");
         },
         error: function () {
@@ -1489,6 +1492,57 @@ function PreencherTabelaFormulario() {
             result.forEach(function (elemento) {
                 switch (elemento['form_ativo']) {
                     case 'SIM':
+                        $("#corpo-tabela").append(`
+                            <tr>
+                                <th>`+ elemento['form_codigo'] + `</th>
+                                <td>`+ elemento['form_nome'] + `</td>
+                                <td>`+ elemento['form_sigla'] + `</td>
+                                <td>`+ elemento['form_ativo'] + `</td>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger w-50 mx-1 my-auto" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                </td>
+                            </tr>
+                        `);
+                        break;
+                    case 'NÃO':
+                        $("#corpo-tabela").append(`
+                            <tr>
+                                <th>`+ elemento['form_codigo'] + `</th>
+                                <td>`+ elemento['form_nome'] + `</td>
+                                <td>`+ elemento['form_sigla'] + `</td>
+                                <td>`+ elemento['form_ativo'] + `</td>
+                                <td class="d-flex">
+                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success w-50 mx-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                </td>
+                            </tr>
+                        `);
+
+                        break;
+                }
+
+            });
+        }
+        , error: function () {
+            console.log("Erro ao listar perfis pelo Ajax!");
+        }
+    });
+}
+
+function PreencherTabelaFormularioPerfil() {
+    console.log(cod_perfil);
+    $("#corpo-tabela").html("");
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formularios-perfis.php",
+        dataType: "JSON",
+        data: {
+            cod_perfil: cod_perfil
+        },
+        success: function (result) {
+            result.forEach(function (elemento) {
+                switch (elemento['form_ativo']) {
+                    case 'SIM': 
                         $("#corpo-tabela").append(`
                             <tr>
                                 <th>`+ elemento['form_codigo'] + `</th>

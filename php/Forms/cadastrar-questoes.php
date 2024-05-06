@@ -32,12 +32,21 @@
             </form>
             <div id="tabela">
                 <table class="table">
-                    <thead>
+                    <!-- <thead>
                         <tr>
                             <th scope="col" style="cursor: pointer;" onclick="Ordernar('ques_codigo')">Cód.</th>
                             <th scope="col" style="cursor: pointer;" onclick="Ordernar('ques_descricao')">Descrição</th>
                             <th scope="col" style="cursor: pointer;" onclick="Ordernar('ques_sigla')">Sigla</th>
                             <th scope="col" style="cursor: pointer;" onclick="Ordernar('ques_ativo')">Ativo</th>
+                            <th scope="col">Opções</th>
+                        </tr>
+                    </thead> -->
+                    <thead>
+                        <tr>
+                            <th scope="col">Cód.</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Sigla</th>
+                            <th scope="col">Ativo</th>
                             <th scope="col">Opções</th>
                         </tr>
                     </thead>
