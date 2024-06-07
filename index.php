@@ -230,8 +230,20 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                 <div class="row">
                     <form class="mt-4" id="form-principal">
                         <h4 class="mb-4">🧾 Formulários</h4>
-                        <div class="d-flex align-content-stretch flex-wrap w-100" id="cards">
+
+
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="viewMode" id="btnRadioList" value="List" checked>
+                            <label class="btn btn-outline-primary" for="btnRadioList"><i class="bi bi-list"></i></label>
+
+                            <input type="radio" class="btn-check" name="viewMode" id="btnRadioCard" value="Card">
+                            <label class="btn btn-outline-primary" for="btnRadioCard"><i class="bi bi-grid"></i></label>
                         </div>
+
+                        <div id="contentContainer" class="mt-3">
+                            <!-- Conteúdo será inserido aqui -->
+                        </div>
+
                     </form>
                 </div>
                 <div class="row">
@@ -331,26 +343,6 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
     <!-- Bootstrap JS -->
     <script src="<?php echo DIRBOOTSTRAP . 'js/bootstrap.bundle.min.js' ?>"></script>
     <script src="<?php echo DIRJS . 'master.js' ?>"></script>
-
-    <script>
-        var nivelPerfil = '<?php echo $nivelPerfil; ?>';
-
-        var intermediario = function() {
-            document.getElementById('usuarios').style.display = 'none';
-        };
-
-        // elementos desabilitados
-        if (nivelPerfil === 'Avançado') {
-            console.log("Usuário = Admin")
-        }
-        else if (nivelPerfil === 'Intermediário') {
-            intermediario();
-        } else {
-            intermediario();
-            document.getElementById('vinculos').style.display = 'none';
-        }
-    </script>
-
 </body>
 
 </html>

@@ -219,6 +219,8 @@ FROM
 intervencao_farmaceutica intfarm
 JOIN fm_registros fr ON fr.reg_codigo_registro = intfarm.codigo
 JOIN fm_usuarios usu ON usu_codigo = fr.reg_codigo_usuario
+WHERE fr.reg_codigo_formulario = 37
+AND fr.reg_ativo <> 'EXCLUIDO'
 ORDER BY fr.reg_data_hora";
 
 
