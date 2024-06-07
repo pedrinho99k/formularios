@@ -166,24 +166,27 @@ $(document).ready(function () {
         // Limpa o conteúdo atual
         contentContainer.innerHTML = '';
 
-        // Insere o conteúdo correspondente ao modo selecionado
-        if (selectedValue === 'List') {
-            // Requisição Ajax para obter formulários no modo Lista
-            $.ajax({
-                url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
-                method: "POST",
-                data: {
-                    cod_perfil: cod_perfil
-                },
-                dataType: "JSON",
-                success: function (result) {
-                    if (result.length > 0) {
-                        result.forEach(function (elemento) {
-                            var codigo_form = elemento['form_codigo'];
-                            var codigo_nome = elemento['form_nome'];
 
-                            // Verifica se o formulário tem botão Excel
-                            var showExcelButton = formularios_excel.includes(codigo_form);
+        // Requisição Ajax para obter formulários no modo Lista
+        $.ajax({
+            url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
+            method: "POST",
+            data: {
+                cod_perfil: cod_perfil
+            },
+            dataType: "JSON",
+            success: function (result) {
+                if (result.length > 0) {
+                    result.forEach(function (elemento) {
+                        var codigo_form = elemento['form_codigo'];
+                        var codigo_nome = elemento['form_nome'];
+
+                        // Verifica se o formulário tem botão Excel
+                        var showExcelButton = formularios_excel.includes(codigo_form);
+
+                        if (selectedValue === 'List') {
+                            // Remove classes específicas antes de adicionar novas
+                            contentContainer.classList.remove('d-flex', 'align-content-stretch', 'flex-wrap', 'w-100');
 
                             // Monta o HTML para o modo de lista
                             var listHtml = `
@@ -199,43 +202,14 @@ $(document).ready(function () {
                                         <button class="btn btn-outline-success button-prin btn-sm" type="submit">${iconExcel} Exportar em Excel</button>
                                     </form>` : ''}
                                 </div>
+                                <hr style="margin: 0px;">
                             `;
 
                             // Adiciona o bloco HTML ao elemento #contentContainer
-                            contentContainer.innerHTML += listHtml;
-
-                            // Remove classes específicas antes de adicionar novas
-                            contentContainer.classList.remove('d-flex', 'align-content-stretch', 'flex-wrap', 'w-100');
-                        });
-                    } else {
-                        // Caso não haja formulários disponíveis
-                        contentContainer.innerHTML = `<p>Nenhum Formulário habilitado ao seu perfil!</p>`;
-                    }
-                },
-                error: function () {
-                    console.log("Erro ao listar perfis pelo Ajax!");
-                }
-            });
-        } else if (selectedValue === 'Card') {
-            // Adiciona classes específicas para o modo Card
-            contentContainer.classList.add('d-flex', 'align-content-stretch', 'flex-wrap', 'w-100');
-
-            // Requisição Ajax para obter formulários no modo Card
-            $.ajax({
-                url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
-                method: "POST",
-                data: {
-                    cod_perfil: cod_perfil
-                },
-                dataType: "JSON",
-                success: function (result) {
-                    if (result.length > 0) {
-                        result.forEach(function (elemento) {
-                            var codigo_form = elemento['form_codigo'];
-                            var codigo_nome = elemento['form_nome'];
-
-                            // Verifica se o formulário tem botão Excel
-                            var showExcelButton = formularios_excel.includes(codigo_form);
+                            $("#contentContainer").append(listHtml);
+                        } else if (selectedValue === 'Card') {
+                            // Adiciona classes específicas para o modo Card
+                            contentContainer.classList.add('d-flex', 'align-content-stretch', 'flex-wrap', 'w-100');
 
                             // Monta o HTML para o modo Card
                             var cardHtml = `
@@ -246,28 +220,28 @@ $(document).ready(function () {
                                         <input type="radio" class="btn-check"  name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
                                         <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}')">Buscar Registros</label>
                                         ${showExcelButton ? `
-                                        <form class="mx-2" action="php/excel/testeExcel.php" method="post">
+                                        <form action="php/excel/testeExcel.php" method="post">
                                             <input type="hidden" name="codigo_form" value="${codigo_form}">
                                             <input type="hidden" name="codigo_nome" value="${codigo_nome}">
-                                            <button class="btn btn-outline-success button-prin btn-sm" type="submit">${iconExcel} Exportar em Excel</button>
+                                            <button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">${iconExcel} Exportar em Excel</button>
                                         </form>` : ''}
                                     </div>
                                 </div>
                             `;
 
                             // Adiciona o bloco HTML ao elemento #contentContainer
-                            contentContainer.innerHTML += cardHtml;
-                        });
-                    } else {
-                        // Caso não haja formulários disponíveis
-                        contentContainer.innerHTML = `<p>Nenhum Formulário habilitado ao seu perfil!</p>`;
-                    }
-                },
-                error: function () {
-                    console.log("Erro ao listar perfis pelo Ajax!");
+                            $("#contentContainer").append(cardHtml);
+                        }
+                    });
+                } else {
+                    // Caso não haja formulários disponíveis
+                    contentContainer.innerHTML = `<p>Nenhum Formulário habilitado ao seu perfil!</p>`;
                 }
-            });
-        }
+            },
+            error: function () {
+                console.log("Erro ao listar perfis pelo Ajax!");
+            }
+        });
     }
 
     // Chama a função para configurar o conteúdo inicial

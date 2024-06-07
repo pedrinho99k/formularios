@@ -229,26 +229,27 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
             <div class="container-fluid">
                 <div class="row">
                     <form class="mt-4" id="form-principal">
-                        <h4 class="mb-4">🧾 Formulários</h4>
+                        <div class="d-flex" style="justify-content: space-between;">
+                            <h4 class="mb-4">🧾 Formulários</h4>
 
+                            <div role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="viewMode" id="btnRadioList" value="List" checked>
+                                <label class="btn btn-outline-primary" for="btnRadioList"><i class="bi bi-list"></i></label>
 
-                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="viewMode" id="btnRadioList" value="List" checked>
-                            <label class="btn btn-outline-primary" for="btnRadioList"><i class="bi bi-list"></i></label>
-
-                            <input type="radio" class="btn-check" name="viewMode" id="btnRadioCard" value="Card">
-                            <label class="btn btn-outline-primary" for="btnRadioCard"><i class="bi bi-grid"></i></label>
+                                <input type="radio" class="btn-check" name="viewMode" id="btnRadioCard" value="Card">
+                                <label class="btn btn-outline-primary" for="btnRadioCard"><i class="bi bi-grid"></i></label>
+                            </div>
                         </div>
+                        
 
-                        <div id="contentContainer" class="mt-3">
+                        <div id="contentContainer" class="d-flex align-content-stretch flex-wrap w-100">
                             <!-- Conteúdo será inserido aqui -->
                         </div>
 
                     </form>
                 </div>
-                <div class="row">
+                <div class="row mt-3">
                     <form id="fim">
-                        <hr>
                         <div class="position-relative">
                             <h4 class="position-absolute top-0 start-0">📑 Registros de Formulários</h4>
                         </div>
