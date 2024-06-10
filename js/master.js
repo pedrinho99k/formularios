@@ -115,7 +115,11 @@ $(document).ready(function () {
         $("#drop-conta").removeAttr('data-bs-popper');
     });
 
+    // Array com códigos de formulários que terão botão Excel
+    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
 
+    var global_codigo_form = 0;
+    var globalcodigo_nome = 0;
 
 
     // Icone SVG do Excel
@@ -134,21 +138,6 @@ $(document).ready(function () {
         '<path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>' +
         '</svg>'
     ;
-
-    // Array com códigos de formulários que terão botão Excel
-    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
-
-    // Funções para os botões
-    function MontarFormulario(codigo_form) {
-        console.log("MontarFormulario: " + codigo_form);
-        // Implemente aqui o código para montar o formulário
-    }
-
-    function VizualizarRegistroPorFormulario(codigo_form, codigo_nome) {
-        console.log("VizualizarRegistroPorFormulario: " + codigo_form + " - " + codigo_nome);
-        // Implemente aqui o código para visualizar registros por formulário
-    }
-
 
     // Função para alternar entre os modos de visualização
     function toggleViewMode() {
@@ -180,6 +169,7 @@ $(document).ready(function () {
                     result.forEach(function (elemento) {
                         var codigo_form = elemento['form_codigo'];
                         var codigo_nome = elemento['form_nome'];
+                        var rows = $("#num_linhas").val(); //LINHAS POR PAGINA
 
                         // Verifica se o formulário tem botão Excel
                         var showExcelButton = formularios_excel.includes(codigo_form);
@@ -191,10 +181,10 @@ $(document).ready(function () {
                             // Monta o HTML para o modo de lista
                             var listHtml = `
                                 <div class="p-2 d-flex align-items-center">
-                                    <h5 class="text-left flex-fill" id="nome-form">${elemento['form_nome']}</h5>
+                                    <h5 class="text-left flex-fill" id="nome-form">${codigo_nome}</h5>
                                     <button type="button" class="mx-2 btn btn-primary button-prin btn-sm ml-2" onclick="MontarFormulario(${codigo_form})">Novo Registro</button>
                                     <input type="radio" class="btn-check mx-2" name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
-                                    <label class="btn btn-outline-secondary button-prin btn-sm ml-2 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}')">Buscar Registros</label>
+                                    <label class="btn btn-outline-secondary button-prin btn-sm ml-2 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}', ${rows})">Buscar Registros</label>
                                     ${showExcelButton ? `
                                     <form class="m-0 mx-2" action="php/excel/testeExcel.php" method="post">
                                         <input type="hidden" name="codigo_form" value="${codigo_form}">
@@ -218,9 +208,9 @@ $(document).ready(function () {
                                         <h5 class="card-title text-center flex-fill" id="nome-form">${elemento['form_nome']}</h5>
                                         <button type="button" class="btn btn-primary button-prin btn-sm" w-100 onclick="MontarFormulario(${codigo_form})">Novo Registro</button>
                                         <input type="radio" class="btn-check"  name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
-                                        <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}')">Buscar Registros</label>
+                                        <label class="btn btn-outline-secondary button-prin btn-sm card-text w-100 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}', ${rows})">Buscar Registros</label>
                                         ${showExcelButton ? `
-                                        <form action="php/excel/testeExcel.php" method="post">
+                                        <form class="m-0" action="php/excel/testeExcel.php" method="post">
                                             <input type="hidden" name="codigo_form" value="${codigo_form}">
                                             <input type="hidden" name="codigo_nome" value="${codigo_nome}">
                                             <button class="btn btn-outline-success button-prin btn-sm w-100" type="submit">${iconExcel} Exportar em Excel</button>
@@ -306,14 +296,14 @@ $(document).ready(function () {
                     <td>` + dataHora + `</td>
                     <td>
                         <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger button-admin btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
-                        <div id="button-mobile">
-                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                        <div id="button-mobile" class="d-flex w-100">
+                            <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
                     </td>`;
 
@@ -370,7 +360,10 @@ $(document).ready(function () {
 
 });
 
-$("#num_linhas").click(function (e) {
+$("#num_linhas").change(function (e) {
+    e.preventDefault(); // Previne o comportamento padrão do evento
+
+    VizualizarRegistroPorFormulario(cod_form, nome_form);
 
     //Busca Registros de fomrulários do usuário
     let cod_usuario = $("#cod_usuario_login").text();
@@ -387,6 +380,10 @@ $("#num_linhas").click(function (e) {
         },
         dataType: "JSON",
         success: function (result) {
+            // Limpa a tabela e a paginação antes de adicionar novos dados
+            list_element.innerHTML = "";
+            pagination_element.innerHTML = "";
+
             if (result.length > 0) {
                 LinhasTabela(result, list_element, rows, current_page);
                 SetupPagination(result, pagination_element, rows);
@@ -404,7 +401,7 @@ $("#num_linhas").click(function (e) {
     });
 
     function LinhasTabela(items, wrapper, rows_per_page, page) {
-        wrapper.innerHTML = "";
+        wrapper.innerHTML = ""; // Limpa o conteúdo anterior
         page--;
 
         let inicio = rows_per_page * page;
@@ -424,23 +421,24 @@ $("#num_linhas").click(function (e) {
                     <td>` + dataHora + `</td>
                     <td>
                         <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                            <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
-                        <div id="button-mobile">
-                            <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                        <div id="button-mobile" class="d-flex w-100">
+                            <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                            <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                            <button type="button" class="btn btn-danger btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                         </div>
-                    </td>`;
+                    </td>
+            `;
 
             wrapper.appendChild(tr_element); //Insere no html
         }
     }
 
     function SetupPagination(items, wrapper, rows_per_page) {
-        wrapper.innerHTML = "";
+        wrapper.innerHTML = ""; // Limpa o conteúdo anterior
 
         let page_count = Math.ceil(items.length / rows_per_page);
         for (let i = 1; i < page_count + 1; i++) {
@@ -452,9 +450,7 @@ $("#num_linhas").click(function (e) {
     function PaginationButton(page, items) {
         let button = document.createElement('button');
         button.setAttribute('type', 'button');
-        button.classList.add('btn');
-        button.classList.add('btn-primary');
-        button.classList.add('m-1');
+        button.classList.add('btn', 'btn-primary', 'm-1');
         button.innerText = page;
 
         if (current_page == page) button.classList.add('active');
@@ -471,8 +467,6 @@ $("#num_linhas").click(function (e) {
         });
         return button;
     }
-    e.preventDefault();
-
 });
 
 
@@ -481,7 +475,9 @@ $("#num_linhas").click(function (e) {
 function VizualizarRegistroPorFormulario(cod_form, nome_form) {
     //INICIO DE FUNÇÕES DE PAGINAÇÃO
     let current_page = 1;//MOSTRA A PAGINA SETADA NO INICIO
-    let rows = 5;//LINHAS POR PAGINA
+    var rows = $("#num_linhas").val(); //LINHAS POR PAGINA
+
+    console.log(rows);
 
     function LinhasTabela(items, wrapper, rows_per_page, page, nome_form) {
         if (items.length <= 0) {
@@ -511,19 +507,21 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form) {
                 <td>` + item['reg_tipo'] + `</td>
                 <td>` + dataHora + `</td>
                 <td>
-                    <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                    <div id="button-desktop" class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                        <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                        <button type="button" class="btn btn-danger btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                     </div>
-                    <div id="button-mobile">
-                        <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Vizualizar</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+                    <div id="button-mobile" class="d-flex w-100">
+                        <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+                        <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+                        <button type="button" class="btn btn-danger btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
                     </div>
                 </td>`;
 
                 wrapper.appendChild(tr_element); //Insere no html
+
+                window.location='#fim';
             }
         }
     }
@@ -631,7 +629,7 @@ function PreencherTabelaRegistros() {
     const list_element = document.getElementById('corpo-tabela');
     const pagination_element = document.getElementById('paginacao');
     let current_page = 1;
-    let rows = 5;
+    let rows = $("#num_linhas").val();
 
     $.ajax({
         url: url + "php/Funcoes/buscar-registros-ativos-json.php",

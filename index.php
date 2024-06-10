@@ -257,10 +257,10 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                             <div class=" position-absolute top-0 end-0">
                                 <label class="" for="num_linhas">Nº de Linhas</label>
                                 <select style="width:50px" name="num_linhas" id="num_linhas">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
                                     <option value="100">100</option>
-                                    <option value="1000">1000</option>
                                 </select>
                             </div>
                         </div><br>
