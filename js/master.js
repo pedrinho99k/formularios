@@ -115,13 +115,6 @@ $(document).ready(function () {
         $("#drop-conta").removeAttr('data-bs-popper');
     });
 
-    // Array com códigos de formulários que terão botão Excel
-    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
-
-    var global_codigo_form = 0;
-    var globalcodigo_nome = 0;
-
-
     // Icone SVG do Excel
     var iconExcel = '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 48 48">' +
         '<path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>' +
@@ -138,6 +131,12 @@ $(document).ready(function () {
         '<path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>' +
         '</svg>'
     ;
+
+    // Array com códigos de formulários que terão botão Excel
+    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
+
+    var global_codigo_form = 0;
+    var globalcodigo_nome = 0;
 
     // Função para alternar entre os modos de visualização
     function toggleViewMode() {
