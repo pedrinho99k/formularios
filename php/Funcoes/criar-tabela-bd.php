@@ -22,11 +22,8 @@ $sql_create = "CREATE TABLE `" . $retorno[0]['form_sigla'] . "`(";
 for ($i = 0; $i < count($retorno); $i++) {
     switch ($retorno[$i]['ques_sigla']) {
         case 'codigo':
-            if (count($retorno) == $i + 1) {
-                $sql_create .= " `" . $retorno[$i]['ques_sigla'] . "` INT AUTO_INCREMENT, PRIMARY KEY(`codigo`));";
-            } else {
-                $sql_create .= " `" . $retorno[$i]['ques_sigla'] . "` INT AUTO_INCREMENT,";
-            }
+            $sql_create .= " `" . $retorno[$i]['ques_sigla'] . "` INT AUTO_INCREMENT,";
+            $sql_create .= " `registro_ativo` VARCHAR(255) NOT NULL DEFAULT 'ATIVO',";  // Adicionando a coluna registro_ativo a tabela
             break;
         default:
             if (count($retorno) == $i + 1) {
@@ -66,6 +63,7 @@ if ($cod_formulario != null) {
         $stmt2->bindParam(':cod_formulario', $cod_formulario, PDO::PARAM_INT);
         $stmt2->execute();
 
+        // Faz a inserção para o usuario
         if ($cod_perfil != 1 && $cod_perfil != 0) {
             $sql_perfil = "INSERT INTO fm_formulario_perfil (fp_codigo_formulario, fp_codigo_perfil, fp_ativo) VALUES (:cod_formulario, '$cod_perfil', 'SIM')";
             $stmt3 = $pdo->prepare($sql_perfil);
