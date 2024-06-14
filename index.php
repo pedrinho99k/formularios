@@ -10,8 +10,6 @@ if ((isset($_SESSION['usuarioNome']))) {
 
 $nivelPerfil = $_SESSION['nivelPerfil'];
 
-$result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Básico");
-
 ?>
 <!doctype html lang="pt-BR">
 
@@ -195,7 +193,7 @@ $result=($nivelPerfil==1)?"Avançado":(($nivelPerfil==2)?"Intermédiario":"Bási
                                     <div class="row">
                                         <label for="staticEmail" class="col-2">Nivel:</label>
                                         <div class="col-10">
-                                            <span id="nivelPerfil" data-nivel="<?php echo $_SESSION['nivelPerfil'] ?>"><?php echo $result ?></span>
+                                            <span id="nivelPerfil" data-nivel="<?php echo $nivelPerfil ?>"><?php echo $nivelPerfil ?></span>
                                         </div> 
                                     </div>
                                 </li>

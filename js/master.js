@@ -1646,13 +1646,14 @@ function PreencherTabelaFormularioPerfil() {
                                 <td>`+ elemento['form_nome'] + `</td>
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger w-50 mx-1 my-auto" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                <td class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-danger mx-1 flex-grow-1" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
                                 </td>
                             </tr>
                         `);
-                        break;
+                    break;
                     case 'NÃO':
                         $("#corpo-tabela").append(`
                             <tr>
@@ -1660,14 +1661,14 @@ function PreencherTabelaFormularioPerfil() {
                                 <td>`+ elemento['form_nome'] + `</td>
                                 <td>`+ elemento['form_sigla'] + `</td>
                                 <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success w-50 mx-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                <td class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
+                                    <button type="button" class="btn btn-success mx-1 flex-grow-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
                                 </td>
                             </tr>
                         `);
-
-                        break;
+                    break;
                 }
 
             });
@@ -1736,6 +1737,88 @@ function SelecionarFormularioAlterar(cod_formulario) {
         }
     });
 }
+
+function mostrarModal(cod_formulario, form_sigla) {
+    // Atualiza os botões do modal para chamar ExcluirFormulario com os dados corretos
+    $('#modal-btn-prosseguir').off('click').on('click', function() {
+        ExcluirFormulario(cod_formulario, form_sigla);
+    });
+
+    // Exibe o modal
+    $('#myModal').show();
+}
+
+function fecharModal() {
+    $('#myModal').hide();
+}
+
+$('#modal-btn-cancelar').on('click', fecharModal);
+
+function ExcluirFormulario(cod_formulario, form_sigla) {
+    $.ajax({
+        url: url + "php/funcoes/excluir-formulario.php",
+        data: {
+            cod_formulario: cod_formulario,
+            form_sigla: form_sigla
+        },
+        method: "POST",
+        success: function (result) {
+            var response = JSON.parse(result);
+            if (response.status === 'success') {
+                fecharModal();
+                FormCadastraFormulario();
+            } else {
+                alert(response.message);
+                fecharModal();
+            }
+        },
+        error: function () {
+            console.log("ERROR NA EXCLUSAO");
+        }
+    });
+}
+
+
+
+// function mostrarModal(cod_formulario, form_sigla) {
+//     // Atualiza os botões do modal para chamar ExcluirFormulario com os dados corretos
+//     $('#modal-btn-prosseguir').on('click', function() {
+//         ExcluirFormulario(cod_formulario, form_sigla);
+//     });
+
+//     // Exibe o modal
+//     $('#myModal').show();
+// }
+
+// function fecharModal() {
+//     $('#myModal').hide();
+// }
+
+// $('#modal-btn-cancelar').on('click', fecharModal);
+
+// function ExcluirFormulario(cod_formulario, form_sigla) {
+//     $.ajax({
+//         url: url + "php/funcoes/excluir-formulario.php",
+//         data: {
+//             cod_formulario: cod_formulario,
+//             form_sigla: form_sigla
+//         },
+//         method: "POST",
+//         success: function (result) {
+//             var response = JSON.parse(result);
+//             if (Response.status === 'success') {
+//                 fecharModal();
+//                 // PreencherTabelaFormulario();
+//             } else {
+//                 alert(response.message);
+//                 fecharModal();
+//             }
+//         }
+//         , error: function () {
+//             console.log("ERROR NA EXCLUSAO");
+//         }
+//     })
+// }
 
 
 function InativarAtivarFormulario(cod_formulario, formulario_ativo) {
