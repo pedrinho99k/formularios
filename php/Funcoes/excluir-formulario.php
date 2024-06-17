@@ -10,27 +10,23 @@ $conecta = Conectar();
 
 // Verifique se o nome da tabela é válido (somente letras, números, underscore e letras especiais)
 if (preg_match('/^[a-zA-Z0-9_\p{L}]+$/u', $nome_tabela)) {
-    // Escapa adequadamente o nome da tabela
-    $nome_tabela_escapado = $conecta->quote($nome_tabela);
-    // Remove aspas simples adicionadas pela função quote
-    $nome_tabela_escapado = trim($nome_tabela_escapado, "'");
-
-    $sql_verificacao = "SELECT COUNT(*) AS total FROM `$nome_tabela_escapado`";
-    $stmt_verificar = $conecta->prepare($sql_verificacao);
-
     try {
+        // Preparação da verificação da tabela
+        $sql_verificacao = "SELECT COUNT(*) AS total FROM `$nome_tabela`";
+        $stmt_verificar = $conecta->prepare($sql_verificacao);
         $stmt_verificar->execute();
         $resultado = $stmt_verificar->fetch(PDO::FETCH_ASSOC);
 
         if ($resultado['total'] == 0) {
             // Se a tabela estiver vazia, exclua-a
-            $sql_drop = "DROP TABLE `$nome_tabela_escapado`";
+            $sql_drop = "DROP TABLE `$nome_tabela`";
             $stmt_drop = $conecta->prepare($sql_drop);
             $stmt_drop->execute();
 
             // Verifique se a tabela foi realmente excluída
-            $sql_check = "SHOW TABLES LIKE '$nome_tabela_escapado'";
+            $sql_check = "SHOW TABLES LIKE :nome_tabela";
             $stmt_check = $conecta->prepare($sql_check);
+            $stmt_check->bindParam(':nome_tabela', $nome_tabela, PDO::PARAM_STR);
             $stmt_check->execute();
             $table_exists = $stmt_check->fetch(PDO::FETCH_ASSOC);
 
@@ -41,6 +37,7 @@ if (preg_match('/^[a-zA-Z0-9_\p{L}]+$/u', $nome_tabela)) {
                 $stmt_delete->bindParam(':cod_form', $cod_form, PDO::PARAM_INT);
                 $stmt_delete->execute();
 
+                // Exclua as questões associadas ao formulário
                 $sql_delete_question = "
                   DELETE fq
                   FROM fm_formularios_questoes AS fq

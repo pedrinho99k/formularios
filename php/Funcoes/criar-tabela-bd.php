@@ -56,7 +56,6 @@ if ($cod_formulario != null) {
     $count_duplicates = $stmt_check_duplicate->fetchColumn();
 
     if ($count_duplicates == 0) {
-
         // Faz a inserção para o usuario adm.
         $sql_adm = "INSERT INTO fm_formulario_perfil (fp_codigo_formulario, fp_codigo_perfil, fp_ativo) VALUES (:cod_formulario, '1', 'SIM')";
         $stmt2 = $pdo->prepare($sql_adm);

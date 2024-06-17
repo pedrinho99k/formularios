@@ -277,6 +277,8 @@
     let html_questao;
 
     function abreviacao(desc_questao) {
+        desc_questao = desc_questao.replace(/[!@#$%¨&*(),.?":{}|<>]/g, '');
+
         if (desc_questao.indexOf(' ') === -1) {
             return desc_questao; // Descricao sem abreviacao
         }
@@ -388,19 +390,21 @@
             let desc_questao = $("#desc_questao").val();
             let sigla_questao = $("#sigla_questao").val();
             let html_questao = $("#html_questao").val();
+
             if (desc_questao == "") {
                 $("#noti-descricao").slideDown();
                 $("#noti-descricao").delay('3000').slideUp();
-            } else {
+            }
+            else {
                 if (SalvarQuestao()) {
                     $("#form-questoes").append(`
-                    <div class="col-md-10" id="pai-` + sigla_questao + `">
-                        ` + html_questao + `
-                    </div>
-                    <div class="col-md-2" id="pai-` + sigla_questao + `">
-                            <button type="button" class="btn btn-primary mt-4" style="width:100%;" onclick="RemoveQuestao('` + sigla_questao + `')">Remover</button>
-                    </div><hr id="pai-` + sigla_questao + `">
-                `);
+                        <div class="col-md-10" id="pai-` + sigla_questao + `">
+                            ` + html_questao + `
+                        </div>
+                        <div class="col-md-2" id="pai-` + sigla_questao + `">
+                                <button type="button" class="btn btn-primary mt-4" style="width:100%;" onclick="RemoveQuestao('` + sigla_questao + `')">Remover</button>
+                        </div><hr id="pai-` + sigla_questao + `">
+                    `);
                     $("#desc_questao").val("");
                     $("#valores_opcao").html("");
                     html_select = "";
@@ -414,8 +418,6 @@
         } else {
             console.log('Erro 1');
         }
-
-
     }
 
 
@@ -464,6 +466,8 @@
         let sigla_questao = $("#sigla_questao").val();
         let html_questao = $("#html_questao").val();
         let questao_ativo = "SIM";
+        let desc_questao_filtrado = abreviacao(desc_questao);
+        
         $.ajax({
             url: url + "php/Funcoes/salvar-questoes.php",
             data: {
@@ -472,7 +476,8 @@
                 sigla_questao: sigla_questao,
                 html_questao: html_questao,
                 questao_ativo: questao_ativo,
-                posicao: posicao
+                posicao: posicao,
+                des_questao_filtrado: desc_questao_filtrado
             },
             method: "POST",
             success: function(result) {

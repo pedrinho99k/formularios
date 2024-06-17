@@ -1571,7 +1571,6 @@ function FormCadastraFormularioQuestoes() {
         success: function (result) {
             $("#form").html(result);
             $("#close-canvas").trigger("click");
-
         },
         error: function () {
             console.log("Error");
@@ -1598,6 +1597,7 @@ function PreencherTabelaFormulario() {
                                 <td class="d-flex">
                                     <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
                                     <button type="button" class="btn btn-danger w-50 mx-1 my-auto" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
                                 </td>
                             </tr>
                         `);
@@ -1612,6 +1612,7 @@ function PreencherTabelaFormulario() {
                                 <td class="d-flex">
                                     <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
                                     <button type="button" class="btn btn-success w-50 mx-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
+                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
                                 </td>
                             </tr>
                         `);
@@ -1765,60 +1766,22 @@ function ExcluirFormulario(cod_formulario, form_sigla) {
         success: function (result) {
             var response = JSON.parse(result);
             if (response.status === 'success') {
+                alert(response.message);
                 fecharModal();
-                FormCadastraFormulario();
+                // FormCadastraFormulario();
+                PreencherTabelaFormulario();
             } else {
                 alert(response.message);
                 fecharModal();
             }
         },
         error: function () {
-            console.log("ERROR NA EXCLUSAO");
+            console.log(response);
+            alert("Erro ao excluir o formulário."); // Caso falhe
+            fecharModal();
         }
     });
 }
-
-
-
-// function mostrarModal(cod_formulario, form_sigla) {
-//     // Atualiza os botões do modal para chamar ExcluirFormulario com os dados corretos
-//     $('#modal-btn-prosseguir').on('click', function() {
-//         ExcluirFormulario(cod_formulario, form_sigla);
-//     });
-
-//     // Exibe o modal
-//     $('#myModal').show();
-// }
-
-// function fecharModal() {
-//     $('#myModal').hide();
-// }
-
-// $('#modal-btn-cancelar').on('click', fecharModal);
-
-// function ExcluirFormulario(cod_formulario, form_sigla) {
-//     $.ajax({
-//         url: url + "php/funcoes/excluir-formulario.php",
-//         data: {
-//             cod_formulario: cod_formulario,
-//             form_sigla: form_sigla
-//         },
-//         method: "POST",
-//         success: function (result) {
-//             var response = JSON.parse(result);
-//             if (Response.status === 'success') {
-//                 fecharModal();
-//                 // PreencherTabelaFormulario();
-//             } else {
-//                 alert(response.message);
-//                 fecharModal();
-//             }
-//         }
-//         , error: function () {
-//             console.log("ERROR NA EXCLUSAO");
-//         }
-//     })
-// }
 
 
 function InativarAtivarFormulario(cod_formulario, formulario_ativo) {
