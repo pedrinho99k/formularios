@@ -12,11 +12,6 @@ $des_questao_filtrado = $_POST['des_questao_filtrado'];
 include_once '../conexao/conexao.php';
 $pdo = Conectar();
 
-if (!preg_match('/^[a-zA-Z0-9_]+$/', $des_questao_filtrado)) {
-    echo '<p>Erro nos caracteres especiais</p>';
-    exit;
-}
-
 $sql_insert = "INSERT INTO fm_questoes(ques_descricao,ques_sigla,ques_html,ques_posicao,ques_ativo)
                VALUES(:desc_questao, :sigla_questao, :html_questao, :posicao, :questao_ativo)";
 
@@ -33,7 +28,6 @@ if ($stmt->execute()) {
     $stm = $pdo->prepare($sql_select);
     $stm->execute();
     $retorno = $stm->fetchAll(PDO::FETCH_ASSOC);
-
 
     foreach ($retorno as $valor) {
         $cod_questao_inserida = $valor['ques_codigo'];

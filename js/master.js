@@ -1586,40 +1586,23 @@ function PreencherTabelaFormulario() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
-                switch (elemento['form_ativo']) {
-                    case 'SIM':
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['form_codigo'] + `</th>
-                                <td>`+ elemento['form_nome'] + `</td>
-                                <td>`+ elemento['form_sigla'] + `</td>
-                                <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger w-50 mx-1 my-auto" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
-                                </td>
-                            </tr>
-                        `);
-                        break;
-                    case 'NÃO':
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['form_codigo'] + `</th>
-                                <td>`+ elemento['form_nome'] + `</td>
-                                <td>`+ elemento['form_sigla'] + `</td>
-                                <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex">
-                                    <button type="button" class="btn btn-primary w-50 mx-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success w-50 mx-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
-                                </td>
-                            </tr>
-                        `);
+                let btnClass = elemento['form_ativo'] === 'SIM' ? 'btn-danger' : 'btn-success';
+                let btnValue = elemento['form_ativo'] === 'SIM' ? 'NÃO' : 'SIM';
+                let btnText = elemento['form_ativo'] === 'SIM' ? 'Inativar' : 'Ativar';
 
-                        break;
-                }
-
+                $("#corpo-tabela").append(`
+                    <tr>
+                        <th>${elemento['form_codigo']}</th>
+                        <td>${elemento['form_nome']}</td>
+                        <td>${elemento['form_sigla']}</td>
+                        <td>${elemento['form_ativo']}</td>
+                        <td class="d-flex">
+                            <button type="button" class="btn btn-primary w-50 mx-1 my-auto" onclick="SelecionarFormularioAlterar(${elemento['form_codigo']})">Alterar</button>
+                            <button type="button" class="btn ${btnClass} w-50 mx-1 my-auto" value="${btnValue}" onclick="InativarAtivarFormulario(${elemento['form_codigo']}, this.value)">${btnText}</button>
+                            <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(${elemento['form_codigo']}, '${elemento['form_sigla']}')">Excluir</button>
+                        </td>
+                    </tr>
+                `);
             });
         }
         , error: function () {
@@ -1639,39 +1622,23 @@ function PreencherTabelaFormularioPerfil() {
         },
         success: function (result) {
             result.forEach(function (elemento) {
-                switch (elemento['form_ativo']) {
-                    case 'SIM': 
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['form_codigo'] + `</th>
-                                <td>`+ elemento['form_nome'] + `</td>
-                                <td>`+ elemento['form_sigla'] + `</td>
-                                <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger mx-1 flex-grow-1" value="NÃO" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Inativar</button>
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
-                                </td>
-                            </tr>
-                        `);
-                    break;
-                    case 'NÃO':
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['form_codigo'] + `</th>
-                                <td>`+ elemento['form_nome'] + `</td>
-                                <td>`+ elemento['form_sigla'] + `</td>
-                                <td>`+ elemento['form_ativo'] + `</td>
-                                <td class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="SelecionarFormularioAlterar(`+ elemento['form_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success mx-1 flex-grow-1" value="SIM" onclick="InativarAtivarFormulario(`+ elemento['form_codigo'] + `,this.value)">Ativar</button>
-                                    <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(`+ elemento['form_codigo'] + `,'` + elemento['form_sigla'] + `')">Excluir</button>
-                                </td>
-                            </tr>
-                        `);
-                    break;
-                }
+                let btnClass = elemento['form_ativo'] === 'SIM' ? 'btn-danger' : 'btn-success';
+                let btnValue = elemento['form_ativo'] === 'SIM' ? 'NÃO' : 'SIM';
+                let btnText = elemento['form_ativo'] === 'SIM' ? 'Inativar' : 'Ativar';
 
+                $("#corpo-tabela").append(`
+                    <tr>
+                        <th>`+ elemento['form_codigo'] + `</th>
+                        <td>`+ elemento['form_nome'] + `</td>
+                        <td>`+ elemento['form_sigla'] + `</td>
+                        <td>`+ elemento['form_ativo'] + `</td>
+                        <td class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="SelecionarFormularioAlterar(${elemento['form_codigo']})">Alterar</button>
+                            <button type="button" class="btn ${btnClass} mx-1 flex-grow-1" value="${btnValue}" onclick="InativarAtivarFormulario(${elemento['form_codigo']}, this.value)">${btnText}</button>
+                            <button type="button" class="btn btn-primary mx-1 flex-grow-1" onclick="mostrarModal(${elemento['form_codigo']}, '${elemento['form_sigla']}')">Excluir</button>
+                        </td>
+                    </tr>
+                `);
             });
         }
         , error: function () {

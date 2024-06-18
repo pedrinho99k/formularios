@@ -23,7 +23,7 @@
             </form>
             <div id="myModal" class="modal">
                 <div class="modal-content">
-                    <p>Está ação vai apagar o formulario!</p>
+                    <p>Está ação irá apagar o formulario!</p>
                     <button id="modal-btn-prosseguir" class="modal-btn">Prosseguir</button>
                     <button id="modal-btn-cancelar" class="modal-btn cancel" onclick="fecharModal()">Cancelar</button>
                 </div>
