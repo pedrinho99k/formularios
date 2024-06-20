@@ -179,7 +179,7 @@ $(document).ready(function () {
 
                             // Monta o HTML para o modo de lista
                             var listHtml = `
-                                <div class="p-2 d-flex align-items-center">
+                                <div class="p-1 d-flex align-items-center">
                                     <h5 class="text-left flex-fill" id="nome-form">${codigo_nome}</h5>
                                     <button type="button" class="mx-2 btn btn-primary button-prin btn-sm ml-2" onclick="MontarFormulario(${codigo_form})">Novo Registro</button>
                                     <input type="radio" class="btn-check mx-2" name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
@@ -1433,41 +1433,33 @@ function PreencherTabelaQuestoes() {
         dataType: "JSON",
         success: function (result) {
             result.forEach(function (elemento) {
-                switch (elemento['ques_ativo']) {
-                    case 'SIM':
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['ques_codigo'] + `</th>
-                                <td>`+ elemento['ques_descricao'] + `</td>
-                                <td>`+ elemento['ques_sigla'] + `</td>
-                                <td>`+ elemento['ques_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1 w-100"  onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-danger my-1 w-100"  value="NÃO" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Inativar</button>
-                                </td>
-                            </tr>
-                        `);
-                        break;
-                    case 'NÃO':
-                        $("#corpo-tabela").append(`
-                            <tr>
-                                <th>`+ elemento['ques_codigo'] + `</th>
-                                <td>`+ elemento['ques_descricao'] + `</td>
-                                <td>`+ elemento['ques_sigla'] + `</td>
-                                <td>`+ elemento['ques_ativo'] + `</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary my-1 w-100"  onclick="SelecionarQuestaoAlterar(`+ elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1 w-100"  value="SIM" onclick="InativarAtivarQuestao(`+ elemento['ques_codigo'] + `,this.value)">Ativar</button>
-                                </td>
-                            </tr>
-                        `);
-
-                        break;
+                let buttonText, buttonClass, buttonValue;
+                
+                if (elemento['ques_ativo'] === 'SIM') {
+                    buttonText = 'Inativar';
+                    buttonClass = 'btn-danger';
+                    buttonValue = 'NÃO';
+                } else {
+                    buttonText = 'Ativar';
+                    buttonClass = 'btn-success';
+                    buttonValue = 'SIM';
                 }
-
+        
+                $("#corpo-tabela").append(`
+                    <tr>
+                        <th>${elemento['ques_codigo']}</th>
+                        <td>${elemento['ques_descricao']}</td>
+                        <td>${elemento['ques_sigla']}</td>
+                        <td>${elemento['ques_ativo']}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary my-1 w-100" onclick="SelecionarQuestaoAlterar(${elemento['ques_codigo']})">Alterar</button>
+                            <button type="button" class="btn ${buttonClass} my-1 w-100" value="${buttonValue}" onclick="InativarAtivarQuestao(${elemento['ques_codigo']}, this.value)">${buttonText}</button>
+                        </td>
+                    </tr>
+                `);
             });
-        }
-        , error: function () {
+        },
+        error: function () {
             console.log("Erro ao listar perfis pelo Ajax!");
         }
     });
@@ -2236,3 +2228,349 @@ function FormListarAhpaceg() {
         }
     });
 }
+
+// function AlterarQuestoes() {
+//     $.ajax({
+//         url: url + "php/Funcoes/buscar-teste-json.php",
+//         method: 'GET',
+//         success: function (result) {
+//             $("#form").html(result);
+//         },
+//         error: function() {
+//             console.log('ERRO');
+//         }
+//     });
+// }
+
+function AlterarQuestoes() {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
+        method: 'POST',
+        data: {
+            cod_perfil: cod_perfil
+        },
+        dataType: 'json',
+        success: function (result) {
+            var html = '';
+
+            result.forEach(function(elemento) {
+                var codigo_form = elemento['form_codigo'];
+                var codigo_nome = elemento['form_nome'];
+
+                html += `
+                    <div class="p-1 d-flex align-items-center">
+                        <h5 class="text-left flex-fill" id="nome-form">${codigo_nome}</h5>
+                        <button type="button" class="mx-2 btn btn-primary button-prin btn-sm ml-2" onclick="ExibirQuestoes(${codigo_form}, '${codigo_nome}')">Adicionar Questões</button>
+                    </div>
+                    <hr style="margin: 0px;">
+                `;
+            });
+            $("#form").html(html);
+        },
+        error: function(xhr, status, error) {
+            console.error('Erro na requisição:', error);
+        }
+    });
+}
+
+
+// function ExibirQuestoes(cod_form, cod_nome) {
+//     $.ajax({
+//         url: url + "php/Funcoes/buscar-questoes-formularios.php",
+//         method: 'POST',
+//         data: {
+//             cod_form: cod_form
+//         },
+//         dataType: 'json',
+//         success: function (result) {
+//             var html = `<h4 class="d-flex justify-content-center mt-3">${cod_nome}</h4>`;
+
+//             if (result.length > 0) {
+//                 result.forEach(function(questao) {
+//                     if (questao.ques_posicao !== -1) {
+//                         html += `
+//                             <div class="card my-3 draggable" id="card${questao.ques_posicao}" draggable="true">
+//                                 <div class="card-body">
+//                                     <label>Descrição : <input type="text" value="${questao.ques_descricao}"></label>
+//                                     <label>Sigla : ${questao.ques_sigla}</label>
+//                                     <label>Posição : ${questao.ques_posicao}º</label>
+//                                     <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
+//                                     <button type="button" class="btn btn-primary button-prin" onclick="ExcluirQuestao()">EXCLUIR</button>
+//                                 </div>
+//                             </div>
+//                         `;
+//                     };
+//                 });
+
+//                 // $("#cardContainer").html(html);
+//                 $("#form").html(html);
+
+//                 var buttonAdd = `
+//                     <div class="fixed-bottom d-flex justify-content-end m-3">
+//                         <button id="btnAdicionar" type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" onclick="AdicionarCard()">Adicionar</button>
+//                     </div>
+//                 `;
+
+//                 $("#form").append(buttonAdd);
+
+//                 setupDragAndDrop();
+
+//             } else {
+//                 html = '<p>Nenhuma questão encontrada.</p>';
+//             }
+//         },
+//         error: function(xhr, status, error) {
+//             console.error("Erro na requisição:", error);
+//         }
+//     });
+// }
+
+// function ExcluirQuestao() {
+//     $(this).closest('.card').remove();
+// }
+
+
+// ExibirQuestoes(result);
+
+// function setupDragAndDrop() {
+//     const draggables = document.querySelectorAll('.draggable');
+//     const cardContainer = document.getElementById('form'); // ID do container
+
+//     draggables.forEach(draggable => {
+//         draggable.addEventListener('dragstart', dragStart);
+//         draggable.addEventListener('dragend', dragEnd);
+//     });
+
+//     cardContainer.addEventListener('dragover', dragOver);
+//     cardContainer.addEventListener('drop', drop);
+
+//     function dragStart(event) {
+//         event.dataTransfer.setData('text/plain', event.target.id);
+//         event.target.classList.add('dragging');
+//     }
+
+//     function dragEnd(event) {
+//         event.target.classList.remove('dragging');
+//         atualizarPosicoes(); // Atualiza as posições após o drop
+//     }
+
+//     function dragOver(event) {
+//         event.preventDefault();
+//         const afterElement = getDragAfterElement(cardContainer, event.clientY);
+//         const dragging = document.querySelector('.dragging');
+//         if (afterElement == null) {
+//             cardContainer.appendChild(dragging);
+//         } else {
+//             cardContainer.insertBefore(dragging, afterElement);
+//         }
+//     }
+
+//     function drop(event) {
+//         event.preventDefault();
+//         const id = event.dataTransfer.getData('text/plain');
+//         const draggableElement = document.getElementById(id);
+//         draggableElement.classList.remove('dragging');
+//     }
+
+//     function getDragAfterElement(container, y) {
+//         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+//         return draggableElements.reduce((closest, child) => {
+//             const box = child.getBoundingClientRect();
+//             const offset = y - box.top - box.height / 2;
+//             if (offset < 0 && offset > closest.offset) {
+//                 return { offset: offset, element: child };
+//             } else {
+//                 return closest;
+//             }
+//         }, { offset: Number.NEGATIVE_INFINITY }).element;
+//     }
+
+//     function atualizarPosicoes() {
+//         const cards = document.querySelectorAll('.draggable');
+//         cards.forEach((card, index) => {
+//             // Atualiza a posição visual
+//             card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
+//             // Atualiza a posição no array result
+//             const questao = result.find(q => q.ques_posicao === parseInt(card.id.replace('card', '')));
+//             if (questao) {
+//                 questao.ques_posicao = index + 1;
+//             }
+//         });
+//     }
+// }
+
+// function AdicionarCard() {
+//     // Gerar um novo ID para o card (você pode usar um contador ou qualquer outro método)
+//     var novoId = $(".card").length + 1;
+
+//     var novoCardHtml = `
+//         <div class="card my-3 draggable" id="card${novoId}" draggable="true">
+//             <div class="card-body">
+//                 <label>Descrição : <input type="text" value="Nova Questão"></label>
+//                 <label>Sigla : </label>
+//                 <label>Posição : ${novoId}º</label>
+//                 <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
+//             </div>
+//         </div>
+//     `;
+
+//     // Adicionar o novo card ao container
+//     $("#form").append(novoCardHtml);
+
+//     // Reaplicar a funcionalidade de arrastar e soltar, se necessário
+//     setupDragAndDrop();
+
+//     window.location='#rodape';
+// }
+
+// Função para exibir questões
+function ExibirQuestoes(cod_form, cod_nome) {
+    $.ajax({
+        url: url + "php/Funcoes/buscar-questoes-formularios.php",
+        method: 'POST',
+        data: {
+            cod_form: cod_form
+        },
+        dataType: 'json',
+        success: function (result) {
+            var html = `<h4 class="d-flex justify-content-center mt-3">${cod_nome}</h4>`;
+
+            if (result.length > 0) {
+                result.forEach(function(questao) {
+                    if (questao.ques_posicao !== -1) {
+                        html += `
+                            <div class="card my-3 draggable" id="card${questao.ques_posicao}" draggable="true">
+                                <div class="card-body">
+                                    <label>Descrição : <input type="text" value="${questao.ques_descricao}"></label>
+                                    <label>Sigla : ${questao.ques_sigla}</label>
+                                    <label>Posição : ${questao.ques_posicao}º</label>
+                                    <label>Ativo : ${questao.ques_ativo}</label>
+                                    <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
+                                    <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                $("#form").html(html);
+
+                var buttonAdd = `
+                    <div class="fixed-bottom d-flex justify-content-end m-3">
+                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2 btnAdicionar">Adicionar</button>
+                    </div>
+                `;
+
+                $("#form").append(buttonAdd);
+
+                setupDragAndDrop();
+
+            } else {
+                html = '<p>Nenhuma questão encontrada.</p>';
+                $("#form").html(html);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro na requisição:", error);
+        }
+    });
+}
+
+// Função para adicionar um novo card
+function AdicionarCard() {
+    var novoId = $(".card").length + 1;
+
+    var novoCardHtml = `
+        <div class="card my-3 draggable" id="card${novoId}" draggable="true">
+            <div class="card-body">
+                <label>Descrição : <input type="text" value="Nova Questão"></label>
+                <label>Sigla : </label>
+                <label>Posição : ${novoId}º</label>
+                <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
+                <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
+            </div>
+        </div>
+    `;
+
+    $("#form").append(novoCardHtml);
+
+    setupDragAndDrop();
+
+    window.location = "#rodape";
+}
+
+// Função para excluir questão
+function ExcluirQuestao() {
+    $(this).closest('.card').remove();
+}
+
+// Função para configurar arrastar e soltar
+function setupDragAndDrop() {
+    const draggables = document.querySelectorAll('.draggable');
+    const cardContainer = document.getElementById('form');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', dragStart);
+        draggable.addEventListener('dragend', dragEnd);
+    });
+
+    cardContainer.addEventListener('dragover', dragOver);
+    cardContainer.addEventListener('drop', drop);
+
+    function dragStart(event) {
+        event.dataTransfer.setData('text/plain', event.target.id);
+        event.target.classList.add('dragging');
+    }
+
+    function dragEnd(event) {
+        event.target.classList.remove('dragging');
+        atualizarPosicoes();
+    }
+
+    function dragOver(event) {
+        event.preventDefault();
+        const afterElement = getDragAfterElement(cardContainer, event.clientY);
+        const dragging = document.querySelector('.dragging');
+        if (afterElement == null) {
+            cardContainer.appendChild(dragging);
+        } else {
+            cardContainer.insertBefore(dragging, afterElement);
+        }
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        const id = event.dataTransfer.getData('text/plain');
+        const draggableElement = document.getElementById(id);
+        draggableElement.classList.remove('dragging');
+    }
+
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function atualizarPosicoes() {
+        const cards = document.querySelectorAll('.draggable');
+        cards.forEach((card, index) => {
+            card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
+        });
+    }
+}
+
+// Delegação de eventos para excluir questão
+$(document).on("click", ".btnExcluir", ExcluirQuestao);
+$(document).on("click", ".btnAdicionar", AdicionarCard);
+
+// Exemplo de chamada da função ExibirQuestoes ao carregar a página
+// $(document).ready(function() {
+//     ExibirQuestoes(1, "Exemplo de Formulário");
+// });

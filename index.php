@@ -101,11 +101,18 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraQuestoes()">Questões</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormCadastraQuestoes()">
+                                    Questões
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormListarAhpaceg()">Relatório AHPACEG</button>
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="AlterarQuestoes()">
+                                    Adicionar Questões
+                                </button>
+                            </li>
+                            <li class="dropdown-item">
+                                <button class="btn btn-primary button-prin button-admin w-100" id="btn-cadastro-questoes" onclick="FormListarAhpaceg()">
+                                    Relatório AHPACEG
                                 </button>
                             </li>
                         </ul>
@@ -300,7 +307,7 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                             <use xlink:href="#bootstrap"></use>
                         </svg>
                     </a>
-                    <span class="text-muted">© 2022 Hospital do Rim</span>
+                    <span id="rodape" class="text-muted">© 2022 Hospital do Rim</span>
                 </div>
                 <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                     <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">

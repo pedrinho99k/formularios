@@ -9,7 +9,7 @@
                     <input type="text" class="form-control" id="cod_questao" name="cod_questao" disabled>
                 </div>
                 <div class="col-md-12">
-                    <label for="dsec_questao" class="form-label">Descrição da Questão</label>
+                    <label for="desc_questao" class="form-label">Descrição da Questão</label>
                     <input type="text" class="form-control" id="desc_questao" name="desc_questao">
                 </div>
                 <div class="col-md-12">
@@ -85,44 +85,36 @@
             },
             dataType: "JSON",
             success: function(result) {
-                result.forEach(function(elemento) {
-                    switch (elemento['ques_ativo']) {
-                        case 'SIM':
-                            $("#corpo-tabela").append(`
-                            <tr>
-                                <th>` + elemento['ques_codigo'] + `</th>
-                                <td>` + elemento['ques_descricao'] + `</td>
-                                <td>` + elemento['ques_sigla'] + `</td>
-                                <td>` + elemento['ques_ativo'] + `</td>
-                                <td>
-                                    <div class="d-flex justify-content-between">
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
-                                        <button type="button" class="btn btn-danger btn-sm" value="NÃO" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Inativar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `);
-                            break;
-                        case 'NÃO':
-                            $("#corpo-tabela").append(`
-                            <tr>
-                                <th>` + elemento['ques_codigo'] + `</th>
-                                <td>` + elemento['ques_descricao'] + `</td>
-                                <td>` + elemento['ques_sigla'] + `</td>
-                                <td>` + elemento['ques_ativo'] + `</td>
-                                <td class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-primary my-1" onclick="SelecionarQuestaoAlterar(` + elemento['ques_codigo'] + `)">Alterar</button>
-                                    <button type="button" class="btn btn-success my-1" value="SIM" onclick="InativarAtivarQuestao(` + elemento['ques_codigo'] + `,this.value)">Ativar</button>
-                                </td>
-                            </tr>
-                        `);
+            result.forEach(function(elemento) {
+                let buttons = '';
+                if (elemento['ques_ativo'] === 'SIM') {
+                    buttons = `
+                        <button type="button" class="btn btn-primary" onclick="SelecionarQuestaoAlterar(${elemento['ques_codigo']})">Alterar</button>
+                        <button type="button" class="btn btn-danger" value="NÃO" onclick="InativarAtivarQuestao(${elemento['ques_codigo']}, this.value)">Inativar</button>
+                    `;
+                } else {
+                    buttons = `
+                        <button type="button" class="btn btn-primary" onclick="SelecionarQuestaoAlterar(${elemento['ques_codigo']})">Alterar</button>
+                        <button type="button" class="btn btn-success" value="SIM" onclick="InativarAtivarQuestao(${elemento['ques_codigo']}, this.value)">Ativar</button>
+                    `;
+                }
 
-                            break;
-                    }
-
-                });
-            },
-            error: function() {
+                $("#corpo-tabela").append(`
+                    <tr>
+                        <th>${elemento['ques_codigo']}</th>
+                        <td>${elemento['ques_descricao']}</td>
+                        <td>${elemento['ques_sigla']}</td>
+                        <td>${elemento['ques_ativo']}</td>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                ${buttons}
+                            </div>
+                        </td>
+                    </tr>
+                `);
+            });
+        },  
+        error: function() {
                 console.log("Erro ao listar perfis pelo Ajax!");
             }
         });
