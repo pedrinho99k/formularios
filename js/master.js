@@ -2229,19 +2229,6 @@ function FormListarAhpaceg() {
     });
 }
 
-// function AlterarQuestoes() {
-//     $.ajax({
-//         url: url + "php/Funcoes/buscar-teste-json.php",
-//         method: 'GET',
-//         success: function (result) {
-//             $("#form").html(result);
-//         },
-//         error: function() {
-//             console.log('ERRO');
-//         }
-//     });
-// }
-
 function AlterarQuestoes() {
     $.ajax({
         url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
@@ -2273,156 +2260,6 @@ function AlterarQuestoes() {
     });
 }
 
-
-// function ExibirQuestoes(cod_form, cod_nome) {
-//     $.ajax({
-//         url: url + "php/Funcoes/buscar-questoes-formularios.php",
-//         method: 'POST',
-//         data: {
-//             cod_form: cod_form
-//         },
-//         dataType: 'json',
-//         success: function (result) {
-//             var html = `<h4 class="d-flex justify-content-center mt-3">${cod_nome}</h4>`;
-
-//             if (result.length > 0) {
-//                 result.forEach(function(questao) {
-//                     if (questao.ques_posicao !== -1) {
-//                         html += `
-//                             <div class="card my-3 draggable" id="card${questao.ques_posicao}" draggable="true">
-//                                 <div class="card-body">
-//                                     <label>Descrição : <input type="text" value="${questao.ques_descricao}"></label>
-//                                     <label>Sigla : ${questao.ques_sigla}</label>
-//                                     <label>Posição : ${questao.ques_posicao}º</label>
-//                                     <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
-//                                     <button type="button" class="btn btn-primary button-prin" onclick="ExcluirQuestao()">EXCLUIR</button>
-//                                 </div>
-//                             </div>
-//                         `;
-//                     };
-//                 });
-
-//                 // $("#cardContainer").html(html);
-//                 $("#form").html(html);
-
-//                 var buttonAdd = `
-//                     <div class="fixed-bottom d-flex justify-content-end m-3">
-//                         <button id="btnAdicionar" type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" onclick="AdicionarCard()">Adicionar</button>
-//                     </div>
-//                 `;
-
-//                 $("#form").append(buttonAdd);
-
-//                 setupDragAndDrop();
-
-//             } else {
-//                 html = '<p>Nenhuma questão encontrada.</p>';
-//             }
-//         },
-//         error: function(xhr, status, error) {
-//             console.error("Erro na requisição:", error);
-//         }
-//     });
-// }
-
-// function ExcluirQuestao() {
-//     $(this).closest('.card').remove();
-// }
-
-
-// ExibirQuestoes(result);
-
-// function setupDragAndDrop() {
-//     const draggables = document.querySelectorAll('.draggable');
-//     const cardContainer = document.getElementById('form'); // ID do container
-
-//     draggables.forEach(draggable => {
-//         draggable.addEventListener('dragstart', dragStart);
-//         draggable.addEventListener('dragend', dragEnd);
-//     });
-
-//     cardContainer.addEventListener('dragover', dragOver);
-//     cardContainer.addEventListener('drop', drop);
-
-//     function dragStart(event) {
-//         event.dataTransfer.setData('text/plain', event.target.id);
-//         event.target.classList.add('dragging');
-//     }
-
-//     function dragEnd(event) {
-//         event.target.classList.remove('dragging');
-//         atualizarPosicoes(); // Atualiza as posições após o drop
-//     }
-
-//     function dragOver(event) {
-//         event.preventDefault();
-//         const afterElement = getDragAfterElement(cardContainer, event.clientY);
-//         const dragging = document.querySelector('.dragging');
-//         if (afterElement == null) {
-//             cardContainer.appendChild(dragging);
-//         } else {
-//             cardContainer.insertBefore(dragging, afterElement);
-//         }
-//     }
-
-//     function drop(event) {
-//         event.preventDefault();
-//         const id = event.dataTransfer.getData('text/plain');
-//         const draggableElement = document.getElementById(id);
-//         draggableElement.classList.remove('dragging');
-//     }
-
-//     function getDragAfterElement(container, y) {
-//         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
-//         return draggableElements.reduce((closest, child) => {
-//             const box = child.getBoundingClientRect();
-//             const offset = y - box.top - box.height / 2;
-//             if (offset < 0 && offset > closest.offset) {
-//                 return { offset: offset, element: child };
-//             } else {
-//                 return closest;
-//             }
-//         }, { offset: Number.NEGATIVE_INFINITY }).element;
-//     }
-
-//     function atualizarPosicoes() {
-//         const cards = document.querySelectorAll('.draggable');
-//         cards.forEach((card, index) => {
-//             // Atualiza a posição visual
-//             card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
-//             // Atualiza a posição no array result
-//             const questao = result.find(q => q.ques_posicao === parseInt(card.id.replace('card', '')));
-//             if (questao) {
-//                 questao.ques_posicao = index + 1;
-//             }
-//         });
-//     }
-// }
-
-// function AdicionarCard() {
-//     // Gerar um novo ID para o card (você pode usar um contador ou qualquer outro método)
-//     var novoId = $(".card").length + 1;
-
-//     var novoCardHtml = `
-//         <div class="card my-3 draggable" id="card${novoId}" draggable="true">
-//             <div class="card-body">
-//                 <label>Descrição : <input type="text" value="Nova Questão"></label>
-//                 <label>Sigla : </label>
-//                 <label>Posição : ${novoId}º</label>
-//                 <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
-//             </div>
-//         </div>
-//     `;
-
-//     // Adicionar o novo card ao container
-//     $("#form").append(novoCardHtml);
-
-//     // Reaplicar a funcionalidade de arrastar e soltar, se necessário
-//     setupDragAndDrop();
-
-//     window.location='#rodape';
-// }
-
 // Função para exibir questões
 function ExibirQuestoes(cod_form, cod_nome) {
     $.ajax({
@@ -2439,23 +2276,30 @@ function ExibirQuestoes(cod_form, cod_nome) {
                 result.forEach(function(questao) {
                     if (questao.ques_posicao !== -1) {
                         html += `
-                            <div class="card my-3 draggable" id="card${questao.ques_posicao}" draggable="true">
+                            <div class="card my-3 draggable questao" id="card${questao.ques_posicao}" draggable="true">
                                 <div class="card-body">
-                                    <label>Descrição : <input type="text" value="${questao.ques_descricao}"></label>
-                                    <label>Sigla : ${questao.ques_sigla}</label>
-                                    <label>Posição : ${questao.ques_posicao}º</label>
-                                    <label>Ativo : ${questao.ques_ativo}</label>
+                                    <label>Codigo : <span data-codigo="${questao.ques_codigo}" class="codigo">${questao.ques_codigo}</span></label>
+                                    <label>Descrição : <input class="descricao" type="text" value="${questao.ques_descricao}"></label>
+                                    <label>Posição : <span class="posicao">${questao.ques_posicao}</span></label>
+                                    <label>Sigla : <span data-sigla="${questao.ques_sigla}" class="sigla">${questao.ques_sigla}</span></label>
+                                    <label>Ativo : <span data-ativo="${questao.ques_ativo}" class="ativo">${questao.ques_ativo}</span></label>
                                     <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
                                     <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
+                                    <div>
+                                        ${questao.ques_html}
+                                    </div>
                                 </div>
                             </div>
                         `;
                     }
                 });
-
                 $("#form").html(html);
 
                 var buttonAdd = `
+                    <div>
+                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="enviar-dados">Enviar</button>
+                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="teste-dados">TESTE</button>
+                    </div>
                     <div class="fixed-bottom d-flex justify-content-end m-3">
                         <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2 btnAdicionar">Adicionar</button>
                     </div>
@@ -2463,17 +2307,80 @@ function ExibirQuestoes(cod_form, cod_nome) {
 
                 $("#form").append(buttonAdd);
 
+                $('#enviar-dados').click(function() {
+                    var cod_form = $(this).data('cod-form');
+                    EnviarDadosQuestoes(cod_form);
+                });
+                
+                $('#teste-dados').click(function() {
+                    var cod_form = $(this).data('cod-form');
+                    ColetarDadosQuestoes(cod_form);
+                });
+
                 setupDragAndDrop();
 
             } else {
                 html = '<p>Nenhuma questão encontrada.</p>';
                 $("#form").html(html);
+                console.log('Nenhuma questão encontrada.');
             }
         },
         error: function(xhr, status, error) {
             console.error("Erro na requisição:", error);
         }
     });
+}
+
+function EnviarDadosQuestoes(cod_form) {
+    var questoes = ColetarDadosQuestoes(cod_form);
+
+    $.ajax({
+        url: url + "php/Funcoes/inserir-questoes.php",
+        method: "POST",
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            questoes: questoes,
+            cod_form: cod_form,
+        }),
+        success: function(result) {
+            console.log("Dados enviados com sucesso :", result);
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro ao enviar os dados :", error);
+        }
+    })
+}
+
+function ColetarDadosQuestoes(cod_form) {
+    const dadosQuestoes = [];
+    const cardsQuestao = document.querySelectorAll('#form .card');
+
+    cardsQuestao.forEach(function(card, index) {
+        // Obtém os dados específicos de cada card
+        const codigo = card.querySelector('.codigo').getAttribute('data-codigo');
+        const descricao = card.querySelector('.descricao').value.trim();
+        const posicao = index + 1;
+        const sigla = card.querySelector('.sigla').getAttribute('data-sigla');
+        const ativo = card.querySelector('.ativo').getAttribute('data-ativo');
+
+        // Cria um objeto com os dados da questão atual
+        const questao = {
+            codigo: codigo,
+            descricao: descricao,
+            sigla: sigla,
+            posicao: posicao,
+            ativo: ativo
+        };
+
+        // Adiciona o objeto ao array de dados das questões
+        dadosQuestoes.push(questao);
+    });
+
+    console.log(dadosQuestoes);
+    console.log(cod_form);
+    // Retorna o array contendo todos os dados das questões
+    return dadosQuestoes;
 }
 
 // Função para adicionar um novo card
@@ -2486,22 +2393,22 @@ function AdicionarCard() {
                 <label>Descrição : <input type="text" value="Nova Questão"></label>
                 <label>Sigla : </label>
                 <label>Posição : ${novoId}º</label>
-                <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
                 <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
             </div>
         </div>
     `;
 
     $("#form").append(novoCardHtml);
+    window.location = "#rodape";
 
     setupDragAndDrop();
-
-    window.location = "#rodape";
+    atualizarPosicoes();
 }
 
 // Função para excluir questão
 function ExcluirQuestao() {
     $(this).closest('.card').remove();
+    atualizarPosicoes()
 }
 
 // Função para configurar arrastar e soltar
@@ -2558,19 +2465,16 @@ function setupDragAndDrop() {
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 
-    function atualizarPosicoes() {
-        const cards = document.querySelectorAll('.draggable');
-        cards.forEach((card, index) => {
-            card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
-        });
-    }
+    atualizarPosicoes();
+}
+
+function atualizarPosicoes() {
+    const cards = document.querySelectorAll('.draggable');
+    cards.forEach((card, index) => {
+        card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
+    });
 }
 
 // Delegação de eventos para excluir questão
 $(document).on("click", ".btnExcluir", ExcluirQuestao);
 $(document).on("click", ".btnAdicionar", AdicionarCard);
-
-// Exemplo de chamada da função ExibirQuestoes ao carregar a página
-// $(document).ready(function() {
-//     ExibirQuestoes(1, "Exemplo de Formulário");
-// });
