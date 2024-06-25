@@ -2283,17 +2283,25 @@ function ExibirQuestoes(cod_form, cod_nome) {
                                     <label>Posição : <span class="posicao">${questao.ques_posicao}</span></label>
                                     <label>Sigla : <span data-sigla="${questao.ques_sigla}" class="sigla">${questao.ques_sigla}</span></label>
                                     <label>Ativo : <span data-ativo="${questao.ques_ativo}" class="ativo">${questao.ques_ativo}</span></label>
+                                    <span class="html-codigo">${questao.ques_html}</span>
                                     <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
                                     <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
-                                    <div>
-                                        ${questao.ques_html}
-                                    </div>
+                                    <input type="text" class="form-control nova-opcao" placeholder="Digite a nova opção">
+                                    <button type="button" class="btn btn-primary button-prin btnAdicionarOpcao">ADICIONAR OPÇÃO</button>
+                                    <button type="button" class="btn btn-danger button-prin btnExcluirOpcao">EXCLUIR OPÇÃO</button>
+                                    <input type="text" class="form-control" id="textoCheckbox" placeholder="Digite o texto da Checkbox">
+                                    <button type="button" class="btn btn-primary button-prin btnAdicionarCheckbox" data-sigla="${questao.ques_sigla}">ADICIONAR CHECKBOX</button>
+                                    <button type="button" class="btn btn-danger button-prin btnExcluirCheckbox" data-sigla="${questao.ques_sigla}">EXCLUIR CHECKBOX</button>
                                 </div>
                             </div>
                         `;
                     }
                 });
                 $("#form").html(html);
+                // adicionarEventoExcluirOpcao();
+                adicionarEventos();
+
+                adicionarExcluirOption();
 
                 var buttonAdd = `
                     <div>
@@ -2363,6 +2371,7 @@ function ColetarDadosQuestoes(cod_form) {
         const posicao = index + 1;
         const sigla = card.querySelector('.sigla').getAttribute('data-sigla');
         const ativo = card.querySelector('.ativo').getAttribute('data-ativo');
+        const htmlCodigo = card.querySelector('.html-codigo').innerHTML;
 
         // Cria um objeto com os dados da questão atual
         const questao = {
@@ -2370,7 +2379,8 @@ function ColetarDadosQuestoes(cod_form) {
             descricao: descricao,
             sigla: sigla,
             posicao: posicao,
-            ativo: ativo
+            ativo: ativo,
+            html: htmlCodigo
         };
 
         // Adiciona o objeto ao array de dados das questões
@@ -2478,3 +2488,123 @@ function atualizarPosicoes() {
 // Delegação de eventos para excluir questão
 $(document).on("click", ".btnExcluir", ExcluirQuestao);
 $(document).on("click", ".btnAdicionar", AdicionarCard);
+
+function adicionarEventos() {
+    $('.btnAdicionarCheckbox').click(function() {
+        adicionarCheckbox(this);
+    });
+
+    $('.btnExcluirCheckbox').click(function() {
+        excluirCheckbox(this);
+    });
+
+    // $('.btnAdicionarOpcao').click(function() {
+    //     adicionarOption(this);
+    // });
+
+    // $('.btnExcluirOpcao').click(function(){
+    //     excluirOption(this);
+    // })
+}
+
+// function adicionarOption() {
+//     var novaOpcao = $(this).siblings('.nova-opcao').val().trim();
+//     if (novaOpcao !== '') {
+//         var select = $(this).siblings('.html-codigo').find('select');
+//         var option = new Option(novaOpcao, novaOpcao);
+//         select.append(option);
+//         $(this).siblings('.nova-opcao').val(''); // Limpa o campo de texto após adicionar a opção
+//     } else {
+//         alert('Digite uma opção.');
+//     }
+// }
+
+// function excluirOption() {
+//     var select = $(this).siblings('.html-codigo').find('select'); // Seleciona o elemento select próximo do botão
+//     var selectedIndex = select.prop('selectedIndex'); // Obtém o índice da opção selecionada
+//     if (selectedIndex !== -1) {
+//         select.find('option').eq(selectedIndex).remove(); // Remove a opção selecionada
+//     } else {
+//         alert('Nenhuma opção para excluir.');
+//     }
+// }
+
+// PARA ADICIONAR/EXCLUIR OPTION
+function adicionarExcluirOption() {
+    // Evento para adicionar opção
+    $('.btnAdicionarOpcao').click(function() {
+        var novaOpcao = $(this).siblings('.nova-opcao').val().trim();
+        if (novaOpcao !== '') {
+            var select = $(this).siblings('.html-codigo').find('select');
+            var option = new Option(novaOpcao, novaOpcao);
+            select.append(option);
+            $(this).siblings('.nova-opcao').val(''); // Limpa o campo de texto após adicionar a opção
+        } else {
+            alert('Digite uma opção.');
+        }
+    });
+
+    // Evento para excluir opção
+    $('.btnExcluirOpcao').click(function() {
+        var select = $(this).siblings('.html-codigo').find('select'); // Seleciona o elemento select próximo do botão
+        var selectedIndex = select.prop('selectedIndex'); // Obtém o índice da opção selecionada
+        if (selectedIndex !== -1) {
+            select.find('option').eq(selectedIndex).remove(); // Remove a opção selecionada
+        } else {
+            alert('Nenhuma opção para excluir.');
+        }
+    });
+}
+
+// PARA ADICIONAR/EXCLUIR CHECKBOX
+function excluirCheckbox(button) {
+    var quesSigla = $(button).data('sigla');
+    var textoCheckboxMarcada = '';
+    var checkboxes = $(`#${quesSigla}`).find('.form-check-input');
+    var found = false;
+
+    checkboxes.each(function() {
+        if ($(this).is(':checked')) {
+            textoCheckboxMarcada = $(this).next('.form-check-label').text(); // Obtém o texto da label e remove espaços em branco
+            $(this).closest('.form-check').remove(); // Remove o elemento pai da checkbox marcada
+            found = true;
+        }
+    });
+
+    if (!found) {
+        alert('Marque um checkbox para excluir.');
+    } else {
+        // Remove o input e o label que contêm exatamente o texto marcado
+        $(`#${quesSigla}`).find(`.form-check-input`).each(function() {
+            if ($(this).val() === textoCheckboxMarcada) {
+                $(this).remove();
+            }
+        });
+        $(`#${quesSigla}`).find(`label`).each(function() {
+            if ($(this).text() === textoCheckboxMarcada) {
+                $(this).remove();
+            }
+        });
+
+        console.log('Checkbox que foi excluído:', textoCheckboxMarcada);
+    }
+}
+
+function adicionarCheckbox(button) {
+    var quesSigla = $(button).data('sigla');
+    var htmlContent = $('#' + quesSigla); // Seleciona a div onde deseja adicionar a checkbox
+    var textoCheckbox = $('#textoCheckbox').val(); // Obtém o texto inserido no input
+
+    var inputCheckbox = document.createElement('input');
+    inputCheckbox.type = 'checkbox';
+    inputCheckbox.className = 'form-check-input'; // Adiciona a classe form-check-input para checkboxes do Bootstrap
+    inputCheckbox.value = textoCheckbox;
+
+    var label = document.createElement('label');
+    label.className = 'form-check-label'; // Adiciona a classe form-check-label para labels de checkboxes do Bootstrap
+    label.textContent = inputCheckbox.value;
+
+    // Adiciona a checkbox e o label dentro da div htmlContent
+    htmlContent.append(inputCheckbox);
+    htmlContent.append(label);
+}
