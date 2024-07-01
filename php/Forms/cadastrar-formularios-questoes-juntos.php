@@ -310,8 +310,8 @@
             case 'Checkbox':
                 for (i = 0; i < opcoes.length; i++) {
                     html_select += `
-                        <input type="checkbox" class="form-check-input" value="${opcoes[i]}">
-                        <label class="form-check-label">${opcoes[i]}</label>
+                        <input type="checkbox" class="form-check-input" value="${opcoes[i]}" id="${opcoes[i]}">
+                        <label class="form-check-label" for="${opcoes[i]}">${opcoes[i]}</label>
                     `;
                 }
             break;

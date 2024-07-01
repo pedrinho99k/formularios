@@ -2229,6 +2229,9 @@ function FormListarAhpaceg() {
     });
 }
 
+
+//-------------------------------------------------------------------------------------------
+
 function AlterarQuestoes() {
     $.ajax({
         url: url + "php/Funcoes/buscar-formulario-codigo-perfil-json.php",
@@ -2260,351 +2263,371 @@ function AlterarQuestoes() {
     });
 }
 
-// Função para exibir questões
+// Form de alterar-questoes.php
 function ExibirQuestoes(cod_form, cod_nome) {
     $.ajax({
-        url: url + "php/Funcoes/buscar-questoes-formularios.php",
-        method: 'POST',
-        data: {
-            cod_form: cod_form
-        },
-        dataType: 'json',
-        success: function (result) {
-            var html = `<h4 class="d-flex justify-content-center mt-3">${cod_nome}</h4>`;
-
-            if (result.length > 0) {
-                result.forEach(function(questao) {
-                    if (questao.ques_posicao !== -1) {
-                        html += `
-                            <div class="card my-3 draggable questao" id="card${questao.ques_posicao}" draggable="true">
-                                <div class="card-body">
-                                    <label>Codigo : <span data-codigo="${questao.ques_codigo}" class="codigo">${questao.ques_codigo}</span></label>
-                                    <label>Descrição : <input class="descricao" type="text" value="${questao.ques_descricao}"></label>
-                                    <label>Posição : <span class="posicao">${questao.ques_posicao}</span></label>
-                                    <label>Sigla : <span data-sigla="${questao.ques_sigla}" class="sigla">${questao.ques_sigla}</span></label>
-                                    <label>Ativo : <span data-ativo="${questao.ques_ativo}" class="ativo">${questao.ques_ativo}</span></label>
-                                    <span class="html-codigo">${questao.ques_html}</span>
-                                    <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
-                                    <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
-                                    <input type="text" class="form-control nova-opcao" placeholder="Digite a nova opção">
-                                    <button type="button" class="btn btn-primary button-prin btnAdicionarOpcao">ADICIONAR OPÇÃO</button>
-                                    <button type="button" class="btn btn-danger button-prin btnExcluirOpcao">EXCLUIR OPÇÃO</button>
-                                    <input type="text" class="form-control" id="textoCheckbox" placeholder="Digite o texto da Checkbox">
-                                    <button type="button" class="btn btn-primary button-prin btnAdicionarCheckbox" data-sigla="${questao.ques_sigla}">ADICIONAR CHECKBOX</button>
-                                    <button type="button" class="btn btn-danger button-prin btnExcluirCheckbox" data-sigla="${questao.ques_sigla}">EXCLUIR CHECKBOX</button>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-                $("#form").html(html);
-                // adicionarEventoExcluirOpcao();
-                adicionarEventos();
-
-                adicionarExcluirOption();
-
-                var buttonAdd = `
-                    <div>
-                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="enviar-dados">Enviar</button>
-                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="teste-dados">TESTE</button>
-                    </div>
-                    <div class="fixed-bottom d-flex justify-content-end m-3">
-                        <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2 btnAdicionar">Adicionar</button>
-                    </div>
-                `;
-
-                $("#form").append(buttonAdd);
-
-                $('#enviar-dados').click(function() {
-                    var cod_form = $(this).data('cod-form');
-                    EnviarDadosQuestoes(cod_form);
-                });
-                
-                $('#teste-dados').click(function() {
-                    var cod_form = $(this).data('cod-form');
-                    ColetarDadosQuestoes(cod_form);
-                });
-
-                setupDragAndDrop();
-
-            } else {
-                html = '<p>Nenhuma questão encontrada.</p>';
-                $("#form").html(html);
-                console.log('Nenhuma questão encontrada.');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Erro na requisição:", error);
-        }
-    });
-}
-
-function EnviarDadosQuestoes(cod_form) {
-    var questoes = ColetarDadosQuestoes(cod_form);
-
-    $.ajax({
-        url: url + "php/Funcoes/inserir-questoes.php",
+        url: url + "php/Forms/alterar-questoes.php",
         method: "POST",
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            questoes: questoes,
+        data: {
             cod_form: cod_form,
-        }),
-        success: function(result) {
-            console.log("Dados enviados com sucesso :", result);
+            cod_nome: cod_nome,
         },
-        error: function(xhr, status, error) {
-            console.error("Erro ao enviar os dados :", error);
+        success: function(result) {
+            // console.log("tudo certo");
+            $("#form").html(result);
         }
     })
 }
 
-function ColetarDadosQuestoes(cod_form) {
-    const dadosQuestoes = [];
-    const cardsQuestao = document.querySelectorAll('#form .card');
+// Função para exibir questões
+// function ExibirQuestoes(cod_form, cod_nome) {
+//     $.ajax({
+//         url: url + "php/Funcoes/buscar-questoes-formularios.php",
+//         method: 'POST',
+//         data: {
+//             cod_form: cod_form
+//         },
+//         dataType: 'json',
+//         success: function (result) {
+//             var html = `<h4 class="d-flex justify-content-center mt-3">${cod_nome}</h4>`;
 
-    cardsQuestao.forEach(function(card, index) {
-        // Obtém os dados específicos de cada card
-        const codigo = card.querySelector('.codigo').getAttribute('data-codigo');
-        const descricao = card.querySelector('.descricao').value.trim();
-        const posicao = index + 1;
-        const sigla = card.querySelector('.sigla').getAttribute('data-sigla');
-        const ativo = card.querySelector('.ativo').getAttribute('data-ativo');
-        const htmlCodigo = card.querySelector('.html-codigo').innerHTML;
+//             if (result.length > 0) {
+//                 result.forEach(function(questao) {
+//                     if (questao.ques_posicao !== -1) {
+//                         html += `
+//                             <div class="card my-3 draggable questao" id="card${questao.ques_posicao}" draggable="true">
+//                                 <div class="card-body">
+//                                     <label>Codigo : <span data-codigo="${questao.ques_codigo}" class="codigo">${questao.ques_codigo}</span></label>
+//                                     <label>Descrição : <input class="descricao" type="text" value="${questao.ques_descricao}"></label>
+//                                     <label>Posição : <span class="posicao">${questao.ques_posicao}</span></label>
+//                                     <label>Sigla : <span data-sigla="${questao.ques_sigla}" class="sigla">${questao.ques_sigla}</span></label>
+//                                     <label>Ativo : <span data-ativo="${questao.ques_ativo}" class="ativo">${questao.ques_ativo}</span></label>
+//                                     <span class="html-codigo">${questao.ques_html}</span>
+//                                     <button type="button" class="btn btn-primary button-prin">INATIVAR</button>
+//                                     <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
+//                                     <input type="text" class="form-control nova-opcao" placeholder="Digite a nova opção">
+//                                     <button type="button" class="btn btn-primary button-prin btnAdicionarOpcao">ADICIONAR OPÇÃO</button>
+//                                     <button type="button" class="btn btn-danger button-prin btnExcluirOpcao">EXCLUIR OPÇÃO</button>
+//                                     <input type="text" class="form-control" id="textoCheckbox" placeholder="Digite o texto da Checkbox">
+//                                     <button type="button" class="btn btn-primary button-prin btnAdicionarCheckbox" data-sigla="${questao.ques_sigla}">ADICIONAR CHECKBOX</button>
+//                                     <button type="button" class="btn btn-danger button-prin btnExcluirCheckbox" data-sigla="${questao.ques_sigla}">EXCLUIR CHECKBOX</button>
+//                                 </div>
+//                             </div>
+//                         `;
+//                     }
+//                 });
+//                 $("#form").html(html);
+//                 // adicionarEventoExcluirOpcao();
+//                 adicionarEventos();
 
-        // Cria um objeto com os dados da questão atual
-        const questao = {
-            codigo: codigo,
-            descricao: descricao,
-            sigla: sigla,
-            posicao: posicao,
-            ativo: ativo,
-            html: htmlCodigo
-        };
+//                 adicionarExcluirOption();
 
-        // Adiciona o objeto ao array de dados das questões
-        dadosQuestoes.push(questao);
-    });
+//                 var buttonAdd = `
+//                     <div>
+//                         <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="enviar-dados">Enviar</button>
+//                         <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2" data-cod-form="${cod_form}" id="teste-dados">TESTE</button>
+//                     </div>
+//                     <div class="fixed-bottom d-flex justify-content-end m-3">
+//                         <button type="button" class="mx-2 btn btn-primary button-prin btn-md ml-2 btnAdicionar">Adicionar</button>
+//                     </div>
+//                 `;
 
-    console.log(dadosQuestoes);
-    console.log(cod_form);
-    // Retorna o array contendo todos os dados das questões
-    return dadosQuestoes;
-}
+//                 $("#form").append(buttonAdd);
 
-// Função para adicionar um novo card
-function AdicionarCard() {
-    var novoId = $(".card").length + 1;
+//                 $('#enviar-dados').click(function() {
+//                     var cod_form = $(this).data('cod-form');
+//                     EnviarDadosQuestoes(cod_form);
+//                 });
+                
+//                 $('#teste-dados').click(function() {
+//                     var cod_form = $(this).data('cod-form');
+//                     ColetarDadosQuestoes(cod_form);
+//                 });
 
-    var novoCardHtml = `
-        <div class="card my-3 draggable" id="card${novoId}" draggable="true">
-            <div class="card-body">
-                <label>Descrição : <input type="text" value="Nova Questão"></label>
-                <label>Sigla : </label>
-                <label>Posição : ${novoId}º</label>
-                <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
-            </div>
-        </div>
-    `;
+//                 setupDragAndDrop();
 
-    $("#form").append(novoCardHtml);
-    window.location = "#rodape";
-
-    setupDragAndDrop();
-    atualizarPosicoes();
-}
-
-// Função para excluir questão
-function ExcluirQuestao() {
-    $(this).closest('.card').remove();
-    atualizarPosicoes()
-}
-
-// Função para configurar arrastar e soltar
-function setupDragAndDrop() {
-    const draggables = document.querySelectorAll('.draggable');
-    const cardContainer = document.getElementById('form');
-
-    draggables.forEach(draggable => {
-        draggable.addEventListener('dragstart', dragStart);
-        draggable.addEventListener('dragend', dragEnd);
-    });
-
-    cardContainer.addEventListener('dragover', dragOver);
-    cardContainer.addEventListener('drop', drop);
-
-    function dragStart(event) {
-        event.dataTransfer.setData('text/plain', event.target.id);
-        event.target.classList.add('dragging');
-    }
-
-    function dragEnd(event) {
-        event.target.classList.remove('dragging');
-        atualizarPosicoes();
-    }
-
-    function dragOver(event) {
-        event.preventDefault();
-        const afterElement = getDragAfterElement(cardContainer, event.clientY);
-        const dragging = document.querySelector('.dragging');
-        if (afterElement == null) {
-            cardContainer.appendChild(dragging);
-        } else {
-            cardContainer.insertBefore(dragging, afterElement);
-        }
-    }
-
-    function drop(event) {
-        event.preventDefault();
-        const id = event.dataTransfer.getData('text/plain');
-        const draggableElement = document.getElementById(id);
-        draggableElement.classList.remove('dragging');
-    }
-
-    function getDragAfterElement(container, y) {
-        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child };
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-
-    atualizarPosicoes();
-}
-
-function atualizarPosicoes() {
-    const cards = document.querySelectorAll('.draggable');
-    cards.forEach((card, index) => {
-        card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
-    });
-}
-
-// Delegação de eventos para excluir questão
-$(document).on("click", ".btnExcluir", ExcluirQuestao);
-$(document).on("click", ".btnAdicionar", AdicionarCard);
-
-function adicionarEventos() {
-    $('.btnAdicionarCheckbox').click(function() {
-        adicionarCheckbox(this);
-    });
-
-    $('.btnExcluirCheckbox').click(function() {
-        excluirCheckbox(this);
-    });
-
-    // $('.btnAdicionarOpcao').click(function() {
-    //     adicionarOption(this);
-    // });
-
-    // $('.btnExcluirOpcao').click(function(){
-    //     excluirOption(this);
-    // })
-}
-
-// function adicionarOption() {
-//     var novaOpcao = $(this).siblings('.nova-opcao').val().trim();
-//     if (novaOpcao !== '') {
-//         var select = $(this).siblings('.html-codigo').find('select');
-//         var option = new Option(novaOpcao, novaOpcao);
-//         select.append(option);
-//         $(this).siblings('.nova-opcao').val(''); // Limpa o campo de texto após adicionar a opção
-//     } else {
-//         alert('Digite uma opção.');
-//     }
+//             } else {
+//                 html = '<p>Nenhuma questão encontrada.</p>';
+//                 $("#form").html(html);
+//                 console.log('Nenhuma questão encontrada.');
+//             }
+//         },
+//         error: function(xhr, status, error) {
+//             console.error("Erro na requisição:", error);
+//         }
+//     });
 // }
 
-// function excluirOption() {
-//     var select = $(this).siblings('.html-codigo').find('select'); // Seleciona o elemento select próximo do botão
-//     var selectedIndex = select.prop('selectedIndex'); // Obtém o índice da opção selecionada
-//     if (selectedIndex !== -1) {
-//         select.find('option').eq(selectedIndex).remove(); // Remove a opção selecionada
-//     } else {
-//         alert('Nenhuma opção para excluir.');
+// function EnviarDadosQuestoes(cod_form) {
+//     var questoes = ColetarDadosQuestoes(cod_form);
+
+//     $.ajax({
+//         url: url + "php/Funcoes/inserir-questoes.php",
+//         method: "POST",
+//         dataType: 'json',
+//         contentType: 'application/json',
+//         data: JSON.stringify({
+//             questoes: questoes,
+//             cod_form: cod_form,
+//         }),
+//         success: function(result) {
+//             console.log("Dados enviados com sucesso :", result);
+//         },
+//         error: function(xhr, status, error) {
+//             console.error("Erro ao enviar os dados :", error);
+//         }
+//     })
+// }
+
+// function ColetarDadosQuestoes(cod_form) {
+//     const dadosQuestoes = [];
+//     const cardsQuestao = document.querySelectorAll('#form .card');
+
+//     cardsQuestao.forEach(function(card, index) {
+//         // Obtém os dados específicos de cada card
+//         const codigo = card.querySelector('.codigo').getAttribute('data-codigo');
+//         const descricao = card.querySelector('.descricao').value.trim();
+//         const posicao = index + 1;
+//         const sigla = card.querySelector('.sigla').getAttribute('data-sigla');
+//         const ativo = card.querySelector('.ativo').getAttribute('data-ativo');
+//         const htmlCodigo = card.querySelector('.html-codigo').innerHTML;
+
+//         // Cria um objeto com os dados da questão atual
+//         const questao = {
+//             codigo: codigo,
+//             descricao: descricao,
+//             sigla: sigla,
+//             posicao: posicao,
+//             ativo: ativo,
+//             html: htmlCodigo
+//         };
+
+//         // Adiciona o objeto ao array de dados das questões
+//         dadosQuestoes.push(questao);
+//     });
+
+//     console.log(dadosQuestoes);
+//     console.log(cod_form);
+//     // Retorna o array contendo todos os dados das questões
+//     return dadosQuestoes;
+// }
+
+// Função para adicionar um novo card
+// function AdicionarCard() {
+//     var novoId = $(".card").length + 1;
+//     var descricao = 'Nova questão';
+//     var descricao_abreviada = abreviacao(descricao);
+
+//     var novoCardHtml = `
+//         <div class="card my-3 draggable" id="card${novoId}" draggable="true">
+//             <div class="card-body">
+//                 <label>Descrição : <input type="text" value="Nova Questão"></label>
+//                 <label>Sigla : </label>
+//                 <label>Posição : ${novoId}º</label>
+//                 <button type="button" class="btn btn-danger btnExcluir">EXCLUIR</button>
+//             </div>
+//             <div class="col-md-12">
+//                 <label for="tipo_questao" class="form-label">Tipo de Questão</label>
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="radio" name="radios-questao-${novoId}" id="${novoId}" value="Text" checked>Texto
+//                 </div>
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="radio" name="radios-questao-${novoId}" id="${novoId}" value="Option">Opções
+//                 </div>
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="radio" name="radios-questao-${novoId}" id="${novoId}" value="Checkbox">Checkbox
+//                 </div>
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="radio" name="radios-questao-${novoId}" id="${novoId}" value="Textarea">Campo Texto
+//                 </div>
+//             </div>
+//         </div>
+//     `;
+
+//     $("#form").append(novoCardHtml);
+//     window.location = "#rodape";
+
+//     setupDragAndDrop();
+//     atualizarPosicoes();
+// }
+
+// Delegação de eventos para excluir questão
+// $(document).on("click", ".btnExcluir", ExcluirQuestao);
+// $(document).on("click", ".btnAdicionar", AdicionarCard);
+
+// function ExcluirQuestao() {
+//     $(this).closest('.card').remove();
+//     atualizarPosicoes()
+// }
+
+// Função para configurar arrastar e soltar
+// function setupDragAndDrop() {
+//     const draggables = document.querySelectorAll('.draggable');
+//     const cardContainer = document.getElementById('form');
+
+//     draggables.forEach(draggable => {
+//         draggable.addEventListener('dragstart', dragStart);
+//         draggable.addEventListener('dragend', dragEnd);
+//     });
+
+//     cardContainer.addEventListener('dragover', dragOver);
+//     cardContainer.addEventListener('drop', drop);
+
+//     function dragStart(event) {
+//         event.dataTransfer.setData('text/plain', event.target.id);
+//         event.target.classList.add('dragging');
 //     }
+
+//     function dragEnd(event) {
+//         event.target.classList.remove('dragging');
+//         atualizarPosicoes();
+//     }
+
+//     function dragOver(event) {
+//         event.preventDefault();
+//         const afterElement = getDragAfterElement(cardContainer, event.clientY);
+//         const dragging = document.querySelector('.dragging');
+//         if (afterElement == null) {
+//             cardContainer.appendChild(dragging);
+//         } else {
+//             cardContainer.insertBefore(dragging, afterElement);
+//         }
+//     }
+
+//     function drop(event) {
+//         event.preventDefault();
+//         const id = event.dataTransfer.getData('text/plain');
+//         const draggableElement = document.getElementById(id);
+//         draggableElement.classList.remove('dragging');
+//     }
+
+//     function getDragAfterElement(container, y) {
+//         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+//         return draggableElements.reduce((closest, child) => {
+//             const box = child.getBoundingClientRect();
+//             const offset = y - box.top - box.height / 2;
+//             if (offset < 0 && offset > closest.offset) {
+//                 return { offset: offset, element: child };
+//             } else {
+//                 return closest;
+//             }
+//         }, { offset: Number.NEGATIVE_INFINITY }).element;
+//     }
+
+//     atualizarPosicoes();
+// }
+
+// function atualizarPosicoes() {
+//     const cards = document.querySelectorAll('.draggable');
+//     cards.forEach((card, index) => {
+//         card.querySelector('label:nth-child(3)').innerText = `Posição : ${index + 1}`;
+//     });
+// }
+
+// function adicionarEventos() {
+//     $('.btnAdicionarCheckbox').click(function() {
+//         adicionarCheckbox(this);
+//     });
+
+//     $('.btnExcluirCheckbox').click(function() {
+//         excluirCheckbox(this);
+//     });
 // }
 
 // PARA ADICIONAR/EXCLUIR OPTION
-function adicionarExcluirOption() {
-    // Evento para adicionar opção
-    $('.btnAdicionarOpcao').click(function() {
-        var novaOpcao = $(this).siblings('.nova-opcao').val().trim();
-        if (novaOpcao !== '') {
-            var select = $(this).siblings('.html-codigo').find('select');
-            var option = new Option(novaOpcao, novaOpcao);
-            select.append(option);
-            $(this).siblings('.nova-opcao').val(''); // Limpa o campo de texto após adicionar a opção
-        } else {
-            alert('Digite uma opção.');
-        }
-    });
+// function adicionarExcluirOption() {
+//     // Evento para adicionar opção
+//     $('.btnAdicionarOpcao').click(function() {
+//         var novaOpcao = $(this).siblings('.nova-opcao').val().trim();
+//         if (novaOpcao !== '') {
+//             var select = $(this).siblings('.html-codigo').find('select');
+//             var option = new Option(novaOpcao, novaOpcao);
+//             select.append(option);
+//             $(this).siblings('.nova-opcao').val(''); // Limpa o campo de texto após adicionar a opção
+//         } else {
+//             alert('Digite uma opção.');
+//         }
+//     });
 
-    // Evento para excluir opção
-    $('.btnExcluirOpcao').click(function() {
-        var select = $(this).siblings('.html-codigo').find('select'); // Seleciona o elemento select próximo do botão
-        var selectedIndex = select.prop('selectedIndex'); // Obtém o índice da opção selecionada
-        if (selectedIndex !== -1) {
-            select.find('option').eq(selectedIndex).remove(); // Remove a opção selecionada
-        } else {
-            alert('Nenhuma opção para excluir.');
-        }
-    });
-}
+//     // Evento para excluir opção
+//     $('.btnExcluirOpcao').click(function() {
+//         var select = $(this).siblings('.html-codigo').find('select'); // Seleciona o elemento select próximo do botão
+//         var selectedIndex = select.prop('selectedIndex'); // Obtém o índice da opção selecionada
+//         if (selectedIndex !== -1) {
+//             select.find('option').eq(selectedIndex).remove(); // Remove a opção selecionada
+//         } else {
+//             alert('Nenhuma opção para excluir.');
+//         }
+//     });
+// }
 
 // PARA ADICIONAR/EXCLUIR CHECKBOX
-function excluirCheckbox(button) {
-    var quesSigla = $(button).data('sigla');
-    var textoCheckboxMarcada = '';
-    var checkboxes = $(`#${quesSigla}`).find('.form-check-input');
-    var found = false;
+// function ExcluirCheckbox(button) {
+//     var quesSigla = $(button).data('sigla');
+//     var textoCheckboxMarcada = '';
+//     var checkboxes = $(`#${quesSigla}`).find('.form-check-input');
+//     var found = false;
 
-    checkboxes.each(function() {
-        if ($(this).is(':checked')) {
-            textoCheckboxMarcada = $(this).next('.form-check-label').text(); // Obtém o texto da label e remove espaços em branco
-            $(this).closest('.form-check').remove(); // Remove o elemento pai da checkbox marcada
-            found = true;
-        }
-    });
+//     checkboxes.each(function() {
+//         if ($(this).is(':checked')) {
+//             textoCheckboxMarcada = $(this).next('.form-check-label').text(); // Obtém o texto da label e remove espaços em branco
+//             $(this).closest('.form-check').remove(); // Remove o elemento pai da checkbox marcada
+//             found = true;
+//         }
+//     });
 
-    if (!found) {
-        alert('Marque um checkbox para excluir.');
-    } else {
-        // Remove o input e o label que contêm exatamente o texto marcado
-        $(`#${quesSigla}`).find(`.form-check-input`).each(function() {
-            if ($(this).val() === textoCheckboxMarcada) {
-                $(this).remove();
-            }
-        });
-        $(`#${quesSigla}`).find(`label`).each(function() {
-            if ($(this).text() === textoCheckboxMarcada) {
-                $(this).remove();
-            }
-        });
+//     if (!found) {
+//         alert('Marque um checkbox para excluir.');
+//     } else {
+//         // Remove o input e o label que contêm exatamente o texto marcado
+//         $(`#${quesSigla}`).find(`.form-check-input`).each(function() {
+//             if ($(this).val() === textoCheckboxMarcada) {
+//                 $(this).remove();
+//             }
+//         });
+//         $(`#${quesSigla}`).find(`label`).each(function() {
+//             if ($(this).text() === textoCheckboxMarcada) {
+//                 $(this).remove();
+//             }
+//         });
 
-        console.log('Checkbox que foi excluído:', textoCheckboxMarcada);
-    }
-}
+//         console.log('Checkbox que foi excluído:', textoCheckboxMarcada);
+//     }
+// }
 
-function adicionarCheckbox(button) {
-    var quesSigla = $(button).data('sigla');
-    var htmlContent = $('#' + quesSigla); // Seleciona a div onde deseja adicionar a checkbox
-    var textoCheckbox = $('#textoCheckbox').val(); // Obtém o texto inserido no input
+// function adicionarCheckbox(button) {
+//     var quesSigla = $(button).data('sigla');
+//     var htmlContent = $('#' + quesSigla); // Seleciona a div onde deseja adicionar a checkbox
+//     var textoCheckbox = $('#textoCheckbox').val(); // Obtém o texto inserido no input
 
-    var inputCheckbox = document.createElement('input');
-    inputCheckbox.type = 'checkbox';
-    inputCheckbox.className = 'form-check-input'; // Adiciona a classe form-check-input para checkboxes do Bootstrap
-    inputCheckbox.value = textoCheckbox;
+//     var inputCheckbox = document.createElement('input');
+//     inputCheckbox.type = 'checkbox';
+//     inputCheckbox.className = 'form-check-input'; // Adiciona a classe form-check-input para checkboxes do Bootstrap
+//     inputCheckbox.value = textoCheckbox;
 
-    var label = document.createElement('label');
-    label.className = 'form-check-label'; // Adiciona a classe form-check-label para labels de checkboxes do Bootstrap
-    label.textContent = inputCheckbox.value;
+//     var label = document.createElement('label');
+//     label.className = 'form-check-label'; // Adiciona a classe form-check-label para labels de checkboxes do Bootstrap
+//     label.textContent = inputCheckbox.value;
 
-    // Adiciona a checkbox e o label dentro da div htmlContent
-    htmlContent.append(inputCheckbox);
-    htmlContent.append(label);
-}
+//     // Adiciona a checkbox e o label dentro da div htmlContent
+//     htmlContent.append(inputCheckbox);
+//     htmlContent.append(label);
+// }
+
+// function abreviacao(desc_questao) {
+//     desc_questao = desc_questao.replace(/[!@#$%¨&*(),.?":{}|<>]/g, '');
+
+//     if (desc_questao.indexOf(' ') === -1) {
+//         return desc_questao; // Descricao sem abreviacao
+//     }
+
+//     var words = desc_questao.split(' ');
+//     var abbWords = [];
+
+//     for (var i = 0; i < words.length; i++) {
+//         abbWords.push(words[i].substr(0, 3));
+//     }
+
+//     var abreviacao = abbWords.join('_');
+//     return abreviacao;
+// }
