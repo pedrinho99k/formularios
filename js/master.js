@@ -116,21 +116,22 @@ $(document).ready(function () {
     });
 
     // Icone SVG do Excel
-    var iconExcel = '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 48 48">' +
-        '<path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>' +
-        '<path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path>' +
-        '<path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>' +
-        '<path fill="#17472a" d="M14 24.005H29V33.055H14z"></path>' +
-        '<g>' +
-        '<path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path>' +
-        '<path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path>' +
-        '<path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>' +
-        '<path fill="#129652" d="M29 24.005H44V33.055H29z"></path>' +
-        '</g>' +
-        '<path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path>' +
-        '<path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>' +
-        '</svg>'
-    ;
+    var iconExcel = `
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 48 48">
+            <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>
+            <path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path>
+            <path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>
+            <path fill="#17472a" d="M14 24.005H29V33.055H14z"></path>
+            <g>
+                <path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path>
+                <path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path>
+                <path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>
+                <path fill="#129652" d="M29 24.005H44V33.055H29z"></path>
+            </g>
+            <path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path>
+            <path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>
+        </svg>
+    `;
 
     // Array com códigos de formulários que terão botão Excel
     var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
@@ -275,36 +276,36 @@ $(document).ready(function () {
     });
 
     // Busca a primeira vez
-    function LinhasTabela(items, wrapper, rows_per_page, page) {
-        wrapper.innerHTML = "";
-        page--;
+    // function LinhasTabela(items, wrapper, rows_per_page, page) {
+    //     wrapper.innerHTML = "";
+    //     page--;
 
-        let inicio = rows_per_page * page;
-        let fim = inicio + rows_per_page;
-        let paginatedItems = items.slice(inicio, fim);
+    //     let inicio = rows_per_page * page;
+    //     let fim = inicio + rows_per_page;
+    //     let paginatedItems = items.slice(inicio, fim);
 
-        for (let i = 0; i < paginatedItems.length; i++) {
-            let item = paginatedItems[i];
-            let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
-            let tr_element = document.createElement('tr');
+    //     for (let i = 0; i < paginatedItems.length; i++) {
+    //         let item = paginatedItems[i];
+    //         let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
+    //         let tr_element = document.createElement('tr');
 
-            tr_element.innerHTML = `
-                    <td id="cod_registro">` + item['reg_codigo'] + `</td>
-                    <td>` + item['form_nome'] + `</td>
-                    <td>` + item['reg_codigo_registro'] + `</td>
-                    <td>` + item['reg_tipo'] + `</td>
-                    <td>` + dataHora + `</td>
-                    <td>
-                        <div id="button-mobile" class="d-flex w-100">
-                            <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                        </div>
-                    </td>`;
+    //         tr_element.innerHTML = `
+    //                 <td id="cod_registro">` + item['reg_codigo'] + `</td>
+    //                 <td>` + item['form_nome'] + `</td>
+    //                 <td>` + item['reg_codigo_registro'] + `</td>
+    //                 <td>` + item['reg_tipo'] + `</td>
+    //                 <td>` + dataHora + `</td>
+    //                 <td>
+    //                     <div id="button-mobile" class="d-flex w-100">
+    //                         <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+    //                         <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+    //                         <button type="button" class="btn btn-danger button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+    //                     </div>
+    //                 </td>`;
 
-            wrapper.appendChild(tr_element); //Insere no html
-        }
-    }
+    //         wrapper.appendChild(tr_element); //Insere no html
+    //     }
+    // }
 
     function SetupPagination(items, wrapper, rows_per_page) {
         wrapper.innerHTML = "";
@@ -395,37 +396,37 @@ $("#num_linhas").change(function (e) {
         }
     });
 
-    function LinhasTabela(items, wrapper, rows_per_page, page) {
-        wrapper.innerHTML = ""; // Limpa o conteúdo anterior
-        page--;
+    // function LinhasTabela(items, wrapper, rows_per_page, page) {
+    //     wrapper.innerHTML = ""; // Limpa o conteúdo anterior
+    //     page--;
 
-        let inicio = rows_per_page * page;
-        let fim = inicio + rows_per_page;
-        let paginatedItems = items.slice(inicio, fim);
+    //     let inicio = rows_per_page * page;
+    //     let fim = inicio + rows_per_page;
+    //     let paginatedItems = items.slice(inicio, fim);
 
-        for (let i = 0; i < paginatedItems.length; i++) {
-            let item = paginatedItems[i];
-            let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
-            let tr_element = document.createElement('tr');
+    //     for (let i = 0; i < paginatedItems.length; i++) {
+    //         let item = paginatedItems[i];
+    //         let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
+    //         let tr_element = document.createElement('tr');
 
-            tr_element.innerHTML = `
-                    <td id="cod_registro">` + item['reg_codigo'] + `</td>
-                    <td>` + item['form_nome'] + `</td>
-                    <td>` + item['reg_codigo_registro'] + `</td>
-                    <td>` + item['reg_tipo'] + `</td>
-                    <td>` + dataHora + `</td>
-                    <td>
-                        <div id="button-mobile" class="d-flex w-100">
-                            <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                        </div>
-                    </td>
-            `;
+    //         tr_element.innerHTML = `
+    //                 <td id="cod_registro">` + item['reg_codigo'] + `</td>
+    //                 <td>` + item['form_nome'] + `</td>
+    //                 <td>` + item['reg_codigo_registro'] + `</td>
+    //                 <td>` + item['reg_tipo'] + `</td>
+    //                 <td>` + dataHora + `</td>
+    //                 <td>
+    //                     <div id="button-mobile" class="d-flex w-100">
+    //                         <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
+    //                         <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
+    //                         <button type="button" class="btn btn-danger btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
+    //                     </div>
+    //                 </td>
+    //         `;
 
-            wrapper.appendChild(tr_element); //Insere no html
-        }
-    }
+    //         wrapper.appendChild(tr_element); //Insere no html
+    //     }
+    // }
 
     function SetupPagination(items, wrapper, rows_per_page) {
         wrapper.innerHTML = ""; // Limpa o conteúdo anterior
@@ -553,20 +554,17 @@ $("#num_linhas").change(function (e) {
 function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
     var siglaArray = [];
     var descricaoArray = [];
-    var questaoCodigo = [];
-    var html_tabela = '';
+    var data = [];
+    var filtered_data = [];
+    var current_page = 1;
+    var rows_per_page = rows;
 
-    console.log("Codigo do formulario : " + cod_form);
-
-    console.log("Nome do form : " + nome_form);
-
-    console.log("Linhas : " + rows);
-
-    // Pega o texto e coloca reticencias depois do limite
+    // Função para truncar o texto se exceder o limite
     function truncarTexto(texto, limite) {
         return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
     }
 
+    // Requisição AJAX para montar o formulário
     $.ajax({
         url: url + "php/Funcoes/montar-formulario.php",
         data: {
@@ -575,66 +573,137 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
         method: "POST",
         dataType: "JSON",
         success: function(result) {
-            result.forEach(function (elemento, index) {
-                if (index > 0 && index < 6) {
+            // Coleta siglas e descrições para cabeçalho da tabela
+            result.forEach(function(elemento, index) {
+                if (index < 5) {
                     siglaArray.push(elemento['ques_sigla']);
                     descricaoArray.push(truncarTexto(elemento['ques_descricao'], 30));
                 }
             });
 
-            result.forEach(function(elemento) {
-                questaoCodigo.push(elemento['fq_codigo']);
-            });
-
+            // Monta cabeçalho da tabela com base nas siglas e descrições coletadas
             var html = '<tr>';
-
             descricaoArray.forEach((descricao) => {
                 html += `<th scope="col">${descricao}</th>`;
             });
             html += '<th scope="col">Opções</th></tr>';
+            $('#head-tabela').html(html); // Insere cabeçalho na tabela
 
-            $('#head-tabela').html(html); // INSERE NO HTML
-
-            $.ajax({
-                url: url + "php/Funcoes/buscar-dados-formulario.php",
-                data: {
-                    cod_form: cod_form,
-                    tipo: "Exibir"
-                },
-                method: "POST",
-                dataType: "JSON",
-                success: function(result) {
-                    console.log(result);
-
-                    result.forEach(function(elemento) {
-                        html_tabela += `<tr id="${elemento['reg_codigo']}">`;
-                        siglaArray.forEach(function(sigla) {
-                            html_tabela += `<td>${truncarTexto(elemento[sigla] || '', 50)}</td>`;
-                        });
-
-                        html_tabela += `
-                            <td>
-                                <div class="d-flex w-100">
-                                    <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="VizualizarRegistro(${cod_form}, ${elemento['reg_codigo_registro']}, ${elemento['reg_codigo']})">Ver</button>
-                                    <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="SelecionarRegistroAlterar(${cod_form}, ${elemento['reg_codigo_registro']} , ${elemento['reg_codigo']})">Alterar</button>
-                                </div>
-                            </td>
-                        `;
-
-                        html_tabela += '</tr>';                        
-                    });
-
-                    $('#corpo-tabela').html(html_tabela);
-                },
-                error: function(xhr, status, error) {
-                    console.log("ERRO AO BUSCAR DADOS NO FORMULARIO AJAX");
-                    console.log("Detalhes do erro:", xhr.responseText);
-                }
-            });
+            // Requisição AJAX para buscar dados do formulário
+            BuscarDadosFormulario(cod_form);
         },
         error: function() {
             console.log("ERRO AO MONTAR FORMULARIO PELO AJAX");
         }
+    });
+
+    // Função para buscar dados do formulário
+    function BuscarDadosFormulario(cod_form) {
+        $.ajax({
+            url: url + "php/Funcoes/buscar-dados-formulario.php",
+            data: {
+                cod_form: cod_form,
+                tipo: "Exibir"
+            },
+            method: "POST",
+            dataType: "JSON",
+            success: function(result) {
+                data = result;
+                filtered_data = data; // Inicialmente, sem filtro
+                // Mostra os dados com paginação
+                MostrarDadosComPaginacao();
+            },
+            error: function(xhr, status, error) {
+                console.log("ERRO AO BUSCAR DADOS NO FORMULARIO AJAX");
+                console.log("Detalhes do erro:", xhr.responseText);
+            }
+        });
+    }
+
+    // Função para mostrar os dados com paginação
+    function MostrarDadosComPaginacao() {
+        var start = (current_page - 1) * rows_per_page;
+        var end = start + rows_per_page;
+        var paginatedItems = filtered_data.slice(start, end);
+
+        html_tabela = '';
+        paginatedItems.forEach(function(elemento) {
+            html_tabela += `<tr id="${elemento['reg_codigo']}">`;
+            siglaArray.forEach(function(sigla) {
+                html_tabela += `<td>${truncarTexto(elemento[sigla] || '', 50)}</td>`;
+            });
+
+            html_tabela += `
+                <td>
+                    <div class="d-flex w-100">
+                        <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="VizualizarRegistro(${cod_form}, ${elemento['reg_codigo_registro']}, ${elemento['reg_codigo']})">Ver</button>
+                        <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="SelecionarRegistroAlterar(${cod_form}, ${elemento['reg_codigo_registro']}, ${elemento['reg_codigo']})">Alterar</button>
+                    </div>
+                </td>
+            `;
+
+            html_tabela += '</tr>';
+        });
+
+        $('#corpo-tabela').html(html_tabela); // Insere os dados na tabela
+
+        // Configuração da paginação
+        var pagination_element = document.getElementById('paginacao');
+        pagination_element.innerHTML = '';
+
+        var page_count = Math.ceil(filtered_data.length / rows_per_page);
+        var maxPagesVisible = 5; // Número máximo de páginas visíveis ao mesmo tempo
+        var half = Math.floor(maxPagesVisible / 2);
+        var startPage = Math.max(1, current_page - half);
+        var endPage = Math.min(page_count, startPage + maxPagesVisible - 1);
+
+        if (current_page > 1) {
+            pagination_element.appendChild(PaginationButton(current_page - 1, 'Anterior'));
+        }
+
+        for (var i = startPage; i <= endPage; i++) {
+            pagination_element.appendChild(PaginationButton(i));
+        }
+
+        if (current_page < page_count) {
+            pagination_element.appendChild(PaginationButton(current_page + 1, 'Próximo'));
+        }
+    }
+
+    function PaginationButton(page, text) {
+        var button = document.createElement('button');
+        button.innerText = text || page;
+        button.className = "btn btn-primary m-1" + (page === current_page ? " active-page" : "");
+
+        button.addEventListener('click', function() {
+            current_page = page;
+            MostrarDadosComPaginacao();
+        });
+
+        return button;
+    }
+
+    // Adicionar o seletor de número de itens por página
+    var limitSelector = document.getElementById('itemsPerPage');
+    limitSelector.value = rows_per_page; // Define o valor inicial
+
+    limitSelector.addEventListener('change', function() {
+        rows_per_page = parseInt(this.value);
+        current_page = 1; // Reset para a primeira página
+        MostrarDadosComPaginacao();
+    });
+
+    // Adicionar o campo de filtro
+    var filterInput = document.getElementById('filterInput');
+    filterInput.addEventListener('input', function() {
+        var filterText = this.value.toLowerCase();
+        filtered_data = data.filter(function(item) {
+            return Object.values(item).some(function(value) {
+                return value.toString().toLowerCase().includes(filterText);
+            });
+        });
+        current_page = 1; // Reset para a primeira página
+        MostrarDadosComPaginacao();
     });
 }
 
@@ -738,10 +807,9 @@ function SelecionarRegistroAlterar(cod_form, cod_dados, cod_registro) {
         method: "POST",
         dataType: "JSON",
         success: function (result) {
+            console.log(result);
             result.forEach(function (elemento) {
-
                 siglaArray.push(elemento['ques_sigla']);
-
             });
         }
         , error: function () {
@@ -760,7 +828,8 @@ function SelecionarRegistroAlterar(cod_form, cod_dados, cod_registro) {
             url: url + "php/Funcoes/buscar-dados-formulario.php",
             data: {
                 cod_form: cod_form,
-                cod_dados: cod_dados
+                cod_dados: cod_dados,
+                tipo: "Visualizar"
             },
             dataType: "JSON",
             success: function (result) {
@@ -790,8 +859,6 @@ function SelecionarRegistroAlterar(cod_form, cod_dados, cod_registro) {
 
 
 function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
-    console.log(cod_dados);
-
     $("#btn-modal-vizualizacao").trigger('click');
     var siglaArray = [];
     $("#vizualizacao").slideDown();
@@ -833,8 +900,6 @@ function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
                 },
                 dataType: "JSON",
                 success: function (result) {
-                    console.log(result);
-
                     for (var i = 0; i < siglaArray.length; i++) {
                         result.forEach(function (elemento) {
                             switch (siglaArray[i]) {
@@ -878,8 +943,6 @@ function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
                     }
                 });
             }, 10);
-
-
         }
         , error: function () {
             console.log("Erro ao montar formulario pelo Ajax!");
