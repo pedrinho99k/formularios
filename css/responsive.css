@@ -7,7 +7,7 @@
     }
 
     .secao {
-        margin-top: none;
+        margin-top: 0;
     }
 
     .footer {
@@ -25,32 +25,38 @@
     #logo {
         display: none;
     }
-    .card{
+
+    .card {
         width: 90% !important;
         margin-left: 5% !important;
         margin-right: 5% !important;
     }
+
     /*#tabela-registros{
         overflow-x: auto;
     }*/
-    #cod_registro{
+
+    #cod_registro {
         display: none !important;
         background-color: aqua !important;
     }
-    .container{
+
+    .container {
         padding: 0 !important;
     }
-    #tabela{
+
+    #tabela {
         overflow-x: auto !important;
     }
-    #button-desktop{
+
+    #button-desktop {
         display: none;
     }
+
     .form-check-input {
         width: 30px !important;
         height: 30px !important;
     }
-
 
 }
 
@@ -77,25 +83,30 @@
     #btn-salvar {
         width: 100%;
     }
-    #button-desktop{
+
+    #button-desktop {
         display: none;
     }
-    #corpo-tabela{
+
+    #corpo-tabela {
         height: 804px;
     }
 }
-@media (max-width: 1599px){
+
+@media (max-width: 1599px) {
     #btn-salvar {
         width: 100%;
     }
+
     /* #corpo-tabela{
         height: 820px;
     } */
-    #button-desktop{
+
+    #button-desktop {
         display: none;
     }
-    
 }
+
 @media (min-width: 1600px) {
     #form table {
         font-size: 15px !important;
@@ -108,14 +119,16 @@
     #tabela {
         overflow-x: hidden;
     }
-    #accordi{
+
+    #accordi {
         display: none;
     }
+
     #button-mobile {
         display: none;
     }
 
-    #corpo-tabela{
+    #corpo-tabela {
         height: 260px;
     }
 }

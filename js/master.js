@@ -274,6 +274,7 @@ $(document).ready(function () {
         }
     });
 
+    // Busca a primeira vez
     function LinhasTabela(items, wrapper, rows_per_page, page) {
         wrapper.innerHTML = "";
         page--;
@@ -294,11 +295,6 @@ $(document).ready(function () {
                     <td>` + item['reg_tipo'] + `</td>
                     <td>` + dataHora + `</td>
                     <td>
-                        <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger button-admin btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                        </div>
                         <div id="button-mobile" class="d-flex w-100">
                             <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
                             <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
@@ -419,11 +415,6 @@ $("#num_linhas").change(function (e) {
                     <td>` + item['reg_tipo'] + `</td>
                     <td>` + dataHora + `</td>
                     <td>
-                        <div id="button-desktop" class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                            <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                            <button type="button" class="btn btn-danger btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                        </div>
                         <div id="button-mobile" class="d-flex w-100">
                             <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
                             <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
@@ -471,136 +462,183 @@ $("#num_linhas").change(function (e) {
 
 
 //Mostrar registros por fomulário
-function VizualizarRegistroPorFormulario(cod_form, nome_form) {
-    //INICIO DE FUNÇÕES DE PAGINAÇÃO
-    let current_page = 1;//MOSTRA A PAGINA SETADA NO INICIO
-    var rows = $("#num_linhas").val(); //LINHAS POR PAGINA
+// function VizualizarRegistroPorFormulario(cod_form, nome_form) {
+//     //INICIO DE FUNÇÕES DE PAGINAÇÃO
+//     let current_page = 1;//MOSTRA A PAGINA SETADA NO INICIO
+//     var rows = $("#num_linhas").val(); //LINHAS POR PAGINA
 
-    console.log(rows);
+//     console.log(rows);
 
-    function LinhasTabela(items, wrapper, rows_per_page, page, nome_form) {
-        if (items.length <= 0) {
-            $("#nome-form-pesquisa").show().text('Formulário: ' + nome_form);
-            $(wrapper).html(`
-                <tr>
-                    <td colspan="6">Nenhum registro encontrado!</td>
-                </tr>`);
-        } else {
-            $("#nome-form-pesquisa").show().text('Formulário: ' + nome_form);
-            wrapper.innerHTML = "";
-            page--;
+    
 
-            let inicio = rows_per_page * page;
-            let fim = inicio + rows_per_page;
-            let paginatedItems = items.slice(inicio, fim);
+    // function SetupPagination(items, wrapper, rows_per_page) {
+    //     wrapper.innerHTML = "";
 
-            for (let i = 0; i < paginatedItems.length; i++) {
-                let item = paginatedItems[i];
-                let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
-                let tr_element = document.createElement('tr');
+    //     let page_count = Math.ceil(items.length / rows_per_page);
+    //     for (let i = 1; i < page_count + 1; i++) {
+    //         let btn = PaginationButton(i, items);
+    //         wrapper.appendChild(btn);
+    //     }
+    // }
 
-                tr_element.innerHTML = `
-                <td id="cod_registro">` + item['reg_codigo'] + `</td>
-                <td>` + item['form_nome'] + `</td>
-                <td>` + item['usu_nome'] + `</td>
-                <td>` + item['reg_tipo'] + `</td>
-                <td>` + dataHora + `</td>
-                <td>
-                    <div id="button-desktop" class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary btn-sm"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                    </div>
-                    <div id="button-mobile" class="d-flex w-100">
-                        <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1"  onclick="VizualizarRegistro(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Ver</button>
-                        <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                        <button type="button" class="btn btn-danger btn-sm flex-grow-1 mx-1"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-                    </div>
-                </td>`;
+    // function PaginationButton(page, items) {
+    //     let button = document.createElement('button');
+    //     button.setAttribute('type', 'button');
+    //     button.classList.add('btn');
+    //     button.classList.add('btn-primary');
+    //     button.classList.add('m-1');
+    //     button.innerText = page;
 
-                wrapper.appendChild(tr_element); //Insere no html
+    //     if (current_page == page) button.classList.add('active');
 
-                window.location='#fim';
-            }
-        }
+    //     button.addEventListener('click', function () {
+
+    //         current_page = page;
+    //         LinhasTabela(items, list_element, rows, current_page);
+
+    //         let current_btn = document.querySelector('.paginacao button.active');
+    //         current_btn.classList.remove('active');
+
+    //         button.classList.add('active');
+    //     });
+    //     return button;
+    // }
+    // //FIM FUNÇÕES DE PAGINAÇÃO
+    // let cod_usuario = $("#cod_usuario_login").text();
+    // const list_element = document.getElementById('corpo-tabela');
+    // const pagination_element = document.getElementById('paginacao');
+    // switch (cod_perfil) {
+    //     case '1':
+    //         $.ajax({
+    //             url: url + "php/Funcoes/buscar-registros-formulario-ativos-json.php",
+    //             method: "POST",
+    //             data: {
+    //                 cod_formulario: cod_form,
+    //             },
+    //             dataType: "JSON",
+    //             success: function (result) {
+    //                 $("#usuario").text("Usuário");
+    //                 LinhasTabela(result, list_element, rows, current_page, nome_form);
+    //                 SetupPagination(result, pagination_element, rows);
+    //             },
+    //             error: function () {
+    //                 console.log("Erro ao listar todos pelo Ajax!");
+    //             }
+    //         });
+    //         break;
+    //     default:
+    //         $.ajax({
+    //             url: url + "php/Funcoes/buscar-registros-formulario-ativos-json.php",
+    //             method: "POST",
+    //             data: {
+    //                 cod_formulario: cod_form,
+    //                 cod_usuario: cod_usuario
+    //             },
+    //             dataType: "JSON",
+    //             success: function (result) {
+    //                 $("#usuario").text("Usuário");
+    //                 LinhasTabela(result, list_element, rows, current_page, nome_form);
+    //                 SetupPagination(result, pagination_element, rows);
+    //             },
+    //             error: function () {
+    //                 console.log("Erro ao listar perfis pelo Ajax!");
+    //             }
+    //         });
+    //         break;
+    // }
+// }
+
+
+
+function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
+    var siglaArray = [];
+    var descricaoArray = [];
+    var questaoCodigo = [];
+    var html_tabela = '';
+
+    console.log("Codigo do formulario : " + cod_form);
+
+    console.log("Nome do form : " + nome_form);
+
+    console.log("Linhas : " + rows);
+
+    // Pega o texto e coloca reticencias depois do limite
+    function truncarTexto(texto, limite) {
+        return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
     }
 
-    function SetupPagination(items, wrapper, rows_per_page) {
-        wrapper.innerHTML = "";
-
-        let page_count = Math.ceil(items.length / rows_per_page);
-        for (let i = 1; i < page_count + 1; i++) {
-            let btn = PaginationButton(i, items);
-            wrapper.appendChild(btn);
-        }
-    }
-
-    function PaginationButton(page, items) {
-        let button = document.createElement('button');
-        button.setAttribute('type', 'button');
-        button.classList.add('btn');
-        button.classList.add('btn-primary');
-        button.classList.add('m-1');
-        button.innerText = page;
-
-        if (current_page == page) button.classList.add('active');
-
-        button.addEventListener('click', function () {
-
-            current_page = page;
-            LinhasTabela(items, list_element, rows, current_page);
-
-            let current_btn = document.querySelector('.paginacao button.active');
-            current_btn.classList.remove('active');
-
-            button.classList.add('active');
-        });
-        return button;
-    }
-    //FIM FUNÇÕES DE PAGINAÇÃO
-    let cod_usuario = $("#cod_usuario_login").text();
-    const list_element = document.getElementById('corpo-tabela');
-    const pagination_element = document.getElementById('paginacao');
-    switch (cod_perfil) {
-        case '1':
-            $.ajax({
-                url: url + "php/Funcoes/buscar-registros-formulario-ativos-json.php",
-                method: "POST",
-                data: {
-                    cod_formulario: cod_form,
-                },
-                dataType: "JSON",
-                success: function (result) {
-                    $("#usuario").text("Usuário");
-                    LinhasTabela(result, list_element, rows, current_page, nome_form);
-                    SetupPagination(result, pagination_element, rows);
-                },
-                error: function () {
-                    console.log("Erro ao listar todos pelo Ajax!");
+    $.ajax({
+        url: url + "php/Funcoes/montar-formulario.php",
+        data: {
+            cod_formulario: cod_form,
+        },
+        method: "POST",
+        dataType: "JSON",
+        success: function(result) {
+            result.forEach(function (elemento, index) {
+                if (index > 0 && index < 6) {
+                    siglaArray.push(elemento['ques_sigla']);
+                    descricaoArray.push(truncarTexto(elemento['ques_descricao'], 30));
                 }
             });
-            break;
-        default:
+
+            result.forEach(function(elemento) {
+                questaoCodigo.push(elemento['fq_codigo']);
+            });
+
+            var html = '<tr>';
+
+            descricaoArray.forEach((descricao) => {
+                html += `<th scope="col">${descricao}</th>`;
+            });
+            html += '<th scope="col">Opções</th></tr>';
+
+            $('#head-tabela').html(html); // INSERE NO HTML
+
             $.ajax({
-                url: url + "php/Funcoes/buscar-registros-formulario-ativos-json.php",
-                method: "POST",
+                url: url + "php/Funcoes/buscar-dados-formulario.php",
                 data: {
-                    cod_formulario: cod_form,
-                    cod_usuario: cod_usuario
+                    cod_form: cod_form,
+                    tipo: "Exibir"
                 },
+                method: "POST",
                 dataType: "JSON",
-                success: function (result) {
-                    $("#usuario").text("Usuário");
-                    LinhasTabela(result, list_element, rows, current_page, nome_form);
-                    SetupPagination(result, pagination_element, rows);
+                success: function(result) {
+                    console.log(result);
+
+                    result.forEach(function(elemento) {
+                        html_tabela += `<tr id="${elemento['reg_codigo']}">`;
+                        siglaArray.forEach(function(sigla) {
+                            html_tabela += `<td>${truncarTexto(elemento[sigla] || '', 50)}</td>`;
+                        });
+
+                        html_tabela += `
+                            <td>
+                                <div class="d-flex w-100">
+                                    <button type="button" class="btn btn-primary btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="VizualizarRegistro(${cod_form}, ${elemento['reg_codigo_registro']}, ${elemento['reg_codigo']})">Ver</button>
+                                    <button type="button" class="btn btn-secondary button-admin btn-sm flex-grow-1 mx-1" style="flex: 1;" onclick="SelecionarRegistroAlterar(${cod_form}, ${elemento['reg_codigo_registro']} , ${elemento['reg_codigo']})">Alterar</button>
+                                </div>
+                            </td>
+                        `;
+
+                        html_tabela += '</tr>';                        
+                    });
+
+                    $('#corpo-tabela').html(html_tabela);
                 },
-                error: function () {
-                    console.log("Erro ao listar perfis pelo Ajax!");
+                error: function(xhr, status, error) {
+                    console.log("ERRO AO BUSCAR DADOS NO FORMULARIO AJAX");
+                    console.log("Detalhes do erro:", xhr.responseText);
                 }
             });
-            break;
-    }
+        },
+        error: function() {
+            console.log("ERRO AO MONTAR FORMULARIO PELO AJAX");
+        }
+    });
 }
+
+
 
 
 //Seção Registros
@@ -654,34 +692,6 @@ function PreencherTabelaRegistros() {
             console.log("Erro ao listar perfis pelo Ajax!");
         }
     });
-
-    function LinhasTabela(items, wrapper, rows_per_page, page) {
-        wrapper.innerHTML = "";
-        page--;
-
-        let inicio = rows_per_page * page;
-        let fim = inicio + rows_per_page;
-        let paginatedItems = items.slice(inicio, fim);
-
-        for (let i = 0; i < paginatedItems.length; i++) {
-            let item = paginatedItems[i];
-            let dataHora = ConverteDataHoraFormtBR(item['reg_data_hora']);
-
-            let tr_element = document.createElement('tr');
-            tr_element.innerHTML = `
-               <td id="cod_registro">` + item['reg_codigo'] + `</td>
-               <td>` + item['form_nome'] + `</td>
-               <td>` + item['reg_codigo_registro'] + `</td>
-               <td>` + item['reg_tipo'] + `</td>
-               <td>` + dataHora + `</td>
-               <td>
-                    <button type="button" class="btn btn-primary btn-sm my-1 w-100"  onclick="SelecionarRegistroAlterar(` + item['form_codigo'] + `,` + item['reg_codigo_registro'] + `,` + item['reg_codigo'] + `)">Alterar</button>
-                    <button type="button" class="btn btn-danger btn-sm my-1 w-100"  onclick="SelecionarRegistroExcluir(` + item['reg_codigo'] + `)">Excluir</button>
-               </td>`;
-
-            wrapper.appendChild(tr_element); //Insere no html
-        }
-    }
 
     function SetupPagination(items, wrapper, rows_per_page) {
         wrapper.innerHTML = "";
@@ -780,6 +790,8 @@ function SelecionarRegistroAlterar(cod_form, cod_dados, cod_registro) {
 
 
 function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
+    console.log(cod_dados);
+
     $("#btn-modal-vizualizacao").trigger('click');
     var siglaArray = [];
     $("#vizualizacao").slideDown();
@@ -816,10 +828,13 @@ function VizualizarRegistro(cod_form, cod_dados, cod_registro) {
                 url: url + "php/Funcoes/buscar-dados-formulario.php",
                 data: {
                     cod_form: cod_form,
-                    cod_dados: cod_dados
+                    cod_dados: cod_dados,
+                    tipo: "Visualizar"
                 },
                 dataType: "JSON",
                 success: function (result) {
+                    console.log(result);
+
                     for (var i = 0; i < siglaArray.length; i++) {
                         result.forEach(function (elemento) {
                             switch (siglaArray[i]) {

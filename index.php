@@ -274,15 +274,15 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                         <div class="col-md-12 mt-4" id="tabela-registros">
                             <h6 id="nome-form-pesquisa"></h6>
                             <table class="table table-striped">
-                                <thead>
-                                    <tr>
+                                <thead id="head-tabela">
+                                    <!-- <tr>
                                         <th scope="col" id="cod_registro">Cód. Registro</th>
                                         <th scope="col">Formulário</th>
                                         <th scope="col" id="usuario">Cód. dos Dados</th>
                                         <th scope="col">Tipo do Registro</th>
                                         <th scope="col">Data/Hora</th>
                                         <th scope="col">Opções</th>
-                                    </tr>
+                                    </tr> -->
                                 </thead>
                                 <tbody id="corpo-tabela">
 
