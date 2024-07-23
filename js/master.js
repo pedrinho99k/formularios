@@ -136,9 +136,6 @@ $(document).ready(function () {
     // Array com códigos de formulários que terão botão Excel
     var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
 
-    var global_codigo_form = 0;
-    var globalcodigo_nome = 0;
-
     // Função para alternar entre os modos de visualização
     function toggleViewMode() {
         var contentContainer = document.getElementById('contentContainer');
@@ -170,6 +167,9 @@ $(document).ready(function () {
                         var codigo_form = elemento['form_codigo'];
                         var codigo_nome = elemento['form_nome'];
                         var rows = $("#num_linhas").val(); //LINHAS POR PAGINA
+
+                        // Conversão para number pq a verificação do includes e ===
+					    codigo_form = parseInt(codigo_form);
 
                         // Verifica se o formulário tem botão Excel
                         var showExcelButton = formularios_excel.includes(codigo_form);
