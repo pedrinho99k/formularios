@@ -136,7 +136,7 @@ $(document).ready(function () {
     ;
 
     // Array com códigos de formulários que terão botão Excel
-    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57];
+    var formularios_excel = [1, 22, 28, 29, 34, 37, 44, 57, 54];
 
     // Funções para os botões
     function MontarFormulario(codigo_form) {
@@ -195,12 +195,11 @@ $(document).ready(function () {
                                     <button type="button" class="mx-2 btn btn-primary button-prin btn-sm ml-2" onclick="MontarFormulario(${codigo_form})">Novo Registro</button>
                                     <input type="radio" class="btn-check mx-2" name="btnradio" id="btnradio${codigo_form}" autocomplete="off">
                                     <label class="btn btn-outline-secondary button-prin btn-sm ml-2 my-1" for="btnradio${codigo_form}" onclick="VizualizarRegistroPorFormulario(${codigo_form}, '${codigo_nome}')">Buscar Registros</label>
-                                    ${showExcelButton ? `
                                     <form class="m-0 mx-2" action="php/excel/testeExcel.php" method="post">
                                         <input type="hidden" name="codigo_form" value="${codigo_form}">
                                         <input type="hidden" name="codigo_nome" value="${codigo_nome}">
                                         <button class="btn btn-outline-success button-prin btn-sm" type="submit">${iconExcel} Exportar em Excel</button>
-                                    </form>` : ''}
+                                    </form>
                                 </div>
                                 <hr style="margin: 0px;">
                             `;
@@ -1236,7 +1235,6 @@ function PreencherSelectFormularios() {
                         break;
                 }
             });
-
         }, error: function () {
             console.log("Error");
         }

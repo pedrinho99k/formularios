@@ -46,22 +46,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $query = $query_37;
             $nomeDoArquivo = $codigo_nome;
             break;
-        case 44:
-            $query = $query_44;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 57:
-            $query = $query_57;
-            $nomeDoArquivo = $codigo_nome;
-            break;
+        // case 44:
+        //     // $query = $query_44;
+        //     $stmt = $conexao->prepare($query_44);
+        //     $stmt->execute();
+
+        //     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        //     foreach($result as $row) {
+        //         print_r($row);
+        //     }
+
+        //     $nomeDoArquivo = $codigo_nome;
+        //     break;
         default:
-            $query = "";
-            echo " <h2> Código do Formulário não encontrado </h2> ";
+        $stmt = $conexao->prepare($select_teste);
+        $stmt->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Exibe as linhas
+        foreach ($result as $row) {
+            // print_r($row);
+            $sigla = $row['form_sigla'];
+        }
+
+        // $sql = "SELECT codigo as 'REGISTRO',
+        // sigla.*
+        // FROM $sigla sigla";
+
+        // $sql = "SELECT
+        //         cdp.codigo AS REGISTRO,
+        //         DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
+        //         usu.usu_nome AS USUÁRIO,
+        //         usu.usu_login AS 'LOGIN',
+        //         cdp.*
+        //     FROM
+        //         $sigla cdp
+        //         JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
+        //         JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
+        //     WHERE 
+        //         fr.reg_codigo_formulario = :codigo_form
+        //         AND fr.reg_ativo <> 'EXCLUIDO'
+        //     ORDER BY 
+        //         fr.reg_data_hora
+        // ";
+
+        $query = "SELECT
+                cdp.codigo AS REGISTRO,
+                DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
+                usu.usu_nome AS USUÁRIO,
+                usu.usu_login AS 'LOGIN',
+                cdp.*
+            FROM
+                $sigla cdp
+                JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
+                JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
+            WHERE 
+                fr.reg_codigo_formulario = :codigo_form
+                AND fr.reg_ativo <> 'EXCLUIDO'
+            ORDER BY 
+                fr.reg_data_hora
+        ";
+
+        // $stmt2 = $conexao->prepare($sql);
+        // $stmt2->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
+        // $stmt2->bindParam(':sigla', $sigla, PDO::PARAM_STR_CHAR);
+        // $stmt2->execute();
+
+        // $result_2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        // print_r($result_2);
+
+        // print_r($result['form_sigla']);
+        
+        $nomeDoArquivo = $codigo_nome;
+        break;
     }
 
     try {
         if (!empty($query)) {
             $resultado = $conexao->prepare($query);
+            $resultado->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
             $resultado->execute();
         
             

@@ -1,6 +1,5 @@
 <?php
 
-
 $sql = "SELECT * FROM fm_formularios ORDER BY form_codigo DESC";
 
 include_once("../conexao/conexao.php");
