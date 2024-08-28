@@ -10,9 +10,6 @@ require __DIR__ . '/../conexao/conexao.php';
 // Conectar ao banco de dados
 $conexao = Conectar();
 
-// QUERY SQL
-require __DIR__ . '/query_sql.php';
-
 
 // Qualquer erro na query sql deixa o arquivo xlsx corrompido
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
@@ -20,49 +17,131 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
     $codigo_nome = $_POST['codigo_nome'];
     $nomeDoArquivo = '';
 
-    // Adicionar a query ao switch
-    switch ($codigo_form) {
-        case 1:
-            $query = $query_1;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 22:
-            $query = $query_22;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 28:
-            $query = $query_28;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 29:
-            $query = $query_29;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 34:
-            $query = $query_34;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 37:
-            $query = $query_37;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 44:
-            $query = $query_44;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        case 57:
-            $query = $query_57;
-            $nomeDoArquivo = $codigo_nome;
-            break;
-        default:
-            $query = "";
-            echo " <h2> Código do Formulário não encontrado </h2> ";
+
+
+    $select_teste = "SELECT *
+        FROM fm_formularios
+        WHERE form_codigo = :codigo_form
+    ";
+
+    $stmt = $conexao->prepare($select_teste);
+    $stmt->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Exibe as linhas
+    foreach ($result as $row) {
+        // print_r($row);
+        $sigla = $row['form_sigla'];
     }
+
+    // $sql = "SELECT codigo as 'REGISTRO',
+    // sigla.*
+    // FROM $sigla sigla";
+
+    // $sql = "SELECT
+    //         cdp.codigo AS REGISTRO,
+    //         DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
+    //         usu.usu_nome AS USUÁRIO,
+    //         usu.usu_login AS 'LOGIN',
+    //         cdp.*
+    //     FROM
+    //         $sigla cdp
+    //         JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
+    //         JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
+    //     WHERE 
+    //         fr.reg_codigo_formulario = :codigo_form
+    //         AND fr.reg_ativo <> 'EXCLUIDO'
+    //     ORDER BY 
+    //         fr.reg_data_hora
+    // ";
+
+
+
+
+
+
+
+
+
+    $select_colunas = "SELECT ques_descricao
+    FROM fm_formularios_questoes AS fq
+    JOIN fm_formularios AS form ON fq.fq_form_codigo = form.form_codigo
+    JOIN fm_questoes AS ques ON fq.fq_ques_codigo = ques.ques_codigo
+    WHERE form.form_codigo = :codigo_form
+    AND fq.fq_vinculo_ativo = 'SIM'
+    AND form.form_ativo = 'SIM'
+    AND ques.ques_ativo = 'SIM'
+    ORDER BY ques.ques_posicao ASC";
+
+    $resultado_colunas = $conexao->prepare($select_colunas);
+    $resultado_colunas->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
+    $resultado_colunas->execute();
+
+    // Obter os nomes das colunas
+    $colunas = $resultado_colunas->fetchAll(PDO::FETCH_COLUMN);
+
+    // Remove o primeiro resultado
+    array_shift($colunas);
+
+
+
+
+
+
+
+
+    $query = "SELECT
+            cdp.codigo AS REGISTRO,
+            DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
+            usu.usu_nome AS USUÁRIO,
+            usu.usu_login AS 'LOGIN',
+            cdp.*
+        FROM
+            $sigla cdp
+            JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
+            JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
+        WHERE 
+            fr.reg_codigo_formulario = :codigo_form
+            AND fr.reg_ativo <> 'EXCLUIDO'
+        ORDER BY 
+            fr.reg_data_hora
+    ";
+
+    // $stmt2 = $conexao->prepare($sql);
+    // $stmt2->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
+    // $stmt2->bindParam(':sigla', $sigla, PDO::PARAM_STR_CHAR);
+    // $stmt2->execute();
+
+    // $result_2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+    // print_r($result_2);
+
+    // print_r($result['form_sigla']);
+    
+    $nomeDoArquivo = $codigo_nome;
+    // break;
+
+
+
+
+
+
+
+
 
     try {
         if (!empty($query)) {
             $resultado = $conexao->prepare($query);
+            $resultado->bindParam(':codigo_form', $codigo_form, PDO::PARAM_INT);
             $resultado->execute();
+
+            // $result = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+            // foreach ($result as &$row) {
+            //     array_shift($row);
+            // };
         
             
             // Criar uma instância do PhpSpreadsheet
@@ -70,10 +149,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $sheet = $spreadsheet->getActiveSheet();
 
             // Adicionar cabeçalhos
-            $coluna = 'A';
-            foreach ($resultado->fetch(PDO::FETCH_ASSOC) as $campo => $valor) {
-                $sheet->setCellValue($coluna . '1', $campo);
-                $coluna++;
+            $coluna = 'A'; // Inicia com a coluna A
+
+            $sheet->setCellValue($coluna . '1', 'DATA');
+            $coluna++;
+
+            $sheet->setCellValue($coluna . '1', 'USUÁRIO');
+            $coluna++;
+
+            $sheet->setCellValue($coluna . '1', 'LOGIN');
+            $coluna++;
+
+            $sheet->setCellValue($coluna . '1', 'CODIGO');
+            $coluna++;
+
+
+
+            foreach ($colunas as $nome_coluna) {
+                $sheet->setCellValue($coluna . '1', $nome_coluna); // Define o valor da célula
+                $coluna++; // Move para a próxima coluna
             }
 
             // Reiniciar a execução da consulta
@@ -83,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             $linha = 2;
             while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
                 $coluna = 'A';
+                array_shift($row);
                 foreach ($row as $valor) {
                     $sheet->setCellValue($coluna . $linha, $valor);
                     $coluna++;

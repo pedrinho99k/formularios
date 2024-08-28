@@ -2,6 +2,10 @@
 
 // QUERY SQL
 
+$select_teste = "SELECT *
+FROM fm_formularios
+WHERE form_codigo = :codigo_form";
+
 // ahpaceg
 $query_1 = 
 "SELECT 
