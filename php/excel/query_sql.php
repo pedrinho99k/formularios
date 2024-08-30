@@ -1,7 +1,5 @@
 <?php
 
-// QUERY SQL
-
 // ahpaceg
 $query_1 = 
 "SELECT 
