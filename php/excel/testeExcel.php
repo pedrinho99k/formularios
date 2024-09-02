@@ -97,20 +97,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['codigo_form'])) {
             array_shift($colunas);
 
             $query = "SELECT
-                    cdp.codigo AS REGISTRO,
-                    DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
-                    usu.usu_nome AS USUÁRIO,
-                    usu.usu_login AS 'LOGIN',
-                    cdp.*
-                FROM
-                    $sigla cdp
-                    JOIN fm_registros fr ON fr.reg_codigo_registro = cdp.codigo
-                    JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
-                WHERE 
-                    fr.reg_codigo_formulario = :codigo_form
-                    AND fr.reg_ativo <> 'EXCLUIDO'
-                ORDER BY 
-                    fr.reg_data_hora
+                cdp.codigo AS REGISTRO,
+                DATE_FORMAT(fr.reg_data_hora, '%d/%m/%Y %H:%i:%s') AS INSERIDO,
+                usu.usu_nome AS USUÁRIO,
+                usu.usu_login AS 'LOGIN',
+                cdp.*
+            FROM
+                $sigla cdp
+                JOIN (
+                    SELECT reg_codigo_registro, MAX(reg_data_hora) AS reg_data_hora
+                    FROM fm_registros
+                    WHERE reg_codigo_formulario = :codigo_form AND reg_ativo <> 'EXCLUIDO'
+                    GROUP BY reg_codigo_registro
+                ) fr_max ON fr_max.reg_codigo_registro = cdp.codigo
+                JOIN fm_registros fr ON fr.reg_codigo_registro = fr_max.reg_codigo_registro AND fr.reg_data_hora = fr_max.reg_data_hora
+                JOIN fm_usuarios usu ON usu.usu_codigo = fr.reg_codigo_usuario
+            ORDER BY 
+                fr.reg_data_hora;        
             ";
 
             $nomeDoArquivo = $codigo_nome;
