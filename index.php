@@ -29,6 +29,12 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200;400&display=swap" rel="stylesheet">
     <script src="<?php echo DIRJS . 'jQuery-2.1.4.min.js' ?>"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -258,17 +264,19 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                 <div class="row mt-3">
                     <form id="fim">
                         <div class="position-relative">
-                            <h4 class="position-absolute top-0 start-0">📑 Registros de Formulários</h4>
-                        </div>
-                        <div class="position-relative">
-                            <div class=" position-absolute top-0 end-0">
-                                <label class="" for="num_linhas">Nº de Linhas</label>
+                            <div class="position-absolute top-0 start-0">
                                 <select style="width:50px" name="num_linhas" id="num_linhas">
                                     <option value="10" selected>10</option>
                                     <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
                                 </select>
+                                <label class="" for="num_linhas">Nº de Linhas</label>
+                            </div>
+                        </div>
+                        <div class="position-relative">
+                            <div class=" position-absolute top-0 end-0">
+                                <input type="text" id="campo-pesquisa" placeholder="Pesquisar..." />
                             </div>
                         </div><br>
                         <div class="col-md-12 mt-4" id="tabela-registros">

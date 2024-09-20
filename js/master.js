@@ -587,6 +587,13 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
             html += '<th scope="col">Opções</th></tr>';
             $('#head-tabela').html(html); // Insere cabeçalho na tabela
 
+            // Cria campo de pesquisa
+            $('#campo-pesquisa').on('input', function() {
+                var termo_pesquisa = $(this).val();
+                console.log(termo_pesquisa);
+                BuscarDadosFormulario(cod_form, termo_pesquisa); // Chama a função com o termo de pesquisa
+            });
+
             // Requisição AJAX para buscar dados do formulário
             BuscarDadosFormulario(cod_form);
         },
@@ -596,12 +603,13 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
     });
 
     // Função para buscar dados do formulário
-    function BuscarDadosFormulario(cod_form) {
+    function BuscarDadosFormulario(cod_form, termo_pesquisa = '') {
         $.ajax({
             url: url + "php/Funcoes/buscar-dados-formulario.php",
             data: {
                 cod_form: cod_form,
-                tipo: "Exibir"
+                tipo: "Exibir",
+                pesquisa: termo_pesquisa
             },
             method: "POST",
             dataType: "JSON",
@@ -2706,3 +2714,9 @@ function ExibirQuestoes(cod_form, cod_nome) {
 //     var abreviacao = abbWords.join('_');
 //     return abreviacao;
 // }
+
+
+function realizarPesquisa() {
+    var termo_pesquisa = $('#campo-pesquisa').val();  // Obtém o valor digitado no campo de pesquisa
+    BuscarDadosFormulario(cod_form, termo_pesquisa);  // Chama a função com o termo de pesquisa
+}
