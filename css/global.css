@@ -245,3 +245,25 @@ body,html {
     color: #000 !important; /* Cor do texto */
     border-color: white !important; /* Cor da borda */
 }
+
+#limpar-campo {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+}
+
+#limpar-campo:hover {
+    color: #cc0606;
+}
+
+#campo-pesquisa {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

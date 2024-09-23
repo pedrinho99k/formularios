@@ -557,6 +557,8 @@ function VizualizarRegistroPorFormulario(cod_form, nome_form, rows) {
     var current_page = 1;
     var rows_per_page = rows;
 
+    document.getElementById('fim').scrollIntoView();
+
     // Função para truncar o texto se exceder o limite
     function truncarTexto(texto, limite) {
         return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
@@ -2720,3 +2722,7 @@ function realizarPesquisa() {
     var termo_pesquisa = $('#campo-pesquisa').val();  // Obtém o valor digitado no campo de pesquisa
     BuscarDadosFormulario(cod_form, termo_pesquisa);  // Chama a função com o termo de pesquisa
 }
+
+document.getElementById('limpar-campo').addEventListener('click', function() {
+    document.getElementById('campo-pesquisa').value = '';
+});

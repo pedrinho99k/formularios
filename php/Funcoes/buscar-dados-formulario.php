@@ -23,7 +23,7 @@ function buscarDados($cod_formulario, $sigla_form, $tipo, $cod_dados = null, $te
             WHERE codigo = :cod_dados";
         
         $stm = $conecta->prepare($sql_select_dados);
-        $stm->bindParam(':cod_dados', $cod_dados, PDO::PARAM_INT);
+        $stm->bindParam(':cod_dados', $cod_dados, PDO::PARAM_STR);
     } else {
         // Consulta padrão para exibição de dados
         $sql_select_dados = "
@@ -89,6 +89,6 @@ $sigla_form = buscarSiglaFormulario($cod_formulario);
 
 // Busca os dados com base no tipo de operação e retorna como JSON
 $retorno = buscarDados($cod_formulario, $sigla_form, $tipo, $cod_dados, $termo_pesquisa);
-$retornoJson = json_encode($retorno);
+$retornoJson = json_encode($retorno, JSON_UNESCAPED_UNICODE);
 echo $retornoJson;
 ?>

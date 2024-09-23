@@ -277,9 +277,12 @@ $nivelPerfil = $_SESSION['nivelPerfil'];
                         <div class="position-relative">
                             <div class=" position-absolute top-0 end-0">
                                 <input type="text" id="campo-pesquisa" placeholder="Pesquisar..." />
+                                <button id="limpar-campo" type="button">
+                                    &#10006; <!-- Ícone de 'X' -->
+                                </button>
                             </div>
-                        </div><br>
-                        <div class="col-md-12 mt-4" id="tabela-registros">
+                        </div>
+                        <div class="col-md-12 mt-5" id="tabela-registros">
                             <h6 id="nome-form-pesquisa"></h6>
                             <table class="table table-striped">
                                 <thead id="head-tabela">
